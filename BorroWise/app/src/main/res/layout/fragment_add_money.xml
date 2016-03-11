@@ -91,7 +91,7 @@
             <Spinner
                 android:id="@+id/spnr_AMPersonName"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="55dp"
                 android:layout_marginLeft="8dp"
                 android:entries="@array/Sample_People"/>
 

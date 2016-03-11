@@ -93,9 +93,8 @@
                         <Spinner
                             android:id="@+id/spnr_AIPersonName"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="8dp"
-                            android:entries="@array/Sample_People"/>
+                            android:layout_height="55dp"
+                            android:layout_marginLeft="8dp"/>
                     </LinearLayout>
 
                 </LinearLayout>

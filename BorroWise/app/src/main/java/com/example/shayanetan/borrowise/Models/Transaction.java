@@ -4,7 +4,7 @@ package com.example.shayanetan.borrowise.Models;
  * Created by kewpe on 10 Mar 2016.
  */
 public abstract class Transaction {
-    public static final String TABLE_NAME = "transaction";
+    public static final String TABLE_NAME = "transactions";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_CLASSIFICATION = "classification";
     public static final String COLUMN_USER_ID = "user_id";

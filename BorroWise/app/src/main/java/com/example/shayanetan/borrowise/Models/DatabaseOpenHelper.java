@@ -29,8 +29,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 + User.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + User.COLUMN_NAME + " TEXT, "
                 + User.COLUMN_CONTACT_INFO + " TEXT, "
-                + User.COLUMN_TOTAL_RATE + " REAL); "
-                + "CREATE TABLE " + Transaction.TABLE_NAME + " ("
+                + User.COLUMN_TOTAL_RATE + " REAL); ";
+        String sql2 = "CREATE TABLE " + Transaction.TABLE_NAME + " ("
                 + Transaction.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + Transaction.COLUMN_CLASSIFICATION + " TEXT, "
                 + Transaction.COLUMN_USER_ID + " INTEGER, "
@@ -38,35 +38,38 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 + Transaction.COLUMN_STATUS + " INTEGER, "
                 + Transaction.COLUMN_START_DATE + " INTEGER, "
                 + Transaction.COLUMN_DUE_DATE + " INTEGER, "
-                + Transaction.COLUMN_RATE + " REAL); "
-                + "CREATE TABLE " + ItemTransaction.TABLE_NAME + " ("
+                + Transaction.COLUMN_RATE + " REAL); ";
+        String sql3 = "CREATE TABLE " + ItemTransaction.TABLE_NAME + " ("
                 + ItemTransaction.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ItemTransaction.COLUMN_NAME + " TEXT, "
                 + ItemTransaction.COLUMN_DESCRIPTION + " TEXT, "
                 + ItemTransaction.COLUMN_TRANSACTION_ID + " INTEGER, "
-                + "FOREIGN KEY("+ItemTransaction.COLUMN_TRANSACTION_ID+") REFERENCES transaction(id)); "
-                + "CREATE TABLE " + MoneyTransaction.TABLE_NAME + " ("
+                + "FOREIGN KEY("+ItemTransaction.COLUMN_TRANSACTION_ID+") REFERENCES transactions(id)); ";
+        String sql4 = "CREATE TABLE " + MoneyTransaction.TABLE_NAME + " ("
                 + MoneyTransaction.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + MoneyTransaction.COLUMN_TOTAL_AMOUNT_DUE + " REAL, "
                 + MoneyTransaction.COLUMN_AMOUNT_DEFICIT + " REAL, "
                 + MoneyTransaction.COLUMN_TRANSACTION_ID + " INTEGER, "
-                + "FOREIGN KEY("+MoneyTransaction.COLUMN_TRANSACTION_ID+") REFERENCES transaction(id)); ";
+                + "FOREIGN KEY("+MoneyTransaction.COLUMN_TRANSACTION_ID+") REFERENCES transactions(id)); ";
 
         db.execSQL(sql);
+        db.execSQL(sql2);
+        db.execSQL(sql3);
+        db.execSQL(sql4);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //when version number is increased, this is called
-
-        String sql = "DROP TABLE IF EXISTS " + User.TABLE_NAME+"; "
-                + "DROP TABLE IF EXISTS " + Transaction.TABLE_NAME+"; "
-                + "DROP TABLE IF EXISTS " + ItemTransaction.TABLE_NAME+"; "
-                + "DROP TABLE IF EXISTS " + MoneyTransaction.TABLE_NAME+"; ";
+        String sql = "DROP TABLE IF EXISTS " + User.TABLE_NAME+"; ";
+        String sql2 = "DROP TABLE IF EXISTS " + Transaction.TABLE_NAME+"; ";
+        String sql3 = "DROP TABLE IF EXISTS " + ItemTransaction.TABLE_NAME+"; ";
+        String sql4 = "DROP TABLE IF EXISTS " + MoneyTransaction.TABLE_NAME+"; ";
         db.execSQL(sql);
+        db.execSQL(sql2);
+        db.execSQL(sql3);
+        db.execSQL(sql4);
         onCreate(db);
-
-
     }
 
     /*
@@ -456,5 +459,17 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     *DELETE OBJECT MODULE
     */
 
+
+    public boolean checkUserIfExists(String name, String number){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c =   db.query(User.TABLE_NAME,
+                null, // == *
+                " " + User.COLUMN_NAME + "= ? AND "+User.COLUMN_CONTACT_INFO + "= ? ", //WHERE _ = ?
+                new String[]{name, number},
+                null,
+                null,
+                null);
+        return c.moveToFirst();
+    }
 }
 
