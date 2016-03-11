@@ -1,0 +1,190 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context="com.example.shayanetan.borrowise.Fragments.AddTransactionItemFragment">
+
+    <LinearLayout
+        android:id="@+id/item_top_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_item_dark"/>
+
+        <TextView
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Item"
+            android:textSize="30sp"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:id="@+id/btn_ItemToMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_money"
+            android:adjustViewBounds="true"
+            android:padding="8dp"
+            android:scaleType="fitXY"
+            android:layout_gravity="right"
+            android:background="@drawable/round_button"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/item_content_section"
+        android:layout_below="@id/item_top_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="15dp">
+
+                <ImageButton
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/ic_camera"
+                    android:background="@color/primaryColor"
+                    android:adjustViewBounds="true"
+                    android:padding="30dp"
+                    android:scaleType="fitXY"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp">
+
+                    <EditText
+                        android:id="@+id/et_AIItemName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Item Name"
+                        android:textSize="20sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_account_dark"/>
+
+                        <Spinner
+                            android:id="@+id/spnr_AIPersonName"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="8dp"
+                            android:entries="@array/Sample_People"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Start Date:"
+                    android:layout_weight="1"/>
+
+                <EditText
+                    android:id="@+id/et_AIStartDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:hint="e.g. 05/02/2016"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="End Date:"
+                    android:layout_weight="1"/>
+
+                <EditText
+                    android:id="@+id/et_AIEndDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:hint="e.g. 05/02/2016"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description:"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/et_AIDescription"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:hint="Enter Description Here"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_AIBorrow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btn_borrowed"
+            android:textSize="25sp"
+            android:background="@color/primaryDarkColor"
+            android:textColor="#FFFFFF"/>
+
+        <Button
+            android:id="@+id/btn_AILend"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btn_lent"
+            android:textSize="25sp"
+            android:background="@color/accentDarkColor"
+            android:textColor="#FFFFFF"/>
+    </LinearLayout>
+
+</RelativeLayout>
+

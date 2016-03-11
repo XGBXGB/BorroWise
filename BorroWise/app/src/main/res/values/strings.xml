@@ -1,14 +1,25 @@
 <resources>
     <string name="app_name">BorroWise</string>
-
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="action_example">Example action</string>
-
     <string name="action_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <string name = "lbl_duedate">Due Date :</string>
+    <string name = "btn_borrowed">BORROWED</string>
+    <string name = "btn_returned">RETURNED</string>
+    <string name = "btn_partial">PAID PARTIAL</string>
+    <string name = "btn_full">PAID FULL</string>
+    <string name = "btn_lost">LOST</string>
+    <string name = "btn_lent">LENT</string>
+    <string-array name="array_transaction_type">
+        <item>Items</item>
+        <item>Money</item>
+    </string-array>
+
+    <string-array name="Sample_People">
+        <item>Winona Erive</item>
+        <item>Shayane Tan</item>
+        <item>Christian Cote</item>
+    </string-array>
 </resources>
