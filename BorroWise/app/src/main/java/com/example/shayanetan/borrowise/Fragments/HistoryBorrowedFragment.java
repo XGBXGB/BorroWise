@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.example.shayanetan.borrowise.Adapters.TransactionsCursorAdapter;
+import com.example.shayanetan.borrowise.Adapters.HistoryCursorAdapter;
 import com.example.shayanetan.borrowise.Models.DatabaseOpenHelper;
 import com.example.shayanetan.borrowise.Models.MoneyTransaction;
 import com.example.shayanetan.borrowise.Models.Transaction;
@@ -31,7 +31,7 @@ public class HistoryBorrowedFragment extends Fragment {
 
     RecyclerView recyclerView;
     Spinner filter;
-    TransactionsCursorAdapter transactionsCursorAdapter;
+    HistoryCursorAdapter historyCursorAdapter;
     DatabaseOpenHelper dbDatabaseOpenHelper;
 
     public HistoryBorrowedFragment() {
@@ -41,7 +41,7 @@ public class HistoryBorrowedFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        transactionsCursorAdapter = new TransactionsCursorAdapter(getActivity(),null);
+        historyCursorAdapter = new HistoryCursorAdapter(getActivity(),null);
         dbDatabaseOpenHelper = new DatabaseOpenHelper(getActivity());
         Transaction t = new MoneyTransaction();
     }
@@ -56,7 +56,7 @@ public class HistoryBorrowedFragment extends Fragment {
 
         recyclerView = (RecyclerView)layout.findViewById(R.id.recyclerview_history_borrowed);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(transactionsCursorAdapter);
+        recyclerView.setAdapter(historyCursorAdapter);
 
         filter = (Spinner) layout.findViewById(R.id.Hspinner_type_borrowed);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -78,7 +78,7 @@ public class HistoryBorrowedFragment extends Fragment {
         Cursor cursor = dbDatabaseOpenHelper.querryBorrowTransactionsJoinUser("1,-1");
         if(cursor!=null) {
             System.out.println("YEHEY NOT NULL ONRESUME");
-            transactionsCursorAdapter.swapCursor(cursor);
+            historyCursorAdapter.swapCursor(cursor);
         }
         else
             System.out.println("HOLYMOTHER OF NULLS");

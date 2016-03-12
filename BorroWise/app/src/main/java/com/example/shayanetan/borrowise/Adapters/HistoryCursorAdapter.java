@@ -6,6 +6,7 @@ package com.example.shayanetan.borrowise.Adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.media.Rating;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.shayanetan.borrowise.Models.ItemTransaction;
@@ -52,46 +54,29 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, Cursor cursor) {
         String name = cursor.getString(cursor.getColumnIndex(User.COLUMN_NAME));
         String dueDate = parseMillisToDate(cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_DUE_DATE)));
+        String returnDate = parseMillisToDate(cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_RETURN_DATE)));
+        String startDate = parseMillisToDate(cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_START_DATE)));
+        double rating = cursor.getDouble(cursor.getColumnIndex(Transaction.COLUMN_RATE));
         String transactionAttribute1 = cursor.getString(cursor.getColumnIndex("Attribute1"));
         switch (viewHolder.getItemViewType()) {
             case TYPE_ITEM:
-                ((BorrowedItemViewHolder)viewHolder).tv_account_item.setText(name);
-                ((BorrowedItemViewHolder)viewHolder).tv_duedate_val.setText(dueDate);
-                ((BorrowedItemViewHolder)viewHolder).tv_itemname.setText(transactionAttribute1);
-                ((BorrowedItemViewHolder)viewHolder).btn_returned.setTag(cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID)));
-                ((BorrowedItemViewHolder)viewHolder).btn_returned.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mOnClickListener.onClick(v);
-                    }
-                });
-                ((BorrowedItemViewHolder)viewHolder).btn_lost.setTag(cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID)));
-                ((BorrowedItemViewHolder)viewHolder).btn_lost.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mOnClickListener.onClick(v);
-                    }
-                });
+                String status = cursor.getString(cursor.getColumnIndex(Transaction.COLUMN_STATUS));
+                ((BorrowedItemViewHolder)viewHolder).tv_Haccount_item.setText(name);
+                ((BorrowedItemViewHolder)viewHolder).tv_Hduedateitem_val.setText(dueDate);
+                ((BorrowedItemViewHolder)viewHolder).tv_Hitemname.setText(transactionAttribute1);
+                ((BorrowedItemViewHolder)viewHolder).tv_Hretdateitem_val.setText(returnDate);
+                ((BorrowedItemViewHolder)viewHolder).tv_Hstartdateitem_val.setText(startDate);
+                ((BorrowedItemViewHolder)viewHolder).tv_Hstatusitem_val.setText(status);
+                ((BorrowedItemViewHolder)viewHolder).rb_Hratingitem.setRating((float)rating);
                 break;
 
             case TYPE_MONEY:
-                ((BorrowedMoneyViewHolder)viewHolder).tv_account_money.setText(name);
-                ((BorrowedMoneyViewHolder)viewHolder).tv_duedate_val.setText(dueDate);
-                ((BorrowedMoneyViewHolder)viewHolder).tv_amount.setText(transactionAttribute1);
-                ((BorrowedMoneyViewHolder)viewHolder).btn_full.setTag(cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID)));
-                ((BorrowedMoneyViewHolder)viewHolder).btn_full.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mOnClickListener.onClick(v);
-                    }
-                });
-                ((BorrowedMoneyViewHolder)viewHolder).btn_partial.setTag(cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID)));
-                ((BorrowedMoneyViewHolder)viewHolder).btn_partial.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mOnClickListener.onClick(v);
-                    }
-                });
+                ((BorrowedMoneyViewHolder)viewHolder).tv_Haccount_money.setText(name);
+                ((BorrowedMoneyViewHolder)viewHolder).tv_Hduedatemoney_val.setText(dueDate);
+                ((BorrowedMoneyViewHolder)viewHolder).tv_Hstartdatemoney_val.setText(startDate);
+                ((BorrowedMoneyViewHolder)viewHolder).tv_Hretdatemoney_val.setText(returnDate);
+                ((BorrowedMoneyViewHolder)viewHolder).tv_Hamount.setText(transactionAttribute1);
+                ((BorrowedMoneyViewHolder)viewHolder).rb_Hratingmoney.setRating((float)rating);
                 break;
         }
     }
@@ -99,10 +84,10 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(viewType == TYPE_ITEM){
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_transaction, parent, false); //same size as parent but not binded to the parent
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_history, parent, false); //same size as parent but not binded to the parent
             return new BorrowedItemViewHolder(v);
         }else if(viewType == TYPE_MONEY){
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_money_transaction, parent, false); //same size as parent but not binded to the parent
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_money_history, parent, false); //same size as parent but not binded to the parent
             return new BorrowedMoneyViewHolder(v);
         }
 
@@ -118,30 +103,21 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
         // TODO
 
         TextView tv_Haccount_item, tv_Hitemname, tv_Hstartdateitem_val, tv_Hduedateitem_val, tv_Hretdateitem_val, tv_Hstatusitem_val;
-        Button btn_lost, btn_returned;
-        ImageView img_item;
+        ImageView img_Hitem;
         View item_container;
-
+        RatingBar rb_Hratingitem;
         public BorrowedItemViewHolder(View itemView) {
-            /*
 
-
-
-
-
-
-            rb_Hratingitem
-
-
-            */
             super(itemView);
             tv_Haccount_item = (TextView) itemView.findViewById(R.id.tv_Haccount_item);
             tv_Hitemname = (TextView) itemView.findViewById(R.id.tv_Hitemname);
             tv_Hstartdateitem_val = (TextView) itemView.findViewById(R.id.tv_Hstartdateitem_val);
+            tv_Hduedateitem_val = (TextView) itemView.findViewById(R.id.tv_Hduedateitem_val);
+            tv_Hretdateitem_val = (TextView) itemView.findViewById(R.id.tv_Hretdateitem_val);
+            tv_Hstatusitem_val = (TextView) itemView.findViewById(R.id.tv_Hstatusitem_val);
+            rb_Hratingitem = (RatingBar) itemView.findViewById(R.id.rb_Hratingitem);
 
-            img_item = (ImageView) itemView.findViewById(R.id.img_item);
-            btn_lost = (Button) itemView.findViewById(R.id.btn_lost);
-            btn_returned = (Button) itemView.findViewById(R.id.btn_returned);
+            img_Hitem = (ImageView) itemView.findViewById(R.id.img_item);
             item_container = itemView.findViewById(R.id.item_container);
         }
 
@@ -153,18 +129,18 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
     public class BorrowedMoneyViewHolder extends RecyclerView.ViewHolder{
         // TODO
 
-        TextView tv_account_money, tv_amount, tv_duedate_val;
-        Button btn_partial, btn_full;
+        TextView tv_Haccount_money, tv_Hamount, tv_Hstartdatemoney_val,tv_Hduedatemoney_val,tv_Hretdatemoney_val;
+        RatingBar rb_Hratingmoney;
         View money_container;
 
         public BorrowedMoneyViewHolder(View itemView) {
             super(itemView);
-            tv_account_money = (TextView) itemView.findViewById(R.id.tv_account_money);
-            tv_amount = (TextView) itemView.findViewById(R.id.tv_amount);
-            tv_duedate_val = (TextView) itemView.findViewById(R.id.lbl_duedatemoney_val);
-
-            btn_partial = (Button) itemView.findViewById(R.id.btn_partial);
-            btn_full = (Button) itemView.findViewById(R.id.btn_full);
+            tv_Haccount_money = (TextView) itemView.findViewById(R.id.tv_Haccount_money);
+            tv_Hamount = (TextView) itemView.findViewById(R.id.tv_Hamount);
+            tv_Hstartdatemoney_val = (TextView) itemView.findViewById(R.id.tv_Hstartdatemoney_val);
+            tv_Hduedatemoney_val = (TextView) itemView.findViewById(R.id.tv_Hduedatemoney_val);
+            tv_Hretdatemoney_val = (TextView) itemView.findViewById(R.id.tv_Hretdatemoney_val);
+            rb_Hratingmoney = (RatingBar) itemView.findViewById(R.id.rb_Hratingmoney);
             money_container = itemView.findViewById(R.id.money_container);
         }
     }

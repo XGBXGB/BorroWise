@@ -38,6 +38,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 + Transaction.COLUMN_STATUS + " INTEGER, "
                 + Transaction.COLUMN_START_DATE + " INTEGER, "
                 + Transaction.COLUMN_DUE_DATE + " INTEGER, "
+                + Transaction.COLUMN_RETURN_DATE + " INTEGER, "
                 + Transaction.COLUMN_RATE + " REAL); ";
         String sql3 = "CREATE TABLE " + ItemTransaction.TABLE_NAME + " ("
                 + ItemTransaction.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
