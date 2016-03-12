@@ -102,8 +102,10 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
     public class BorrowedItemViewHolder extends RecyclerView.ViewHolder {
         // TODO
 
+
         TextView tv_Haccount_item, tv_Hitemname, tv_Hstartdateitem_val, tv_Hduedateitem_val, tv_Hretdateitem_val, tv_Hstatusitem_val;
         ImageView img_Hitem;
+
         View item_container;
         RatingBar rb_Hratingitem;
         public BorrowedItemViewHolder(View itemView) {

@@ -38,8 +38,6 @@ public class TransactionLentFragment extends Fragment {
         transactionsCursorAdapter = new TransactionsCursorAdapter(getActivity(),null);
         dbDatabaseOpenHelper = new DatabaseOpenHelper(getActivity());
         Transaction t = new MoneyTransaction();
-
-
     }
 
     @Override
@@ -94,8 +92,7 @@ public class TransactionLentFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onPause() {
         //TODO: query all transactions and swapthe Cursor
 //        Cursor cursor = dbHelper.queryAllUnits();
 //        recyclerView.swapCursor(cursor);
