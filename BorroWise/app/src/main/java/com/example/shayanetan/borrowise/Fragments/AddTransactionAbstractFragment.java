@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.shayanetan.borrowise.Adapters.ContactsCursorAdapter;
 import com.example.shayanetan.borrowise.Models.CustomDate;
@@ -27,6 +28,7 @@ import com.example.shayanetan.borrowise.Models.User;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -87,6 +89,8 @@ public abstract class AddTransactionAbstractFragment extends Fragment{
         });
 
         CustomDate d = new CustomDate();
+
+        Toast.makeText(getActivity(), d.getCurrentDate(), Toast.LENGTH_SHORT);
         btn_start_date.setText(d.formatDateCommas(d.getCurrentDate()));
         btn_end_date.setText(d.formatDateCommas(d.getCurrentDate()));
 

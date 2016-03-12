@@ -1,5 +1,7 @@
 package com.example.shayanetan.borrowise.Models;
 
+import android.widget.Toast;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -18,24 +20,10 @@ public class CustomDate {
     private int day;
 
     public CustomDate(){
-        // get the supported ids for GMT-08:00 (Pacific Standard Time)
-        String[] ids = TimeZone.getAvailableIDs(-8 * 60 * 60 * 1000);
-        // if no ids were returned, something is wrong. get out.
-        if (ids.length == 0)
-            System.exit(0);
-        // create a Pacific Standard Time time zone
-        SimpleTimeZone pdt = new SimpleTimeZone(-8 * 60 * 60 * 1000, ids[0]);
-
-        // set up rules for daylight savings time
-        pdt.setStartRule(Calendar.APRIL, 1, Calendar.SUNDAY, 2 * 60 * 60 * 1000);
-        pdt.setEndRule(Calendar.OCTOBER, -1, Calendar.SUNDAY, 2 * 60 * 60 * 1000);
-
-        // create a GregorianCalendar with the Pacific Daylight time zone
-        // and the current date and time
-        Calendar calendar = new GregorianCalendar(pdt);
-        this.year = calendar.get(Calendar.YEAR);
-        this.day= calendar.get(Calendar.MONTH);
-        this.month = calendar.get(Calendar.DAY_OF_MONTH);
+        Calendar calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
     }
 
     public String getCurrentDate(){
@@ -45,10 +33,10 @@ public class CustomDate {
     public String formatDateCommas(String toParse){
        String result = "";
         try {
-            SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy");
-            Date dateObj = curFormater.parse(toParse);
-            SimpleDateFormat postFormater = new SimpleDateFormat("MM/dd/yyyy");
-            result = postFormater.format(dateObj);
+            SimpleDateFormat curFormatter = new SimpleDateFormat("MM/dd/yyyy");
+            Date dateObj = curFormatter.parse(toParse);
+            SimpleDateFormat postFormatter = new SimpleDateFormat("MMMM dd, yyyy");
+            result = postFormatter.format(dateObj);
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -60,7 +48,7 @@ public class CustomDate {
 
         String result = "";
         try {
-            SimpleDateFormat curFormatter = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat curFormatter = new SimpleDateFormat("MM/dd/yyyy");
             Date dateObj = curFormatter.parse(toParse);
             SimpleDateFormat postFormatter = new SimpleDateFormat("MM/dd/yyyy");
             result = postFormatter.format(dateObj);

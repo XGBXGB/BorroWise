@@ -28,6 +28,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         CustomDate d = new CustomDate();
+
         return new DatePickerDialog(getActivity(), this, d.getYear(), d.getMonth(), d.getDay());
     }
 
