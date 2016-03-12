@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:orientation="vertical" android:layout_width="match_parent"
 android:layout_height="wrap_content"
+    android:padding="5dp"
 android:id="@+id/container">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="17sp"
         android:textStyle="bold"
         android:gravity="left"
         android:layout_marginTop="5dp"
@@ -17,7 +18,7 @@ android:id="@+id/container">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:textStyle="bold"
+        android:textColor="@color/accentDarkColor"
         android:gravity="left"
         android:layout_marginBottom="5dp"
         android:id="@+id/tv_number"/>

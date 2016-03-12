@@ -11,6 +11,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -27,28 +29,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class AddMoneyFragment extends Fragment {
+public class AddMoneyFragment extends AddTransactionAbstractFragment {
     //TODO:UI components
 
     private FragmentTransaction transaction;
-    private FragmentActivity myContext;
-    private DatabaseOpenHelper dbHelper;
-    private ContactsCursorAdapter contactsCursorAdapter;
-
-    private ImageButton btn_MoneyToItem;
-    private EditText et_AMAmount, et_AMStartDate, et_AMEndDate;
-    private Button btn_AMBorrow, btn_AMLend;
-    private Spinner spnr_AMPersonName;
+    private EditText et_AMAmount;
 
     public AddMoneyFragment() {
         // Required empty public constructor
-    }
-
-
-    @Override
-    public void onAttach(Activity activity) {
-        myContext=(FragmentActivity) activity;
-        super.onAttach(activity);
     }
 
     @Override
@@ -63,90 +51,53 @@ public class AddMoneyFragment extends Fragment {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_add_money, container, false);
 
-        btn_MoneyToItem = (ImageButton) layout.findViewById(R.id.btn_MoneyToItem);
+        img_btn_switch = (ImageButton) layout.findViewById(R.id.btn_MoneyToItem);
+        btn_borrowed = (Button) layout.findViewById(R.id.btn_AMBorrow);
+        btn_lent = (Button) layout.findViewById(R.id.btn_AMLend);
 
         et_AMAmount = (EditText) layout.findViewById(R.id.et_AMAmount);
-        spnr_AMPersonName = (Spinner) layout.findViewById(R.id.spnr_AMPersonName);
-        et_AMStartDate = (EditText) layout.findViewById(R.id.et_AMStartDate);
-        et_AMEndDate = (EditText) layout.findViewById(R.id.et_AMEndDate);
+        atv_person_name = (AutoCompleteTextView) layout.findViewById(R.id.atv_AMPersonName);
+        btn_start_date = (Button) layout.findViewById(R.id.btn_AMStartDate);
+        btn_end_date = (Button) layout.findViewById(R.id.btn_AMEndDate);
 
-        contactsCursorAdapter = new ContactsCursorAdapter(myContext, null, 0);
-        spnr_AMPersonName.setAdapter(contactsCursorAdapter);
+        init(); //method can be found in abstract class
 
-        Cursor cursor = myContext.getContentResolver().query(
-                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                null,
-                null,
-                null,
-                null);
-
-        contactsCursorAdapter.swapCursor(cursor);
-
-        btn_AMBorrow = (Button) layout.findViewById(R.id.btn_AMBorrow);
-        btn_AMLend = (Button) layout.findViewById(R.id.btn_AMLend);
-
-        dbHelper = new DatabaseOpenHelper(myContext);
-
-        btn_MoneyToItem.setOnClickListener(new View.OnClickListener() {
+        btn_borrowed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                AddItemFragment fragment = new AddItemFragment();
-
-                FragmentManager fm = myContext.getSupportFragmentManager();
-                transaction = fm.beginTransaction();
-                transaction.replace(R.id.fragment_container, fragment);
-                transaction.commit();
-
-
-            }
-        });
-
-        btn_AMBorrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                dbHelper.insertTransaction(new MoneyTransaction(
-                        "Money",spnr_AMPersonName.getSelectedItemPosition(), "borrow", 1,
-                        parseDateToMillis(et_AMStartDate.getText().toString()), parseDateToMillis(et_AMEndDate.getText().toString()),
+                databaseOpenHelper.insertTransaction(new MoneyTransaction(
+                        "Money",selected_contactID, "borrow", 1,
+                        parseDateToMillis(btn_start_date.getText().toString()),
+                        parseDateToMillis(btn_end_date.getText().toString()),
                         0.0,
                         Double.parseDouble(et_AMAmount.getText().toString()), 0.0));
 
-                Cursor contactDetail = (Cursor) spnr_AMPersonName.getSelectedItem();
-                String name = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-                String number = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-
-                if(dbHelper.checkUserIfExists(name, number)){
+                if(databaseOpenHelper.checkUserIfExists(selected_name, selected_contact_number)){
                     System.out.println("USER ALREADY EXISTS!");
                 }else{
                     System.out.println("USER doesnt EXISTS!");
-                    dbHelper.insertUser(new User(name, number, 0));
+                    databaseOpenHelper.insertUser(new User(selected_name, selected_contact_number, 0));
                 }
-
-
             }
         });
 
-        btn_AMLend.setOnClickListener(new View.OnClickListener() {
+        btn_lent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                dbHelper.insertTransaction(new MoneyTransaction(
-                        "Money",spnr_AMPersonName.getSelectedItemPosition(), "lend", 1,
-                        parseDateToMillis(et_AMStartDate.getText().toString()), parseDateToMillis(et_AMEndDate.getText().toString()),
+                databaseOpenHelper.insertTransaction(new MoneyTransaction(
+                        "Money",selected_contactID, "lend", 1,
+                        parseDateToMillis(btn_start_date.getText().toString()),
+                        parseDateToMillis(btn_end_date.getText().toString()),
                         0.0,
                         Double.parseDouble(et_AMAmount.getText().toString()), 0.0));
 
-                Cursor contactDetail = (Cursor) spnr_AMPersonName.getSelectedItem();
-                String name = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-                String number = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-
-                if(dbHelper.checkUserIfExists(name, number)){
+                if(databaseOpenHelper.checkUserIfExists(selected_name, selected_contact_number)){
                     System.out.println("USER ALREADY EXISTS!");
                 }else{
                     System.out.println("USER doesnt EXISTS!");
-                    dbHelper.insertUser(new User(name, number, 0));
+                    databaseOpenHelper.insertUser(new User(selected_name, selected_contact_number, 0));
                 }
 
             }
@@ -155,17 +106,20 @@ public class AddMoneyFragment extends Fragment {
         return layout;
     }
 
-    public long parseDateToMillis(String toParse){
-        long millis=0;
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy"); // I assume d-M, you may refer to M-d for month-day instead.
-            Date date = formatter.parse(toParse); // You will need try/catch around this
-            millis = date.getTime();
+    @Override
+    public void onFragmentSwitch() {
 
-        } catch (ParseException e){
-            e.printStackTrace();
-        }
-        return millis;
+        img_btn_switch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddItemFragment fragment = new AddItemFragment();
+                FragmentManager fm = myContext.getSupportFragmentManager();
+                transaction = fm.beginTransaction();
+                transaction.replace(R.id.fragment_container, fragment);
+                transaction.commit();
+            }
+        });
     }
+
 
 }

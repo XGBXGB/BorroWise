@@ -34,8 +34,8 @@ public class TransactionBorrowedFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        transactionsCursorAdapter = new TransactionsCursorAdapter(getActivity(),null);
-        dbDatabaseOpenHelper = new DatabaseOpenHelper(getActivity());
+        transactionsCursorAdapter = new TransactionsCursorAdapter(getActivity().getBaseContext(),null);
+        dbDatabaseOpenHelper = new DatabaseOpenHelper(getActivity().getBaseContext());
         Transaction t = new MoneyTransaction();
 
 

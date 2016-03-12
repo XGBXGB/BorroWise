@@ -10,18 +10,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="10dp"
-        android:layout_marginBottom="10dp">
+        android:paddingTop="5dp"
+        android:layout_marginBottom="5dp">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
             android:src="@drawable/ic_money_dark"/>
 
         <TextView
             android:paddingLeft="15dp"
             android:paddingTop="10dp"
             android:layout_width="0dp"
+            android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:text="Money"
             android:textSize="30sp"
@@ -44,7 +46,7 @@
         android:id="@+id/money_content_section"
         android:layout_below="@id/money_top_section"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
@@ -77,8 +79,8 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="50dp"
-                android:src="@drawable/ic_account_dark"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginRight="3dp"
+                android:src="@drawable/ic_account_dark"/>
             <!--EditText
                 android:id="@+id/et_AMPersonName"
                 android:layout_width="match_parent"
@@ -87,13 +89,23 @@
                 android:textSize="20sp"
                 android:layout_marginLeft="8dp"/-->
 
-
-            <Spinner
-                android:id="@+id/spnr_AMPersonName"
+            <AutoCompleteTextView
+                android:id="@+id/atv_AMPersonName"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginLeft="8dp"
-                android:entries="@array/Sample_People"/>
+                android:layout_height="wrap_content"
+                android:hint="Enter person name"
+                android:layout_alignParentLeft="true"
+                android:ems="10"
+                android:text="">
+                <requestFocus />
+            </AutoCompleteTextView>
+
+            <!--<Spinner-->
+                <!--android:id="@+id/spnr_AMPersonName"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="55dp"-->
+                <!--android:layout_marginLeft="8dp"-->
+                <!--android:entries="@array/Sample_People"/>-->
 
         </LinearLayout>
 
@@ -111,13 +123,12 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"/>
 
-
-            <EditText
-                android:id="@+id/et_AMStartDate"
-                android:layout_width="0dp"
+            <Button
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:hint="e.g. 05/02/2016"/>
+                android:background="@drawable/accent_dark_border"
+                android:id="@+id/btn_AMStartDate"
+                android:layout_weight="1" />
 
 
         </LinearLayout>
@@ -126,6 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp">
 
             <TextView
@@ -136,12 +148,12 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"/>
 
-            <EditText
-                android:id="@+id/et_AMEndDate"
-                android:layout_width="0dp"
+            <Button
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:hint="e.g. 05/02/2016"/>
+                android:background="@drawable/accent_dark_border"
+                android:id="@+id/btn_AMEndDate"
+                android:layout_weight="1" />
 
         </LinearLayout>
     </LinearLayout>
@@ -150,6 +162,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@id/money_content_section"
         android:orientation="horizontal">
 
         <Button
