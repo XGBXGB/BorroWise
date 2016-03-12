@@ -1,6 +1,7 @@
 package com.example.shayanetan.borrowise.Fragments;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -74,5 +75,12 @@ public class HistoryBorrowedFragment extends Fragment {
         //TODO: query all transactions and swapthe Cursor
 //        Cursor cursor = dbHelper.queryAllUnits();
 //        recyclerView.swapCursor(cursor);
+        Cursor cursor = dbDatabaseOpenHelper.querryBorrowTransactionsJoinUser("1,-1");
+        if(cursor!=null) {
+            System.out.println("YEHEY NOT NULL ONRESUME");
+            transactionsCursorAdapter.swapCursor(cursor);
+        }
+        else
+            System.out.println("HOLYMOTHER OF NULLS");
     }
 }

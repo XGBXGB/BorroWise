@@ -228,7 +228,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                         + " INNER JOIN " + User.TABLE_NAME
                         + " ON " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_USER_ID + "=" + User.TABLE_NAME + "." + User.COLUMN_ID
                         + " WHERE " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_TYPE + "='borrow' AND "
-                        + Transaction.TABLE_NAME+"."+Transaction.COLUMN_STATUS+ "="+status
+                        + Transaction.TABLE_NAME+"."+Transaction.COLUMN_STATUS+ " IN ("+status+") "
                 +" UNION "
                 +"SELECT "+Transaction.TABLE_NAME+"."+Transaction.COLUMN_ID+" AS _id, "+Transaction.COLUMN_CLASSIFICATION+", "
                         +Transaction.COLUMN_USER_ID+", "+Transaction.COLUMN_TYPE+", "
@@ -242,7 +242,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                         + " INNER JOIN " + User.TABLE_NAME
                         + " ON " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_USER_ID + "=" + User.TABLE_NAME + "." + User.COLUMN_ID
                         + " WHERE " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_TYPE + "='borrow' AND "
-                        + Transaction.TABLE_NAME+"."+Transaction.COLUMN_STATUS+ "="+status
+                        + Transaction.TABLE_NAME+"."+Transaction.COLUMN_STATUS+ " IN ("+status+") "
                 , null);
         return cursor.moveToFirst() ? cursor : null;
     }
@@ -263,7 +263,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                         + " INNER JOIN " + User.TABLE_NAME
                         + " ON " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_USER_ID + "=" + User.TABLE_NAME + "." + User.COLUMN_ID
                         + " WHERE " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_TYPE + "='lend' AND "
-                        + Transaction.TABLE_NAME+"."+Transaction.COLUMN_STATUS+ "="+status
+                        + Transaction.TABLE_NAME+"."+Transaction.COLUMN_STATUS+ " IN ("+status+") "
                         +" UNION "
                         +"SELECT "+Transaction.TABLE_NAME+"."+Transaction.COLUMN_ID+" AS _id, "+Transaction.COLUMN_CLASSIFICATION+", "
                         +Transaction.COLUMN_USER_ID+", "+Transaction.COLUMN_TYPE+", "
@@ -277,7 +277,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                         + " INNER JOIN " + User.TABLE_NAME
                         + " ON " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_USER_ID + "=" + User.TABLE_NAME + "." + User.COLUMN_ID
                         + " WHERE " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_TYPE + "='lend' AND "
-                        + Transaction.TABLE_NAME+"."+Transaction.COLUMN_STATUS+ "="+status
+                        + Transaction.TABLE_NAME+"."+Transaction.COLUMN_STATUS+ " IN ("+status+") "
                 , null);
         return cursor.moveToFirst() ? cursor : null;
     }

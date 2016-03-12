@@ -16,6 +16,7 @@ import android.widget.Spinner;
 
 import com.example.shayanetan.borrowise.Adapters.TransactionsCursorAdapter;
 import com.example.shayanetan.borrowise.Models.DatabaseOpenHelper;
+import com.example.shayanetan.borrowise.Models.ItemTransaction;
 import com.example.shayanetan.borrowise.Models.MoneyTransaction;
 import com.example.shayanetan.borrowise.Models.Transaction;
 import com.example.shayanetan.borrowise.R;
@@ -50,6 +51,26 @@ public class TransactionLentFragment extends Fragment {
         //initiate adapter and set recycler view adapter
 
         recyclerView = (RecyclerView)layout.findViewById(R.id.recyclerview_transaction_lent);
+
+        transactionsCursorAdapter.setmOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.btn_full:
+                        MoneyTransaction m = (MoneyTransaction) dbDatabaseOpenHelper.queryTransaction(Integer.parseInt(v.getTag().toString()));
+                        m.setAmountDeficit(0);
+                        m.setStatus(1);
+                        dbDatabaseOpenHelper.updateTransaction(m);
+                        break;
+                    case R.id.btn_returned:
+                        ItemTransaction i = (ItemTransaction) dbDatabaseOpenHelper.queryTransaction(Integer.parseInt(v.getTag().toString()));
+                        i.setStatus(1);
+                        dbDatabaseOpenHelper.updateTransaction(i);
+                        break;
+                }
+            }
+        });
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(transactionsCursorAdapter);
 
