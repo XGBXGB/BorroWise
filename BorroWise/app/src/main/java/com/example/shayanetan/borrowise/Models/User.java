@@ -4,9 +4,9 @@ package com.example.shayanetan.borrowise.Models;
  * Created by kewpe on 10 Mar 2016.
  */
 public class User {
-    public static final String TABLE_NAME = "user";
+    public static final String TABLE_NAME = "users";
     public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_NAME = "type";
+    public static final String COLUMN_NAME = "name";
     public static final String COLUMN_CONTACT_INFO = "contact_info";
     public static final String COLUMN_TOTAL_RATE = "total_rate";
 

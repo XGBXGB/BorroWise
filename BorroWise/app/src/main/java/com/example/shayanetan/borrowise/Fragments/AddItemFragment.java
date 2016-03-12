@@ -108,21 +108,24 @@ public class AddItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                dbHelper.insertTransaction(new ItemTransaction(
-                        "Item",spnr_AIPersonName.getSelectedItemPosition(), "borrow", 1,
-                        parseDateToMillis(et_AIStartDate.getText().toString()), parseDateToMillis(et_AIEndDate.getText().toString()),
-                        0.0, et_AIItemName.getText().toString(), et_AIDescription.getText().toString()));
-
                 Cursor contactDetail = (Cursor) spnr_AIPersonName.getSelectedItem();
                 String name = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
                 String number = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 
-                if(dbHelper.checkUserIfExists(name, number)){
-                    System.out.println("USER ALREADY EXISTS!");
+                int id = dbHelper.checkUserIfExists(name, number);
+                if(id == -1){
+                    id = (int) dbHelper.insertUser(new User(name, number, 0));
                 }else{
                     System.out.println("USER doesnt EXISTS!");
-                    dbHelper.insertUser(new User(name, number, 0));
                 }
+
+
+                dbHelper.insertTransaction(new ItemTransaction(
+                        "Item", id, "borrow", 0,
+                        parseDateToMillis(et_AIStartDate.getText().toString()), parseDateToMillis(et_AIEndDate.getText().toString()),
+                        0.0, et_AIItemName.getText().toString(), et_AIDescription.getText().toString()));
+
+
             }
         });
 
@@ -130,21 +133,22 @@ public class AddItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                dbHelper.insertTransaction(new ItemTransaction(
-                        "Item",spnr_AIPersonName.getSelectedItemPosition(), "lend", 1,
-                        parseDateToMillis(et_AIStartDate.getText().toString()),parseDateToMillis(et_AIEndDate.getText().toString()),
-                        0.0, et_AIItemName.getText().toString(), et_AIDescription.getText().toString()));
-
                 Cursor contactDetail = (Cursor) spnr_AIPersonName.getSelectedItem();
                 String name = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
                 String number = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 
-                if(dbHelper.checkUserIfExists(name, number)){
-                    System.out.println("USER ALREADY EXISTS!");
+                int id = dbHelper.checkUserIfExists(name, number);
+                if(id == -1){
+                    id = (int) dbHelper.insertUser(new User(name, number, 0));
                 }else{
                     System.out.println("USER doesnt EXISTS!");
-                    dbHelper.insertUser(new User(name, number, 0));
                 }
+
+
+                dbHelper.insertTransaction(new ItemTransaction(
+                        "Item", id, "lend", 0,
+                        parseDateToMillis(et_AIStartDate.getText().toString()), parseDateToMillis(et_AIEndDate.getText().toString()),
+                        0.0, et_AIItemName.getText().toString(), et_AIDescription.getText().toString()));
             }
         });
 
