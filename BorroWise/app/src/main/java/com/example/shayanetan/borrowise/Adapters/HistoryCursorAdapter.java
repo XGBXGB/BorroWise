@@ -55,9 +55,9 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
         String transactionAttribute1 = cursor.getString(cursor.getColumnIndex("Attribute1"));
         switch (viewHolder.getItemViewType()) {
             case TYPE_ITEM:
-                ((BorrowedItemViewHolder)viewHolder).tv_account_item.setText(name);
-                ((BorrowedItemViewHolder)viewHolder).tv_duedate_val.setText(dueDate);
-                ((BorrowedItemViewHolder)viewHolder).tv_itemname.setText(transactionAttribute1);
+                ((BorrowedItemViewHolder)viewHolder).tv_Haccount_item.setText(name);
+                ((BorrowedItemViewHolder)viewHolder).tv_Hduedateitem_val.setText(dueDate);
+                ((BorrowedItemViewHolder)viewHolder).tv_Hitemname.setText(transactionAttribute1);
                 ((BorrowedItemViewHolder)viewHolder).btn_returned.setTag(cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID)));
                 ((BorrowedItemViewHolder)viewHolder).btn_returned.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -117,7 +117,12 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
     public class BorrowedItemViewHolder extends RecyclerView.ViewHolder {
         // TODO
 
-        TextView tv_Haccount_item, tv_Hitemname, tv_Hstartdateitem_val, tv_Hduedateitem_val, tv_Hretdateitem_val, tv_Hstatusitem_val;
+        TextView tv_Haccount_item,
+                tv_Hitemname,
+                tv_Hstartdateitem_val,
+                tv_Hduedateitem_val,
+                tv_Hretdateitem_val,
+                tv_Hstatusitem_val;
         Button btn_lost, btn_returned;
         ImageView img_item;
         View item_container;
@@ -138,6 +143,7 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
             tv_Haccount_item = (TextView) itemView.findViewById(R.id.tv_Haccount_item);
             tv_Hitemname = (TextView) itemView.findViewById(R.id.tv_Hitemname);
             tv_Hstartdateitem_val = (TextView) itemView.findViewById(R.id.tv_Hstartdateitem_val);
+            tv_Hduedateitem_val = (TextView) itemView.findViewById(R.id.tv_Hduedateitem_val);
 
             img_item = (ImageView) itemView.findViewById(R.id.img_item);
             btn_lost = (Button) itemView.findViewById(R.id.btn_lost);

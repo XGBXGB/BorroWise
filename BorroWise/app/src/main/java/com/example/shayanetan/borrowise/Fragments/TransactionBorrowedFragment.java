@@ -96,8 +96,8 @@ public class TransactionBorrowedFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onPause() {
+//        super.onResume();
         //TODO: query all transactions and swapthe Cursor
 
         Cursor cursor = dbDatabaseOpenHelper.querryBorrowTransactionsJoinUser("0");
