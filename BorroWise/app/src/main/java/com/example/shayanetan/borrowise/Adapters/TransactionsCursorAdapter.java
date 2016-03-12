@@ -14,7 +14,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.shayanetan.borrowise.Models.ItemTransaction;
+import com.example.shayanetan.borrowise.Models.Transaction;
+import com.example.shayanetan.borrowise.Models.User;
 import com.example.shayanetan.borrowise.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by ShayaneTan on 3/11/2016.
@@ -29,21 +35,35 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
         super(context, cursor);
     }
 
+
+
     @Override
     public int getItemViewType(int position) {
-        return position == 0 ? TYPE_ITEM : TYPE_MONEY;
+        Cursor itemCursor = super.getCursor();
+        itemCursor.moveToPosition(position);
+        if(itemCursor.getString(itemCursor.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)).equalsIgnoreCase("item"))
+            return TYPE_ITEM;
+        else
+            return TYPE_MONEY;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, Cursor cursor) {
-
+        String name = cursor.getString(cursor.getColumnIndex(User.COLUMN_NAME));
+        String dueDate = parseMillisToDate(cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_DUE_DATE)));
+        String transactionAttribute1 = cursor.getString(cursor.getColumnIndex("Attribute1"));
         switch (viewHolder.getItemViewType()) {
             case TYPE_ITEM:
-                //TODO:action lsiteners and inflaters
+                String itemName = cursor.getString(cursor.getColumnIndex(ItemTransaction.COLUMN_NAME));
+                ((BorrowedItemViewHolder)viewHolder).tv_account_item.setText(name);
+                ((BorrowedItemViewHolder)viewHolder).tv_duedate_val.setText(dueDate);
+                ((BorrowedItemViewHolder)viewHolder).tv_itemname.setText(transactionAttribute1);
                 break;
 
             case TYPE_MONEY:
-                //TODO:action lsiteners and inflaters
+                ((BorrowedMoneyViewHolder)viewHolder).tv_account_money.setText(name);
+                ((BorrowedMoneyViewHolder)viewHolder).tv_duedate_val.setText(dueDate);
+                ((BorrowedMoneyViewHolder)viewHolder).tv_amount.setText(transactionAttribute1);
                 break;
         }
     }
@@ -115,6 +135,12 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
     public interface OnItemClickListener{
         public void onItemClick(int id);
         public void onItemLongClick(int id);
+    }
+
+    public String parseMillisToDate(long millis){
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        Date resultdate = new Date(millis);
+        return sdf.format(resultdate);
     }
 }
 

@@ -57,7 +57,11 @@ public class AddMoneyFragment extends AddTransactionAbstractFragment {
         btn_borrowed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Cursor contactDetail = (Cursor) spnr_AIPersonName.getSelectedItem();
+                // String name = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                //String number = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 
+<<<<<<< HEAD
                 databaseOpenHelper.insertTransaction(new MoneyTransaction(
                         "Money",selected_contactID, "borrow", 1,
                         parseDateToMillis(btn_start_date.getText().toString()),
@@ -72,13 +76,32 @@ public class AddMoneyFragment extends AddTransactionAbstractFragment {
                     databaseOpenHelper.insertUser(new User(selected_name, selected_contact_number, 0));
                 }
 
+=======
+                int id = databaseOpenHelper.checkUserIfExists(selected_name, selected_contact_number);
+                if(id == -1){
+                    id = (int) databaseOpenHelper.insertUser(new User(selected_name, selected_contact_number, 0));
+                }else{
+                    System.out.println("USER doesnt EXISTS!");
+                }
+
+
+                databaseOpenHelper.insertTransaction(new MoneyTransaction(
+                        "Money", id, "borrow", 0,
+                        parseDateToMillis(btn_start_date.getText().toString()), parseDateToMillis(btn_end_date.getText().toString()),
+                        0.0, Double.parseDouble(et_AMAmount.getText().toString()), 0.0));
+
+>>>>>>> origin/master
             }
         });
 
         btn_lent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Cursor contactDetail = (Cursor) spnr_AIPersonName.getSelectedItem();
+                // String name = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                //String number = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 
+<<<<<<< HEAD
                 databaseOpenHelper.insertTransaction(new MoneyTransaction(
                         "Money", selected_contactID, "lend", 1,
                         parseDateToMillis(btn_start_date.getText().toString()),
@@ -92,6 +115,21 @@ public class AddMoneyFragment extends AddTransactionAbstractFragment {
                     System.out.println("USER doesnt EXISTS!");
                     databaseOpenHelper.insertUser(new User(selected_name, selected_contact_number, 0));
                 }
+=======
+                int id = databaseOpenHelper.checkUserIfExists(selected_name, selected_contact_number);
+                if(id == -1){
+                    id = (int) databaseOpenHelper.insertUser(new User(selected_name, selected_contact_number, 0));
+                }else{
+                    System.out.println("USER doesnt EXISTS!");
+                }
+
+
+                databaseOpenHelper.insertTransaction(new MoneyTransaction(
+                        "Money", id, "lend", 0,
+                        parseDateToMillis(btn_start_date.getText().toString()), parseDateToMillis(btn_end_date.getText().toString()),
+                        0.0, Double.parseDouble(et_AMAmount.getText().toString()), 0.0));
+
+>>>>>>> origin/master
             }
         });
 

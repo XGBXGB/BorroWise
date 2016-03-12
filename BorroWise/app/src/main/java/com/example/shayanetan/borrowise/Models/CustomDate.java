@@ -47,8 +47,9 @@ public class CustomDate {
         try {
             SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy");
             Date dateObj = curFormater.parse(toParse);
-            SimpleDateFormat postFormater = new SimpleDateFormat("MMMM dd, yyyy");
+            SimpleDateFormat postFormater = new SimpleDateFormat("MM/dd/yyyy");
             result = postFormater.format(dateObj);
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
