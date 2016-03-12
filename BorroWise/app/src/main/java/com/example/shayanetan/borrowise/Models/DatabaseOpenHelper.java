@@ -94,6 +94,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         cv.put(Transaction.COLUMN_STATUS, t.getStatus());
         cv.put(Transaction.COLUMN_START_DATE, t.getStartDate());
         cv.put(Transaction.COLUMN_DUE_DATE, t.getDueDate());
+        cv.put(Transaction.COLUMN_RETURN_DATE, t.getReturnDate());
         cv.put(Transaction.COLUMN_RATE, t.getRate());
 
         long id = db.insert(Transaction.TABLE_NAME, null, cv);
@@ -175,6 +176,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                         c.getInt(c.getColumnIndex(Transaction.COLUMN_STATUS)),
                         c.getLong(c.getColumnIndex(Transaction.COLUMN_START_DATE)),
                         c.getLong(c.getColumnIndex(Transaction.COLUMN_DUE_DATE)),
+                        c.getLong(c.getColumnIndex(Transaction.COLUMN_RETURN_DATE)),
                         c.getDouble(c.getColumnIndex(Transaction.COLUMN_RATE)),
                         c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_NAME)),
                         c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_DESCRIPTION)));
@@ -189,12 +191,13 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                         null);
                 c2.moveToFirst();
                 t = new MoneyTransaction(c.getString(c.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)),
-                        c.getInt(c.getColumnIndex(MoneyTransaction.COLUMN_USER_ID)),
-                        c.getString(c.getColumnIndex(MoneyTransaction.COLUMN_TYPE)),
-                        c.getInt(c.getColumnIndex(MoneyTransaction.COLUMN_STATUS)),
-                        c.getLong(c.getColumnIndex(MoneyTransaction.COLUMN_START_DATE)),
-                        c.getLong(c.getColumnIndex(MoneyTransaction.COLUMN_DUE_DATE)),
-                        c.getDouble(c.getColumnIndex(MoneyTransaction.COLUMN_RATE)),
+                        c.getInt(c.getColumnIndex(Transaction.COLUMN_USER_ID)),
+                        c.getString(c.getColumnIndex(Transaction.COLUMN_TYPE)),
+                        c.getInt(c.getColumnIndex(Transaction.COLUMN_STATUS)),
+                        c.getLong(c.getColumnIndex(Transaction.COLUMN_START_DATE)),
+                        c.getLong(c.getColumnIndex(Transaction.COLUMN_DUE_DATE)),
+                        c.getLong(c.getColumnIndex(Transaction.COLUMN_RETURN_DATE)),
+                        c.getDouble(c.getColumnIndex(Transaction.COLUMN_RATE)),
                         c2.getDouble(c2.getColumnIndex(MoneyTransaction.COLUMN_TOTAL_AMOUNT_DUE)),
                         c2.getDouble(c2.getColumnIndex(MoneyTransaction.COLUMN_AMOUNT_DEFICIT)));
                 t.setId(id);
@@ -219,7 +222,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 "SELECT "+Transaction.TABLE_NAME+"."+Transaction.COLUMN_ID+" AS _id, "+Transaction.COLUMN_CLASSIFICATION+", "
                         +Transaction.COLUMN_USER_ID+", "+Transaction.COLUMN_TYPE+", "
                         +Transaction.COLUMN_STATUS+", "+Transaction.COLUMN_START_DATE+", "
-                        +Transaction.COLUMN_DUE_DATE+", "+Transaction.COLUMN_RATE+", "
+                        +Transaction.COLUMN_DUE_DATE+", "+Transaction.COLUMN_RETURN_DATE+", "+Transaction.COLUMN_RATE+", "
                         +ItemTransaction.TABLE_NAME+"."+ItemTransaction.COLUMN_NAME+" AS Attribute1, "+ItemTransaction.TABLE_NAME+"."+ItemTransaction.COLUMN_DESCRIPTION+" AS Attribute2, "
                         +User.TABLE_NAME+"."+User.COLUMN_NAME+" AS name"
                         + " FROM " + Transaction.TABLE_NAME
@@ -233,7 +236,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 +"SELECT "+Transaction.TABLE_NAME+"."+Transaction.COLUMN_ID+" AS _id, "+Transaction.COLUMN_CLASSIFICATION+", "
                         +Transaction.COLUMN_USER_ID+", "+Transaction.COLUMN_TYPE+", "
                         +Transaction.COLUMN_STATUS+", "+Transaction.COLUMN_START_DATE+", "
-                        +Transaction.COLUMN_DUE_DATE+", "+Transaction.COLUMN_RATE+", "
+                        +Transaction.COLUMN_DUE_DATE+", "+Transaction.COLUMN_RETURN_DATE+", "+Transaction.COLUMN_RATE+", "
                         +MoneyTransaction.TABLE_NAME+"."+MoneyTransaction.COLUMN_TOTAL_AMOUNT_DUE+" AS Attribute1, "+MoneyTransaction.TABLE_NAME+"."+MoneyTransaction.COLUMN_AMOUNT_DEFICIT+" AS Attribute2, "
                         +User.TABLE_NAME+"."+User.COLUMN_NAME+" AS name"
                         + " FROM " + Transaction.TABLE_NAME
@@ -254,7 +257,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 "SELECT "+Transaction.TABLE_NAME+"."+Transaction.COLUMN_ID+" AS _id, "+Transaction.COLUMN_CLASSIFICATION+", "
                         +Transaction.COLUMN_USER_ID+", "+Transaction.COLUMN_TYPE+", "
                         +Transaction.COLUMN_STATUS+", "+Transaction.COLUMN_START_DATE+", "
-                        +Transaction.COLUMN_DUE_DATE+", "+Transaction.COLUMN_RATE+", "
+                        +Transaction.COLUMN_DUE_DATE+", "+Transaction.COLUMN_RETURN_DATE+", "+Transaction.COLUMN_RATE+", "
                         +ItemTransaction.TABLE_NAME+"."+ItemTransaction.COLUMN_NAME+" AS Attribute1, "+ItemTransaction.TABLE_NAME+"."+ItemTransaction.COLUMN_DESCRIPTION+" AS Attribute2, "
                         +User.TABLE_NAME+"."+User.COLUMN_NAME+" AS name"
                         + " FROM " + Transaction.TABLE_NAME
@@ -268,7 +271,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                         +"SELECT "+Transaction.TABLE_NAME+"."+Transaction.COLUMN_ID+" AS _id, "+Transaction.COLUMN_CLASSIFICATION+", "
                         +Transaction.COLUMN_USER_ID+", "+Transaction.COLUMN_TYPE+", "
                         +Transaction.COLUMN_STATUS+", "+Transaction.COLUMN_START_DATE+", "
-                        +Transaction.COLUMN_DUE_DATE+", "+Transaction.COLUMN_RATE+", "
+                        +Transaction.COLUMN_DUE_DATE+", "+Transaction.COLUMN_RETURN_DATE+", "+Transaction.COLUMN_RATE+", "
                         +MoneyTransaction.TABLE_NAME+"."+MoneyTransaction.COLUMN_TOTAL_AMOUNT_DUE+" AS Attribute1, "+MoneyTransaction.TABLE_NAME+"."+MoneyTransaction.COLUMN_AMOUNT_DEFICIT+" AS Attribute2, "
                         +User.TABLE_NAME+"."+User.COLUMN_NAME+" AS name"
                         + " FROM " + Transaction.TABLE_NAME
@@ -335,6 +338,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                     c.getInt(c.getColumnIndex(Transaction.COLUMN_STATUS)),
                     c.getLong(c.getColumnIndex(Transaction.COLUMN_START_DATE)),
                     c.getLong(c.getColumnIndex(Transaction.COLUMN_DUE_DATE)),
+                    c.getLong(c.getColumnIndex(Transaction.COLUMN_RETURN_DATE)),
                     c.getDouble(c.getColumnIndex(Transaction.COLUMN_RATE)),
                     c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_NAME)),
                     c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_DESCRIPTION)));
@@ -353,6 +357,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                     c.getInt(c.getColumnIndex(Transaction.COLUMN_STATUS)),
                     c.getLong(c.getColumnIndex(Transaction.COLUMN_START_DATE)),
                     c.getLong(c.getColumnIndex(Transaction.COLUMN_DUE_DATE)),
+                    c.getLong(c.getColumnIndex(Transaction.COLUMN_RETURN_DATE)),
                     c.getDouble(c.getColumnIndex(Transaction.COLUMN_RATE)),
                     c2.getDouble(c2.getColumnIndex(MoneyTransaction.COLUMN_TOTAL_AMOUNT_DUE)),
                     c2.getDouble(c2.getColumnIndex(MoneyTransaction.COLUMN_AMOUNT_DEFICIT)));
@@ -425,6 +430,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                             c.getInt(c.getColumnIndex(Transaction.COLUMN_STATUS)),
                             c.getLong(c.getColumnIndex(Transaction.COLUMN_START_DATE)),
                             c.getLong(c.getColumnIndex(Transaction.COLUMN_DUE_DATE)),
+                            c.getLong(c.getColumnIndex(Transaction.COLUMN_RETURN_DATE)),
                             c.getDouble(c.getColumnIndex(Transaction.COLUMN_RATE)),
                             c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_NAME)),
                             c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_DESCRIPTION)));
@@ -443,6 +449,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                             c.getInt(c.getColumnIndex(Transaction.COLUMN_STATUS)),
                             c.getLong(c.getColumnIndex(Transaction.COLUMN_START_DATE)),
                             c.getLong(c.getColumnIndex(Transaction.COLUMN_DUE_DATE)),
+                            c.getLong(c.getColumnIndex(Transaction.COLUMN_RETURN_DATE)),
                             c.getDouble(c.getColumnIndex(Transaction.COLUMN_RATE)),
                             c2.getDouble(c2.getColumnIndex(MoneyTransaction.COLUMN_TOTAL_AMOUNT_DUE)),
                             c2.getDouble(c2.getColumnIndex(MoneyTransaction.COLUMN_AMOUNT_DEFICIT)));
@@ -486,6 +493,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         cv.put(Transaction.COLUMN_STATUS, updatedTransaction.getStatus());
         cv.put(Transaction.COLUMN_START_DATE, updatedTransaction.getStartDate());
         cv.put(Transaction.COLUMN_DUE_DATE, updatedTransaction.getDueDate());
+        cv.put(Transaction.COLUMN_RETURN_DATE, updatedTransaction.getReturnDate());
         cv.put(Transaction.COLUMN_RATE, updatedTransaction.getRate());
 
         int id = db.update(updatedTransaction.TABLE_NAME, cv, " " + updatedTransaction.COLUMN_ID + "= ? ",  new String[]{String.valueOf(updatedTransaction.getId())});

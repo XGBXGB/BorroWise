@@ -12,9 +12,9 @@ public class ItemTransaction extends Transaction {
     private String name;
     private String description;
 
-    public ItemTransaction(String classification, int userID, String type, int status, long startDate, long dueDate, double rate,
+    public ItemTransaction(String classification, int userID, String type, int status, long startDate, long dueDate, long returnDate, double rate,
                            String name, String description) {
-        super(classification, userID, type, status, startDate, dueDate, rate);
+        super(classification, userID, type, status, startDate, dueDate, returnDate, rate);
         this.name = name;
         this.description = description;
     }

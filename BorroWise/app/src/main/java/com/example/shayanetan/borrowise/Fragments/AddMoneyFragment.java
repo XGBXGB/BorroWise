@@ -63,7 +63,7 @@ public class AddMoneyFragment extends AddTransactionAbstractFragment {
                 databaseOpenHelper.insertTransaction(new MoneyTransaction(
                         "Money", id, "borrow", 0,
                         parseDateToMillis(btn_start_date.getText().toString()), parseDateToMillis(btn_end_date.getText().toString()),
-                        0.0, Double.parseDouble(et_AMAmount.getText().toString()), 0.0));
+                        0,0.0, Double.parseDouble(et_AMAmount.getText().toString()), 0.0));
                 }
         });
 
@@ -81,7 +81,7 @@ public class AddMoneyFragment extends AddTransactionAbstractFragment {
                 databaseOpenHelper.insertTransaction(new MoneyTransaction(
                         "Money", id, "lend", 0,
                         parseDateToMillis(btn_start_date.getText().toString()), parseDateToMillis(btn_end_date.getText().toString()),
-                        0.0, Double.parseDouble(et_AMAmount.getText().toString()), 0.0));
+                        0,0.0, Double.parseDouble(et_AMAmount.getText().toString()), 0.0));
             }
         });
 

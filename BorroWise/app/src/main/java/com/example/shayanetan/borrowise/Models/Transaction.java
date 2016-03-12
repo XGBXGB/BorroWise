@@ -12,6 +12,7 @@ public abstract class Transaction {
     public static final String COLUMN_STATUS = "status";
     public static final String COLUMN_START_DATE = "start_date";
     public static final String COLUMN_DUE_DATE = "due_date";
+    public static final String COLUMN_RETURN_DATE = "return_date";
     public static final String COLUMN_RATE = "rate";
 
     protected int id;
@@ -21,16 +22,18 @@ public abstract class Transaction {
     protected int status;
     protected long startDate;
     protected long dueDate;
+    protected long returnDate;
     protected double rate;
 
     public Transaction(){};
-    public Transaction(String classification, int userID, String type, int status, long startDate, long dueDate, double rate) {
+    public Transaction(String classification, int userID, String type, int status, long startDate, long dueDate, long returnDate, double rate) {
         this.classification = classification;
         this.userID = userID;
         this.type = type;
         this.status = status;
         this.startDate = startDate;
         this.dueDate = dueDate;
+        this.returnDate = returnDate;
         this.rate = rate;
     }
 
@@ -88,6 +91,14 @@ public abstract class Transaction {
 
     public void setDueDate(long dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public long getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(long returnDate) {
+        this.returnDate = returnDate;
     }
 
     public double getRate() {

@@ -66,7 +66,7 @@ public class AddItemFragment extends AddTransactionAbstractFragment {
                     databaseOpenHelper.insertTransaction(new ItemTransaction(
                         "Item", id, "borrow", 0,
                         parseDateToMillis(btn_start_date.getText().toString()), parseDateToMillis(btn_end_date.getText().toString()),
-                        0.0, et_AIItemName.getText().toString(), et_AIDescription.getText().toString()));
+                        0,0.0, et_AIItemName.getText().toString(), et_AIDescription.getText().toString()));
 
             }
         });
@@ -86,7 +86,7 @@ public class AddItemFragment extends AddTransactionAbstractFragment {
                 databaseOpenHelper.insertTransaction(new ItemTransaction(
                         "Item", id, "lend", 0,
                         parseDateToMillis(btn_start_date.getText().toString()), parseDateToMillis(btn_end_date.getText().toString()),
-                        0.0, et_AIItemName.getText().toString(), et_AIDescription.getText().toString()));
+                        0,0.0, et_AIItemName.getText().toString(), et_AIDescription.getText().toString()));
             }
         });
 
