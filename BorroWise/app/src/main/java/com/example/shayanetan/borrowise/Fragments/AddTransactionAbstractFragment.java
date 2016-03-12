@@ -9,6 +9,7 @@ import android.provider.ContactsContract;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,11 +89,12 @@ public abstract class AddTransactionAbstractFragment extends Fragment{
             }
         });
 
-        CustomDate d = new CustomDate();
 
-        Toast.makeText(getActivity(), d.getCurrentDate(), Toast.LENGTH_SHORT);
-        btn_start_date.setText(d.formatDateCommas(d.getCurrentDate()));
-        btn_end_date.setText(d.formatDateCommas(d.getCurrentDate()));
+        CustomDate d = new CustomDate();
+        String currentDate = (d.getMonth()+1)+ "/" + d.getDay()+ "/ "+ d.getYear();
+        Log.v("WAHHHHHHHHH: ", currentDate);
+        btn_start_date.setText(d.formatDateCommas(currentDate));
+        btn_end_date.setText(d.formatDateCommas(currentDate));
 
         btn_start_date.setOnClickListener(new View.OnClickListener() {
             @Override

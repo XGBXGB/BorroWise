@@ -26,10 +26,6 @@ public class CustomDate {
         day = calendar.get(Calendar.DAY_OF_MONTH);
     }
 
-    public String getCurrentDate(){
-        return month + "/" + day + "/" + year;
-    }
-
     public String formatDateCommas(String toParse){
        String result = "";
         try {
