@@ -73,6 +73,7 @@ public class AddItemFragment extends AddTransactionAbstractFragment {
             @Override
             public void onClick(View v) {
 
+<<<<<<< HEAD
                 databaseOpenHelper.insertTransaction(new ItemTransaction("Item",
                         selected_contactID,
                         "borrow",
@@ -89,7 +90,26 @@ public class AddItemFragment extends AddTransactionAbstractFragment {
                 }else{
                     System.out.println("USER doesnt EXISTS!");
                     databaseOpenHelper.insertUser(new User(selected_name, selected_contact_number, 0));
+=======
+                Cursor contactDetail = (Cursor) spnr_AIPersonName.getSelectedItem();
+                String name = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                String number = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+
+                int id = dbHelper.checkUserIfExists(name, number);
+                if(id == -1){
+                    id = (int) dbHelper.insertUser(new User(name, number, 0));
+                }else{
+                    System.out.println("USER doesnt EXISTS!");
+>>>>>>> origin/master
                 }
+
+
+                dbHelper.insertTransaction(new ItemTransaction(
+                        "Item", id, "borrow", 0,
+                        parseDateToMillis(et_AIStartDate.getText().toString()), parseDateToMillis(et_AIEndDate.getText().toString()),
+                        0.0, et_AIItemName.getText().toString(), et_AIDescription.getText().toString()));
+
+
             }
         });
 
@@ -97,6 +117,7 @@ public class AddItemFragment extends AddTransactionAbstractFragment {
             @Override
             public void onClick(View v) {
 
+<<<<<<< HEAD
                 databaseOpenHelper.insertTransaction(
                             new ItemTransaction("Item",selected_contactID,"lend",1,
                                                 parseDateToMillis(btn_start_date.getText().toString()),
@@ -112,7 +133,24 @@ public class AddItemFragment extends AddTransactionAbstractFragment {
                 }else{
                     System.out.println("USER doesnt EXISTS!");
                     databaseOpenHelper.insertUser(new User(selected_name, selected_contact_number, 0));
+=======
+                Cursor contactDetail = (Cursor) spnr_AIPersonName.getSelectedItem();
+                String name = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                String number = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+
+                int id = dbHelper.checkUserIfExists(name, number);
+                if(id == -1){
+                    id = (int) dbHelper.insertUser(new User(name, number, 0));
+                }else{
+                    System.out.println("USER doesnt EXISTS!");
+>>>>>>> origin/master
                 }
+
+
+                dbHelper.insertTransaction(new ItemTransaction(
+                        "Item", id, "lend", 0,
+                        parseDateToMillis(et_AIStartDate.getText().toString()), parseDateToMillis(et_AIEndDate.getText().toString()),
+                        0.0, et_AIItemName.getText().toString(), et_AIDescription.getText().toString()));
             }
         });
 

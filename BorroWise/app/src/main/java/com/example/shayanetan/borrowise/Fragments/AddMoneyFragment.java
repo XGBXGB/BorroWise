@@ -66,6 +66,7 @@ public class AddMoneyFragment extends AddTransactionAbstractFragment {
             @Override
             public void onClick(View v) {
 
+<<<<<<< HEAD
                 databaseOpenHelper.insertTransaction(new MoneyTransaction(
                         "Money",selected_contactID, "borrow", 1,
                         parseDateToMillis(btn_start_date.getText().toString()),
@@ -79,6 +80,28 @@ public class AddMoneyFragment extends AddTransactionAbstractFragment {
                     System.out.println("USER doesnt EXISTS!");
                     databaseOpenHelper.insertUser(new User(selected_name, selected_contact_number, 0));
                 }
+=======
+
+                Cursor contactDetail = (Cursor) spnr_AMPersonName.getSelectedItem();
+                String name = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                String number = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+
+                int id = dbHelper.checkUserIfExists(name, number);
+                if(id == -1){
+                    id = (int) dbHelper.insertUser(new User(name, number, 0));
+                }else{
+                    System.out.println("USER doesnt EXISTS!");
+                }
+
+
+                dbHelper.insertTransaction(new MoneyTransaction(
+                        "Money", id, "borrow", 0,
+                        parseDateToMillis(et_AMStartDate.getText().toString()), parseDateToMillis(et_AMEndDate.getText().toString()),
+                        0.0,
+                        Double.parseDouble(et_AMAmount.getText().toString()), 0.0));
+
+
+>>>>>>> origin/master
             }
         });
 
@@ -86,6 +109,7 @@ public class AddMoneyFragment extends AddTransactionAbstractFragment {
             @Override
             public void onClick(View v) {
 
+<<<<<<< HEAD
                 databaseOpenHelper.insertTransaction(new MoneyTransaction(
                         "Money",selected_contactID, "lend", 1,
                         parseDateToMillis(btn_start_date.getText().toString()),
@@ -98,7 +122,26 @@ public class AddMoneyFragment extends AddTransactionAbstractFragment {
                 }else{
                     System.out.println("USER doesnt EXISTS!");
                     databaseOpenHelper.insertUser(new User(selected_name, selected_contact_number, 0));
+=======
+                Cursor contactDetail = (Cursor) spnr_AMPersonName.getSelectedItem();
+                String name = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                String number = contactDetail.getString(contactDetail.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+
+                int id = dbHelper.checkUserIfExists(name, number);
+                if(id == -1){
+                    id = (int) dbHelper.insertUser(new User(name, number, 0));
+                }else{
+                    System.out.println("USER doesnt EXISTS!");
+>>>>>>> origin/master
                 }
+
+
+                dbHelper.insertTransaction(new MoneyTransaction(
+                        "Money", id, "lend", 0,
+                        parseDateToMillis(et_AMStartDate.getText().toString()), parseDateToMillis(et_AMEndDate.getText().toString()),
+                        0.0,
+                        Double.parseDouble(et_AMAmount.getText().toString()), 0.0));
+
 
             }
         });

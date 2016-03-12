@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.shayanetan.borrowise.Fragments.AddItemFragment;
+import com.example.shayanetan.borrowise.Fragments.HistoryFragment;
 import com.example.shayanetan.borrowise.Fragments.TransactionBorrowedFragment;
 import com.example.shayanetan.borrowise.Fragments.TransactionFragment;
 import com.example.shayanetan.borrowise.Models.DatabaseOpenHelper;
@@ -146,9 +147,9 @@ public class MainActivity extends AppCompatActivity{
             case R.id.menuitem_transaction:
                 fragmentClass = TransactionFragment.class;
                 break;
-//            case R.id.menuitem_history:
-//                fragmentClass = ThirdFragment.class;
-//                break;
+            case R.id.menuitem_history:
+                fragmentClass = HistoryFragment.class;
+                break;
             default:
                 fragmentClass = AddItemFragment.class;
         }

@@ -39,6 +39,7 @@ public class TransactionBorrowedFragment extends Fragment {
         Transaction t = new MoneyTransaction();
 
 
+
     }
 
     @Override
@@ -52,6 +53,15 @@ public class TransactionBorrowedFragment extends Fragment {
         recyclerView = (RecyclerView)layout.findViewById(R.id.recyclerview_transaction_borrowed);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(transactionsCursorAdapter);
+
+        Cursor cursor = dbDatabaseOpenHelper.querryBorrowTransactionsJoinUser("0");
+        if(cursor!=null) {
+            System.out.println("YEHEY NOT NULL ONCREATE");
+            transactionsCursorAdapter.swapCursor(cursor);
+        }
+        else
+            System.out.println("HOLYMOTHER OF NULLS");
+
 
         filter = (Spinner) layout.findViewById(R.id.spinner_type_borrowed);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -68,8 +78,14 @@ public class TransactionBorrowedFragment extends Fragment {
     public void onResume() {
         super.onResume();
         //TODO: query all transactions and swapthe Cursor
-//        Cursor cursor = dbHelper.queryAllUnits();
-//        recyclerView.swapCursor(cursor);
+
+        Cursor cursor = dbDatabaseOpenHelper.querryBorrowTransactionsJoinUser("0");
+        if(cursor!=null) {
+            System.out.println("YEHEY NOT NULL ONRESUME");
+            transactionsCursorAdapter.swapCursor(cursor);
+        }
+        else
+            System.out.println("HOLYMOTHER OF NULLS");
     }
 
 
