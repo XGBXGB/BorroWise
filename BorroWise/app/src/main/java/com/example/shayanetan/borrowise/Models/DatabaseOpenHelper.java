@@ -168,7 +168,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                         null,
                         null,
                         null);
-
+                c2.moveToFirst();
                 t = new ItemTransaction(c.getString(c.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)),
                         c.getInt(c.getColumnIndex(Transaction.COLUMN_USER_ID)),
                         c.getString(c.getColumnIndex(Transaction.COLUMN_TYPE)),
@@ -187,7 +187,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                         null,
                         null,
                         null);
-
+                c2.moveToFirst();
                 t = new MoneyTransaction(c.getString(c.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)),
                         c.getInt(c.getColumnIndex(MoneyTransaction.COLUMN_USER_ID)),
                         c.getString(c.getColumnIndex(MoneyTransaction.COLUMN_TYPE)),
@@ -328,7 +328,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                             null,
                             null,
                             null);
-
+                    c2.moveToFirst();
                     t = new ItemTransaction(c.getString(c.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)),
                     c.getInt(c.getColumnIndex(Transaction.COLUMN_USER_ID)),
                     c.getString(c.getColumnIndex(Transaction.COLUMN_TYPE)),
@@ -346,7 +346,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                             null,
                             null,
                             null);
-
+                    c2.moveToFirst();
                     t = new MoneyTransaction(c.getString(c.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)),
                     c.getInt(c.getColumnIndex(Transaction.COLUMN_USER_ID)),
                     c.getString(c.getColumnIndex(Transaction.COLUMN_TYPE)),
@@ -418,7 +418,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                             null,
                             null,
                             null);
-
+                    c2.moveToFirst();
                     t = new ItemTransaction(c.getString(c.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)),
                             c.getInt(c.getColumnIndex(Transaction.COLUMN_USER_ID)),
                             c.getString(c.getColumnIndex(Transaction.COLUMN_TYPE)),
@@ -436,7 +436,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                             null,
                             null,
                             null);
-
+                    c2.moveToFirst();
                     t = new MoneyTransaction(c.getString(c.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)),
                             c.getInt(c.getColumnIndex(Transaction.COLUMN_USER_ID)),
                             c.getString(c.getColumnIndex(Transaction.COLUMN_TYPE)),

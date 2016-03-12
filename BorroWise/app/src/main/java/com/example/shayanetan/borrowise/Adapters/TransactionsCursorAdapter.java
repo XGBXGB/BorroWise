@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,7 +30,7 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
 
     private static final int TYPE_ITEM = 1;
     private static final int TYPE_MONEY = 2;
-    private OnItemClickListener mOnItemClickListener;
+    private OnClickListener mOnClickListener;
 
     public TransactionsCursorAdapter(Context context, Cursor cursor) {
         super(context, cursor);
@@ -54,16 +55,43 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
         String transactionAttribute1 = cursor.getString(cursor.getColumnIndex("Attribute1"));
         switch (viewHolder.getItemViewType()) {
             case TYPE_ITEM:
-                String itemName = cursor.getString(cursor.getColumnIndex(ItemTransaction.COLUMN_NAME));
                 ((BorrowedItemViewHolder)viewHolder).tv_account_item.setText(name);
                 ((BorrowedItemViewHolder)viewHolder).tv_duedate_val.setText(dueDate);
                 ((BorrowedItemViewHolder)viewHolder).tv_itemname.setText(transactionAttribute1);
+                ((BorrowedItemViewHolder)viewHolder).btn_returned.setTag(cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID)));
+                ((BorrowedItemViewHolder)viewHolder).btn_returned.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mOnClickListener.onClick(v);
+                    }
+                });
+                ((BorrowedItemViewHolder)viewHolder).btn_lost.setTag(cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID)));
+                ((BorrowedItemViewHolder)viewHolder).btn_lost.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mOnClickListener.onClick(v);
+                    }
+                });
                 break;
 
             case TYPE_MONEY:
                 ((BorrowedMoneyViewHolder)viewHolder).tv_account_money.setText(name);
                 ((BorrowedMoneyViewHolder)viewHolder).tv_duedate_val.setText(dueDate);
                 ((BorrowedMoneyViewHolder)viewHolder).tv_amount.setText(transactionAttribute1);
+                ((BorrowedMoneyViewHolder)viewHolder).btn_full.setTag(cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID)));
+                ((BorrowedMoneyViewHolder)viewHolder).btn_full.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mOnClickListener.onClick(v);
+                    }
+                });
+                ((BorrowedMoneyViewHolder)viewHolder).btn_partial.setTag(cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID)));
+                ((BorrowedMoneyViewHolder)viewHolder).btn_partial.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mOnClickListener.onClick(v);
+                    }
+                });
                 break;
         }
     }
@@ -80,6 +108,8 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
 
         return null;
     }
+
+
 
     /*********************************************
      * ITEM VIEW HOLDER
@@ -128,13 +158,8 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
         }
     }
 
-    public void setmOnItemClickListener(OnItemClickListener m){
-        this.mOnItemClickListener = m;
-    }
-
-    public interface OnItemClickListener{
-        public void onItemClick(int id);
-        public void onItemLongClick(int id);
+    public void setmOnClickListener(OnClickListener m){
+        this.mOnClickListener = m;
     }
 
     public String parseMillisToDate(long millis){
