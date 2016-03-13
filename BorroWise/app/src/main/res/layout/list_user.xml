@@ -24,6 +24,8 @@
             android:layout_weight="3"
             android:paddingTop="10dp">
 
+
+
             <TextView
                 android:id="@+id/tv_username"
                 android:layout_marginLeft="10dp"
@@ -34,23 +36,31 @@
                 android:textSize="30sp"
                 android:textStyle="bold"/>
 
-            <RatingBar
-                android:id="@+id/rb_ratinguser"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="15dp"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="?android:attr/ratingBarStyleSmall"
-                android:numStars="5"
-                android:isIndicator="true"
-                android:stepSize="0.5"
-                android:rating="3.5"/>
-            <TextView
-                android:id="@+id/tv_userrating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3.5 stars out of 5 stars"
-                android:layout_marginLeft="15dp"/>
+                android:orientation="horizontal">
+                <RatingBar
+                    android:id="@+id/rb_ratinguser"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/ratingBarStyleIndicator"
+                    android:numStars="5"
+                    android:isIndicator="true"
+                    android:stepSize="0.5"
+                    android:rating="3.5"/>
+                <TextView
+                    android:layout_marginTop="12dp"
+                    android:id="@+id/tv_userrating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3.5"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

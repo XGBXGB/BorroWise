@@ -34,7 +34,7 @@ public class UsersLentFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      //  usersCursorAdapter = new usersCursorAdapter(getActivity(),null);
+        usersCursorAdapter = new UsersCursorAdapter(getActivity(),null);
         dbDatabaseOpenHelper = new DatabaseOpenHelper(getActivity());
         Transaction t = new MoneyTransaction();
 
@@ -51,16 +51,16 @@ public class UsersLentFragment extends Fragment {
 
         recyclerView = (RecyclerView)layout.findViewById(R.id.recyclerview_users_lent);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-      //  recyclerView.setAdapter(usersCursorAdapter);
+        recyclerView.setAdapter(usersCursorAdapter);
 
-        filter = (Spinner) layout.findViewById(R.id.Uspinner_type_lent);
+       /* filter = (Spinner) layout.findViewById(R.id.Uspinner_type_lent);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.array_transaction_type, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        filter.setAdapter(adapter);
+        filter.setAdapter(adapter);*/
         return layout;
     }
 
@@ -70,10 +70,11 @@ public class UsersLentFragment extends Fragment {
         //TODO: query all transactions and swapthe Cursor
 //        Cursor cursor = dbHelper.queryAllUnits();
 //        recyclerView.swapCursor(cursor);
-        Cursor cursor = dbDatabaseOpenHelper.querryLendTransactionsJoinUser("1,-1");
+//        Cursor cursor = dbDatabaseOpenHelper.querryLendTransactionsJoinUser("1,-1");
+        Cursor cursor = dbDatabaseOpenHelper.queryAllUsersC();
         if(cursor!=null) {
             System.out.println("YEHEY NOT NULL ONRESUME");
-     //       usersCursorAdapter.swapCursor(cursor);
+            usersCursorAdapter.swapCursor(cursor);
         }
         else
             System.out.println("HOLYMOTHER OF NULLS");

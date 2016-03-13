@@ -1,5 +1,6 @@
 package com.example.shayanetan.borrowise;
 
+import android.provider.ContactsContract;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -38,10 +39,17 @@ public class MainActivity extends AppCompatActivity{
     private ViewGroup fragment_container;
 
 
+    private DatabaseOpenHelper dbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        dbHelper = new DatabaseOpenHelper(getBaseContext());
+        //dbHelper.insertUser(new User("Shayane Tan","contact1", 4.5));
+        //dbHelper.insertUser(new User("Winona Erive","contact2", 1.15));
+       // dbHelper.insertUser(new User("Christian Cote","contact3", 5));
 
 
         toolbar = (Toolbar)findViewById(R.id.appbar);
