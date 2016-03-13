@@ -47,8 +47,13 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         dbHelper = new DatabaseOpenHelper(getBaseContext());
+<<<<<<< HEAD
         //dbHelper.insertUser(new User("Shayane Tan","contact1", 4.5));
         //dbHelper.insertUser(new User("Winona Erive","contact2", 1.15));
+=======
+       // dbHelper.insertUser(new User("Shayane Tan","contact1", 4.5));
+       // dbHelper.insertUser(new User("Winona Erive","contact2", 1.15));
+>>>>>>> origin/master
        // dbHelper.insertUser(new User("Christian Cote","contact3", 5));
 
 
