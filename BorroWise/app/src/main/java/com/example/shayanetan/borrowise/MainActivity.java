@@ -21,7 +21,9 @@ import com.example.shayanetan.borrowise.Fragments.AddItemFragment;
 import com.example.shayanetan.borrowise.Fragments.HistoryFragment;
 import com.example.shayanetan.borrowise.Fragments.TransactionBorrowedFragment;
 import com.example.shayanetan.borrowise.Fragments.TransactionFragment;
+import com.example.shayanetan.borrowise.Fragments.UsersFragment;
 import com.example.shayanetan.borrowise.Models.DatabaseOpenHelper;
+import com.example.shayanetan.borrowise.Models.User;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,10 +37,12 @@ public class MainActivity extends AppCompatActivity{
     private ActionBarDrawerToggle drawer_toggle;
     private ViewGroup fragment_container;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         toolbar = (Toolbar)findViewById(R.id.appbar);
         drawer_layout = (DrawerLayout)findViewById(R.id.drawer_layout);
@@ -149,6 +153,9 @@ public class MainActivity extends AppCompatActivity{
                 break;
             case R.id.menuitem_history:
                 fragmentClass = HistoryFragment.class;
+                break;
+            case R.id.menuitem_account:
+                fragmentClass = UsersFragment.class;
                 break;
             default:
                 fragmentClass = AddItemFragment.class;
