@@ -49,7 +49,7 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, Cursor cursor) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, Cursor cursor) {
 
         String name = cursor.getString(cursor.getColumnIndex(User.COLUMN_NAME));
         int id = cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID));
@@ -59,7 +59,7 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
         switch (viewHolder.getItemViewType()) {
             case TYPE_ITEM:
                 ((BorrowedItemViewHolder)viewHolder).item_container.setTag(R.id.key_entry_id, id);
-                ((BorrowedItemViewHolder)viewHolder).item_container.setTag(R.id.item_container, TYPE_ITEM);
+                ((BorrowedItemViewHolder)viewHolder).item_container.setTag(R.id.key_entry_type, TYPE_ITEM);
                 ((BorrowedItemViewHolder)viewHolder).tv_account_item.setText(name);
                 ((BorrowedItemViewHolder)viewHolder).tv_duedate_val.setText(dueDate);
                 ((BorrowedItemViewHolder)viewHolder).tv_itemname.setText(transactionAttribute1);
@@ -67,26 +67,29 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
                     @Override
                     public void onClick(View v) {
 
-                       // System.out.println("ID: " + v.getTag(R.id.key_entry_id).toString());
-                       // int tran_id =  Integer.parseInt(v.getTag(R.id.key_entry_id).toString());
-                        int tran_type = Integer.parseInt(v.getTag(R.id.item_container).toString());
-                        mOnClickListener.onButtonClick(0,tran_type);
+                        BorrowedItemViewHolder vh = (BorrowedItemViewHolder) viewHolder;
+
+                        int tran_id = Integer.parseInt(vh.item_container.getTag(R.id.key_entry_id).toString());
+                        int tran_type = Integer.parseInt(vh.item_container.getTag(R.id.key_entry_type).toString());
+                        mOnClickListener.onButtonClick(tran_id, tran_type);
                     }
                 });
                 ((BorrowedItemViewHolder)viewHolder).btn_lost.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        int tran_id =  Integer.parseInt(v.getTag(R.id.key_entry_id).toString());
-                        int tran_type = Integer.parseInt(v.getTag(R.id.item_container).toString());
-                        mOnClickListener.onButtonClick(tran_id,tran_type);
+                        BorrowedItemViewHolder vh = (BorrowedItemViewHolder) viewHolder;
+
+                        int tran_id = Integer.parseInt(vh.item_container.getTag(R.id.key_entry_id).toString());
+                        int tran_type = Integer.parseInt(vh.item_container.getTag(R.id.key_entry_type).toString());
+                        mOnClickListener.onButtonClick(tran_id, tran_type);
                     }
                 });
                 break;
 
             case TYPE_MONEY:
                 ((BorrowedMoneyViewHolder)viewHolder).money_container.setTag(R.id.key_entry_id, id);
-                ((BorrowedMoneyViewHolder)viewHolder).money_container.setTag(R.id.money_container, TYPE_MONEY);
+                ((BorrowedMoneyViewHolder)viewHolder).money_container.setTag(R.id.key_entry_type, TYPE_MONEY);
                 ((BorrowedMoneyViewHolder)viewHolder).tv_account_money.setText(name);
                 ((BorrowedMoneyViewHolder)viewHolder).tv_duedate_val.setText(dueDate);
                 ((BorrowedMoneyViewHolder)viewHolder).tv_amount.setText(transactionAttribute1);
@@ -94,20 +97,24 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
                     @Override
                     public void onClick(View v) {
 
-                        int tran_id = Integer.parseInt(v.getTag(R.id.key_entry_id).toString());
-                        int tran_type = Integer.parseInt(v.getTag(R.id.money_container).toString());
+                        BorrowedMoneyViewHolder vh = (BorrowedMoneyViewHolder) viewHolder;
+
+                        int tran_id = Integer.parseInt(vh.money_container.getTag(R.id.key_entry_id).toString());
+                        int tran_type = Integer.parseInt(vh.money_container.getTag(R.id.key_entry_type).toString());
                         mOnClickListener.onButtonClick(tran_id, tran_type);
 
                     }
                 });
-               // ((BorrowedMoneyViewHolder)viewHolder).btn_partial.setTag(cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID)));
+                // ((BorrowedMoneyViewHolder)viewHolder).btn_partial.setTag(cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID)));
                 ((BorrowedMoneyViewHolder)viewHolder).btn_partial.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        int tran_id =  Integer.parseInt(v.getTag(R.id.key_entry_id).toString());
-                        int tran_type = Integer.parseInt(v.getTag(R.id.money_container).toString());
-                        mOnClickListener.onButtonClick(tran_id,tran_type);
+                        BorrowedMoneyViewHolder vh = (BorrowedMoneyViewHolder) viewHolder;
+
+                        int tran_id = Integer.parseInt(vh.money_container.getTag(R.id.key_entry_id).toString());
+                        int tran_type = Integer.parseInt(vh.money_container.getTag(R.id.key_entry_type).toString());
+                        mOnClickListener.onButtonClick(tran_id, tran_type);
                     }
                 });
                 break;
