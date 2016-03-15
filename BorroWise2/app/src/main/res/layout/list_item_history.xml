@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/card_transaction"
+    android:id="@+id/Hitem_container">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:background="@color/accentDarkColor">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_account"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:id="@+id/tv_Haccount_item"
+                android:layout_width="0dp"
+                android:layout_weight="14"
+                android:layout_marginLeft="3dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Shayane Tan"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+            <!--extView
+                android:id="@+id/tv_Hrating"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_marginLeft="3dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="3.5*"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"/-->
+
+            <RatingBar
+                android:id="@+id/rb_Hratingitem"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/ratingBarStyleSmall"
+                android:numStars="5"
+                android:isIndicator="true"
+                android:stepSize="0.5"
+                android:rating="5"
+                android:background="#FFFFFF"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:padding="5dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/ic_image_placeholder"
+                android:id="@+id/img_Hitem"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="2"/>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_marginLeft="5dp"
+                android:layout_height="match_parent"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_Hitemname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:textSize="30sp"
+                    android:text="HawkeBag"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tv_Hstartdateitem_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start Date: "
+                    android:textSize="15sp"
+                    android:layout_below="@id/tv_Hitemname"/>
+
+                <TextView
+                    android:id="@+id/tv_Hstartdateitem_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="cheng"
+                    android:layout_toRightOf="@id/tv_Hstartdateitem_label"
+                    android:layout_below="@id/tv_Hitemname"/>
+
+                <TextView
+                    android:id="@+id/tv_Hduedateitem_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="@string/lbl_duedate"
+                    android:layout_below="@id/tv_Hstartdateitem_label"/>
+
+                <TextView
+                    android:id="@+id/tv_Hduedateitem_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="cheng"
+                    android:layout_toRightOf="@id/tv_Hduedateitem_label"
+                    android:layout_below="@id/tv_Hstartdateitem_val"/>
+
+                <TextView
+                    android:id="@+id/tv_Hretdateitem_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="@string/lbl_retdate"
+                    android:layout_below="@id/tv_Hduedateitem_label"/>
+
+                <TextView
+                    android:id="@+id/tv_Hretdateitem_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="cheng"
+                    android:layout_toRightOf="@id/tv_Hretdateitem_label"
+                    android:layout_below="@id/tv_Hduedateitem_val"/>
+
+                <TextView
+                    android:id="@+id/tv_Hstatusitem_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="Status: "
+                    android:layout_below="@id/tv_Hretdateitem_label"/>
+
+                <TextView
+                    android:id="@+id/tv_Hstatusitem_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="Returned"
+                    android:layout_toRightOf="@id/tv_Hstatusitem_label"
+                    android:layout_below="@id/tv_Hretdateitem_val"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>
