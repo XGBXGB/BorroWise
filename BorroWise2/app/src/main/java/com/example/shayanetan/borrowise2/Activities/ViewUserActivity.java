@@ -7,8 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.shayanetan.borrowise2.Adapters.TransactionsCursorAdapter;
+import com.example.shayanetan.borrowise2.Adapters.UsersCursorAdapter;
 import com.example.shayanetan.borrowise2.Adapters.ViewPagerAdapter;
 import com.example.shayanetan.borrowise2.Fragments.ViewBorrowedFragment;
+import com.example.shayanetan.borrowise2.Fragments.ViewBorrowerFragment;
+import com.example.shayanetan.borrowise2.Fragments.ViewLenderFragment;
 import com.example.shayanetan.borrowise2.Fragments.ViewLentFragment;
 import com.example.shayanetan.borrowise2.Models.DatabaseOpenHelper;
 import com.example.shayanetan.borrowise2.Models.ItemTransaction;
@@ -16,40 +19,40 @@ import com.example.shayanetan.borrowise2.Models.MoneyTransaction;
 import com.example.shayanetan.borrowise2.Views.SlidingTabLayout;
 import com.example.shayanetan.borrowise2.R;
 
-public class ViewTransactionActivity extends BaseActivity
-                                     implements ViewBorrowedFragment.OnFragmentInteractionListener, ViewLentFragment.OnFragmentInteractionListener{
+public class ViewUserActivity extends BaseActivity
+        implements ViewLenderFragment.OnFragmentInteractionListener, ViewBorrowerFragment.OnFragmentInteractionListener{
 
     private ViewPager viewPager;
     private ViewPagerAdapter viewPagerAdapter;
     private SlidingTabLayout slidingTabLayout;
 
-    private static String TITLE_TAB1 = "BORROWED";
-    private static String TITLE_TAB2 = "LENT";
+    private static String TITLE_TAB1 = "BORROWERS";
+    private static String TITLE_TAB2 = "LENDERS";
 
-    private ViewBorrowedFragment borrowFragment;
-    private ViewLentFragment lentFragment;
+    private ViewBorrowerFragment borrowFragment;
+    private ViewLenderFragment lentFragment;
     private DatabaseOpenHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_transaction);
+        setContentView(R.layout.activity_view_user);
 
         dbHelper = DatabaseOpenHelper.getInstance(getBaseContext());
-       // transactionsCursorAdapter = new TransactionsCursorAdapter(getBaseContext(),null);
+        // transactionsCursorAdapter = new TransactionsCursorAdapter(getBaseContext(),null);
         viewPagerAdapter = new ViewPagerAdapter(this.getSupportFragmentManager());
 
         viewPager = (ViewPager)findViewById(R.id.view_pager);
 
-        borrowFragment = new ViewBorrowedFragment();
+        borrowFragment = new ViewBorrowerFragment();
         borrowFragment.setOnFragmentInteractionListener(this);
-        lentFragment = new ViewLentFragment();
+        lentFragment = new ViewLenderFragment();
         lentFragment.setOnFragmentInteractionListener(this);
 
         viewPagerAdapter.addFragment(borrowFragment, TITLE_TAB1);
         viewPagerAdapter.addFragment(lentFragment, TITLE_TAB2);
 
-       // viewPagerAdapter.addFragment(new TransactionLentFragment(), TITLE_TAB2);
+        // viewPagerAdapter.addFragment(new TransactionLentFragment(), TITLE_TAB2);
         viewPager.setAdapter(viewPagerAdapter);
 
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tab);
@@ -81,31 +84,15 @@ public class ViewTransactionActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void updateTransaction(int id, int type) {
-        switch (type) {
-            case TransactionsCursorAdapter.TYPE_MONEY:
-                MoneyTransaction m = (MoneyTransaction) dbHelper.queryTransaction(id);
-                m.setAmountDeficit(0);
-                m.setStatus(1);
-                dbHelper.updateTransaction(m);
-                break;
-            case TransactionsCursorAdapter.TYPE_ITEM:
-                ItemTransaction i = (ItemTransaction) dbHelper.queryTransaction(id);
-                i.setStatus(1);
-                dbHelper.updateTransaction(i);
-                break;
-        }
-    }
 
     @Override
-    public void retrieveTransaction(TransactionsCursorAdapter adapter, String viewType) {
+    public void retrieveTransaction(UsersCursorAdapter adapter, String viewType) {
         Cursor cursor = null;
-        if(viewType.equalsIgnoreCase(ViewLentFragment.VIEW_TYPE)) {
-             cursor= dbHelper.querryLendTransactionsJoinUser("0");
+        if(viewType.equalsIgnoreCase(ViewLenderFragment.VIEW_TYPE)) {
+            cursor= dbHelper.querryUsersType("lend", "0");
         }
-        else if(viewType.equalsIgnoreCase(ViewBorrowedFragment.VIEW_TYPE)){
-            cursor = dbHelper.querryBorrowTransactionsJoinUser("0");
+        else if(viewType.equalsIgnoreCase(ViewBorrowerFragment.VIEW_TYPE)){
+            cursor= dbHelper.querryUsersType("borrow", "0");
         }
         adapter.swapCursor(cursor);
     }

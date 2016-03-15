@@ -14,9 +14,9 @@ import android.widget.Spinner;
 import com.example.shayanetan.borrowise2.Adapters.TransactionsCursorAdapter;
 import com.example.shayanetan.borrowise2.R;
 
-public class ViewBorrowedFragment extends Fragment {
+public class ViewLentFragment extends Fragment {
 
-    public static String VIEW_TYPE = "borrowed_viewtype";
+    public static String VIEW_TYPE = "lent_viewtype";
 
     private RecyclerView recyclerView;
     private Spinner filter;
@@ -24,7 +24,7 @@ public class ViewBorrowedFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ViewBorrowedFragment() {
+    public ViewLentFragment() {
         // Required empty public constructor
     }
 
@@ -39,10 +39,10 @@ public class ViewBorrowedFragment extends Fragment {
         transactionsCursorAdapter = new TransactionsCursorAdapter(getActivity().getBaseContext(),null);
 
         // Inflate the layout for this fragment
-        View layout = inflater.inflate(R.layout.fragment_view_borrowed, container, false);
+        View layout = inflater.inflate(R.layout.fragment_view_lent, container, false);
 
         //initiate adapter and set recycler view adapter
-        recyclerView = (RecyclerView)layout.findViewById(R.id.recyclerview_transaction_borrowed);
+        recyclerView = (RecyclerView)layout.findViewById(R.id.recyclerview_transaction_lent);
 
         transactionsCursorAdapter.setmOnClickListener(new TransactionsCursorAdapter.OnButtonClickListener() {
             @Override
@@ -56,7 +56,7 @@ public class ViewBorrowedFragment extends Fragment {
         recyclerView.setAdapter(transactionsCursorAdapter);
         mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE);
 
-        filter = (Spinner) layout.findViewById(R.id.spinner_type_borrowed);
+        filter = (Spinner) layout.findViewById(R.id.spinner_type_lent);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.array_transaction_type, android.R.layout.simple_spinner_item);

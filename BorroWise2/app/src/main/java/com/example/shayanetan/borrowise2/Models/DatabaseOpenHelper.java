@@ -224,6 +224,19 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     /*
     *QUERY CURSOR MODULE
     */
+    public Cursor querryUsersType(String type, String status){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT "+User.COLUMN_ID+", "+User.COLUMN_NAME+", "+User.COLUMN_CONTACT_INFO+", "+User.COLUMN_TOTAL_RATE
+                +" FROM "+User.TABLE_NAME
+                +" WHERE "+User.COLUMN_ID+" IN ("
+                +" SELECT "+Transaction.COLUMN_USER_ID
+                +" FROM "+Transaction.TABLE_NAME
+                +" WHERE "+Transaction.COLUMN_TYPE+"='"+type+"' AND "+Transaction.COLUMN_STATUS+" IN("+status+"))"
+                , null);
+        return cursor.moveToFirst() ? cursor : null;
+    }
+
     public Cursor querryBorrowTransactionsJoinUser(String status){
 
         SQLiteDatabase db = getReadableDatabase();

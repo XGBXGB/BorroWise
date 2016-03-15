@@ -88,7 +88,7 @@ public class BaseActivity extends AppCompatActivity implements
                 //TODO : SET HISTORY ACCOUTN CLASS HERE
                 break;
             case R.id.menuitem_account:
-                //TODO : SET USER ACCOUTN CLASS HERE
+                i.setClass(getBaseContext(),ViewUserActivity.class);
                 break;
             default:
                 i.setClass(getBaseContext(),HomeActivity.class);
