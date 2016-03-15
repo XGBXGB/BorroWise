@@ -55,6 +55,14 @@ public class BaseActivity extends AppCompatActivity implements
 
         toolbar = (Toolbar) findViewById(R.id.appbar);
         navigationView = (NavigationView) findViewById(R.id.navigationView);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                selectDrawerItem(menuItem);
+                return true;
+
+            }
+        });
 
         if (useToolbar()) {
             setSupportActionBar(toolbar);
@@ -63,6 +71,34 @@ public class BaseActivity extends AppCompatActivity implements
         }
 
         setUpNavView();
+    }
+
+    private void selectDrawerItem(MenuItem menuItem) {
+
+        Intent i = new Intent();
+
+        switch(menuItem.getItemId()) {
+            case R.id.menuitem_home:
+                i.setClass(getBaseContext(),HomeActivity.class);
+                break;
+            case R.id.menuitem_transaction:
+                i.setClass(getBaseContext(),ViewTransactionActivity.class);
+                break;
+            case R.id.menuitem_history:
+                //TODO : SET HISTORY ACCOUTN CLASS HERE
+                break;
+            case R.id.menuitem_account:
+                //TODO : SET USER ACCOUTN CLASS HERE
+                break;
+            default:
+                i.setClass(getBaseContext(),HomeActivity.class);
+        }
+
+        if(menuItem.getItemId() == R.id.menuitem_home)
+            setTitle("BorroWise");
+        else
+            setTitle(menuItem.getTitle());
+        startActivity(i);
     }
 
     /**
@@ -76,7 +112,7 @@ public class BaseActivity extends AppCompatActivity implements
     }
 
     protected void setUpNavView() {
-        navigationView.setNavigationItemSelectedListener(this);
+        //navigationView.setNavigationItemSelectedListener(this);
 
         if (useDrawerToggle()) { // use the hamburger menu
             drawerToggle = new ActionBarDrawerToggle(this, fullLayout, toolbar,
@@ -119,16 +155,16 @@ public class BaseActivity extends AppCompatActivity implements
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        switch (id) {
-            case R.id.menuitem_home:
-                startActivity(new Intent(this, HomeActivity.class));
-                return true;
-
-            case R.id.menuitem_transaction:
-                startActivity(new Intent(this, ViewTransactionActivity.class));
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                fullLayout.openDrawer(GravityCompat.START);
                 return true;
         }
+
+        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
