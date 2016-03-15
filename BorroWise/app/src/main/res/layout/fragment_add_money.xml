@@ -81,13 +81,6 @@
                 android:layout_height="50dp"
                 android:layout_marginRight="3dp"
                 android:src="@drawable/ic_account_dark"/>
-            <!--EditText
-                android:id="@+id/et_AMPersonName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Person Name"
-                android:textSize="20sp"
-                android:layout_marginLeft="8dp"/-->
 
             <AutoCompleteTextView
                 android:id="@+id/atv_AMPersonName"
@@ -99,13 +92,6 @@
                 android:text="">
                 <requestFocus />
             </AutoCompleteTextView>
-
-            <!--<Spinner-->
-                <!--android:id="@+id/spnr_AMPersonName"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="55dp"-->
-                <!--android:layout_marginLeft="8dp"-->
-                <!--android:entries="@array/Sample_People"/>-->
 
         </LinearLayout>
 

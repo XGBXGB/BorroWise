@@ -5,12 +5,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.shayanetan.borrowise2.Fragments.AddItemFragment;
+import com.example.shayanetan.borrowise2.Fragments.AddAbstractFragment;
 import com.example.shayanetan.borrowise2.Models.DatabaseOpenHelper;
 import com.example.shayanetan.borrowise2.Models.Transaction;
 import com.example.shayanetan.borrowise2.Models.User;
 import com.example.shayanetan.borrowise2.R;
 
-public class HomeActivity extends BaseActivity implements AddItemFragment.OnFragmentInteractionListener {
+public class HomeActivity extends BaseActivity implements AddAbstractFragment.OnFragmentInteractionListener {
 
 
     private AddItemFragment itemFragment;

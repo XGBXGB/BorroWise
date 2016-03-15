@@ -24,7 +24,7 @@ import java.util.Date;
 /**
  * Created by ShayaneTan on 3/12/2016.
  */
-public abstract class AddTransactionAbstractFragment extends Fragment {
+public abstract class AddAbstractFragment extends Fragment {
 
     protected int selected_contactID;
     protected String selected_name;
@@ -46,7 +46,8 @@ public abstract class AddTransactionAbstractFragment extends Fragment {
     public  abstract View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
     protected abstract void onFragmentSwitch();
-
+    protected abstract void clearAllFields();
+    protected abstract void printAddAcknowledgement(String entry_name, String type);
     public interface OnFragmentInteractionListener{
         //TODO: Update argument type and name
         public int onAddNewUser(String name, String contact_info);

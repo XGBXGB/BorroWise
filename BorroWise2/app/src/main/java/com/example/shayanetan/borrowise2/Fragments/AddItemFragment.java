@@ -16,7 +16,7 @@ import com.example.shayanetan.borrowise2.Models.ItemTransaction;
 import com.example.shayanetan.borrowise2.R;
 
 
-public class AddItemFragment extends AddTransactionAbstractFragment {
+public class AddItemFragment extends AddAbstractFragment {
 
     private FragmentTransaction transaction;
     private EditText et_AIItemName,
@@ -62,7 +62,7 @@ public class AddItemFragment extends AddTransactionAbstractFragment {
                             et_AIDescription.getText().toString());
                     mListener.onAddTransactions(it);
 
-                    printAddAcknowledgement(et_AIItemName.getText().toString());
+                    printAddAcknowledgement(et_AIItemName.getText().toString(), "borrowed");
                 }
 
                 clearAllFields();
@@ -84,7 +84,7 @@ public class AddItemFragment extends AddTransactionAbstractFragment {
                             et_AIDescription.getText().toString());
                     mListener.onAddTransactions(it);
 
-                    printAddAcknowledgement(et_AIItemName.getText().toString());
+                    printAddAcknowledgement(et_AIItemName.getText().toString(), "lent");
                 }
 
                 clearAllFields();
@@ -94,8 +94,8 @@ public class AddItemFragment extends AddTransactionAbstractFragment {
         return layout;
     }
 
-    public void printAddAcknowledgement(String item){
-        Toast.makeText(getActivity(),item + " has been successfully added", Toast.LENGTH_SHORT).show();
+    public void printAddAcknowledgement(String entry_name, String type){
+        Toast.makeText(getActivity(),entry_name+ " has been successfully "+ type + " !", Toast.LENGTH_SHORT).show();
     }
 
     public void clearAllFields(){

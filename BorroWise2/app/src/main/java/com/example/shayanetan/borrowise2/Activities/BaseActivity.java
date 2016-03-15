@@ -60,7 +60,6 @@ public class BaseActivity extends AppCompatActivity implements
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 selectDrawerItem(menuItem);
                 return true;
-
             }
         });
 
@@ -85,7 +84,7 @@ public class BaseActivity extends AppCompatActivity implements
                 i.setClass(getBaseContext(),ViewTransactionActivity.class);
                 break;
             case R.id.menuitem_history:
-                //TODO : SET HISTORY ACCOUTN CLASS HERE
+                i.setClass(getBaseContext(),HistoryActivity.class);
                 break;
             case R.id.menuitem_account:
                 i.setClass(getBaseContext(),ViewUserActivity.class);

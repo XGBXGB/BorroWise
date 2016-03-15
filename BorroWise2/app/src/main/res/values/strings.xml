@@ -41,4 +41,5 @@
     <string name="title_activity_drawer">DrawerActivity</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_view_transaction">ViewTransactionActivity</string>
+    <string name="title_activity_history">HistoryActivity</string>
 </resources>
