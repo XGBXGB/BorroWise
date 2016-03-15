@@ -46,8 +46,8 @@ public class ViewLentFragment extends Fragment {
 
         transactionsCursorAdapter.setmOnClickListener(new TransactionsCursorAdapter.OnButtonClickListener() {
             @Override
-            public void onButtonClick(int id, int type) {
-                mListener.updateTransaction(id, type);
+            public void onButtonClick(int id, int type, int btnType) {
+                mListener.updateTransaction(id, type, btnType);
                 mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE);
             }
         });
@@ -76,7 +76,7 @@ public class ViewLentFragment extends Fragment {
 
 
     public interface OnFragmentInteractionListener{
-        public void updateTransaction(int id, int type);
+        public void updateTransaction(int id, int type, int btnType);
         public void retrieveTransaction(TransactionsCursorAdapter adapter, String viewType);
     }
     public void setOnFragmentInteractionListener(OnFragmentInteractionListener mListener){

@@ -53,8 +53,14 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, Cursor cursor) {
         String name = cursor.getString(cursor.getColumnIndex(User.COLUMN_NAME));
+        String returnDate="";
         String dueDate = parseMillisToDate(cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_DUE_DATE)));
-        String returnDate = parseMillisToDate(cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_RETURN_DATE)));
+        if(cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_STATUS)) == -1) {
+            returnDate = "N/A";
+        }
+        else{
+            returnDate = parseMillisToDate(cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_RETURN_DATE)));
+        }
         String startDate = parseMillisToDate(cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_START_DATE)));
         double rating = cursor.getDouble(cursor.getColumnIndex(Transaction.COLUMN_RATE));
         String transactionAttribute1 = cursor.getString(cursor.getColumnIndex("Attribute1"));
@@ -154,7 +160,7 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
         public void onButtonClick(int id, int type);
     }
     public String parseMillisToDate(long millis){
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy");
         Date resultdate = new Date(millis);
         return sdf.format(resultdate);
     }

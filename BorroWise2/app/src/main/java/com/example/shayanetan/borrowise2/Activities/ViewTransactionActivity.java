@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.shayanetan.borrowise2.Adapters.TransactionsCursorAdapter;
 import com.example.shayanetan.borrowise2.Adapters.ViewPagerAdapter;
@@ -82,18 +83,30 @@ public class ViewTransactionActivity extends BaseActivity
     }
 
     @Override
-    public void updateTransaction(int id, int type) {
+    public void updateTransaction(int id, int type, int btnType) {
         switch (type) {
             case TransactionsCursorAdapter.TYPE_MONEY:
-                MoneyTransaction m = (MoneyTransaction) dbHelper.queryTransaction(id);
-                m.setAmountDeficit(0);
-                m.setStatus(1);
-                dbHelper.updateTransaction(m);
+                if(btnType == TransactionsCursorAdapter.BTN_TYPE_RETURN) {
+                    MoneyTransaction m = (MoneyTransaction) dbHelper.queryTransaction(id);
+                    m.setAmountDeficit(0);
+                    m.setReturnDate(System.currentTimeMillis());
+                    m.setStatus(1);
+                    dbHelper.updateTransaction(m);
+                }else{
+                    Toast.makeText(this, "PARTIALS NOT YET SUPPORTED", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case TransactionsCursorAdapter.TYPE_ITEM:
-                ItemTransaction i = (ItemTransaction) dbHelper.queryTransaction(id);
-                i.setStatus(1);
-                dbHelper.updateTransaction(i);
+                if(btnType == TransactionsCursorAdapter.BTN_TYPE_RETURN) {
+                    ItemTransaction i = (ItemTransaction) dbHelper.queryTransaction(id);
+                    i.setReturnDate(System.currentTimeMillis());
+                    i.setStatus(1);
+                    dbHelper.updateTransaction(i);
+                }else{
+                    ItemTransaction i = (ItemTransaction) dbHelper.queryTransaction(id);
+                    i.setStatus(-1);
+                    dbHelper.updateTransaction(i);
+                }
                 break;
         }
     }

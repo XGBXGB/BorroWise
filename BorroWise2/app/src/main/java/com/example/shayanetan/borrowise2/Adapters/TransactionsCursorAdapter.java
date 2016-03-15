@@ -26,6 +26,9 @@ import java.util.Date;
  * Created by ShayaneTan on 3/11/2016.
  */
 public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView.ViewHolder>{
+    public static final int BTN_TYPE_RETURN = 1;
+    public static final int BTN_TYPE_LOST = 2;
+    public static final int BTN_TYPE_PARTIAL = 3;
 
     public static final int TYPE_ITEM = 1;
     public static final int TYPE_MONEY = 2;
@@ -71,7 +74,7 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
 
                         int tran_id = Integer.parseInt(vh.item_container.getTag(R.id.key_entry_id).toString());
                         int tran_type = Integer.parseInt(vh.item_container.getTag(R.id.key_entry_type).toString());
-                        mOnClickListener.onButtonClick(tran_id, tran_type);
+                        mOnClickListener.onButtonClick(tran_id, tran_type, BTN_TYPE_RETURN);
                     }
                 });
                 ((BorrowedItemViewHolder)viewHolder).btn_lost.setOnClickListener(new OnClickListener() {
@@ -82,7 +85,7 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
 
                         int tran_id = Integer.parseInt(vh.item_container.getTag(R.id.key_entry_id).toString());
                         int tran_type = Integer.parseInt(vh.item_container.getTag(R.id.key_entry_type).toString());
-                        mOnClickListener.onButtonClick(tran_id, tran_type);
+                        mOnClickListener.onButtonClick(tran_id, tran_type, BTN_TYPE_LOST);
                     }
                 });
                 break;
@@ -101,7 +104,7 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
 
                         int tran_id = Integer.parseInt(vh.money_container.getTag(R.id.key_entry_id).toString());
                         int tran_type = Integer.parseInt(vh.money_container.getTag(R.id.key_entry_type).toString());
-                        mOnClickListener.onButtonClick(tran_id, tran_type);
+                        mOnClickListener.onButtonClick(tran_id, tran_type, BTN_TYPE_RETURN);
 
                     }
                 });
@@ -114,7 +117,7 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
 
                         int tran_id = Integer.parseInt(vh.money_container.getTag(R.id.key_entry_id).toString());
                         int tran_type = Integer.parseInt(vh.money_container.getTag(R.id.key_entry_type).toString());
-                        mOnClickListener.onButtonClick(tran_id, tran_type);
+                        mOnClickListener.onButtonClick(tran_id, tran_type, BTN_TYPE_PARTIAL);
                     }
                 });
                 break;
@@ -186,13 +189,13 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
     }
 
     public String parseMillisToDate(long millis){
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy");
         Date resultdate = new Date(millis);
         return sdf.format(resultdate);
     }
 
     public interface OnButtonClickListener{
-        public void onButtonClick(int id, int type);
+        public void onButtonClick(int id, int type, int btnType);
     }
 }
 

@@ -100,7 +100,7 @@ public abstract class AddAbstractFragment extends Fragment {
     public long parseDateToMillis(String toParse){
         long millis=0;
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy"); // I assume d-M, you may refer to M-d for month-day instead.
+            SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd, yyyy"); // I assume d-M, you may refer to M-d for month-day instead.
             Date date = formatter.parse(toParse); // You will need try/catch around this
             millis = date.getTime();
 
