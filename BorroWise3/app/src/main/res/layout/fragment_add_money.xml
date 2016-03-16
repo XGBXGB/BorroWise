@@ -1,0 +1,193 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.shayanetan.borrowise2.Fragments.AddMoneyFragment"
+    android:padding="15dp">
+
+    <LinearLayout
+        android:id="@+id/money_top_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:layout_marginBottom="5dp">
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_money_dark"/>
+
+        <TextView
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            android:layout_width="0dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:text="Money"
+            android:textSize="30sp"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:id="@+id/btn_MoneyToItem"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_item"
+            android:adjustViewBounds="true"
+            android:padding="8dp"
+            android:scaleType="fitXY"
+            android:layout_gravity="right"
+            android:background="@drawable/round_button"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/money_content_section"
+        android:layout_below="@id/money_top_section"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PHP"
+                android:textSize="25sp"
+                android:layout_marginTop="3dp"/>
+
+            <EditText
+                android:id="@+id/et_AMAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Amount"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="3dp"
+                android:src="@drawable/ic_account_dark"/>
+            <!--EditText
+                android:id="@+id/et_AMPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Person Name"
+                android:textSize="20sp"
+                android:layout_marginLeft="8dp"/-->
+
+            <AutoCompleteTextView
+                android:id="@+id/atv_AMPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter person name"
+                android:layout_alignParentLeft="true"
+                android:ems="10"
+                android:text="">
+                <requestFocus />
+            </AutoCompleteTextView>
+
+            <!--<Spinner-->
+            <!--android:id="@+id/spnr_AMPersonName"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="55dp"-->
+            <!--android:layout_marginLeft="8dp"-->
+            <!--android:entries="@array/Sample_People"/>-->
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="Start Date:"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/accent_dark_border"
+                android:id="@+id/btn_AMStartDate"
+                android:layout_weight="1" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="End Date:"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/accent_dark_border"
+                android:id="@+id/btn_AMEndDate"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@id/money_content_section"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_AMBorrow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:text="@string/btn_borrowed"
+            android:textSize="20sp"
+            android:background="@color/primaryDarkColor"
+            android:textColor="#FFFFFF"/>
+
+        <Button
+            android:id="@+id/btn_AMLend"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btn_lent"
+            android:textSize="20sp"
+            android:background="@color/accentDarkColor"
+            android:textColor="#FFFFFF"/>
+    </LinearLayout>
+
+</RelativeLayout>
