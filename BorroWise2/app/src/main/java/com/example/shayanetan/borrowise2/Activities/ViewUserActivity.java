@@ -89,10 +89,10 @@ public class ViewUserActivity extends BaseActivity
     public void retrieveTransaction(UsersCursorAdapter adapter, String viewType) {
         Cursor cursor = null;
         if(viewType.equalsIgnoreCase(ViewLenderFragment.VIEW_TYPE)) {
-            cursor= dbHelper.querryUsersType("lend", "0");
+            cursor= dbHelper.querryUsersType("borrow", "0");
         }
         else if(viewType.equalsIgnoreCase(ViewBorrowerFragment.VIEW_TYPE)){
-            cursor= dbHelper.querryUsersType("borrow", "0");
+            cursor= dbHelper.querryUsersType("lend", "0");
         }
         adapter.swapCursor(cursor);
     }
