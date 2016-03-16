@@ -55,7 +55,6 @@ public class AddMoneyFragment extends AddAbstractFragment {
                                      parseDateToMillis(btn_end_date.getText().toString()),
                                      0,0.0, Double.parseDouble(et_AMAmount.getText().toString()), 0.0);
                 mListener.onAddTransactions(m);
-                clearAllFields();
                 printAddAcknowledgement(et_AMAmount.getText().toString(), "borrowed");
             }
         });
@@ -72,7 +71,6 @@ public class AddMoneyFragment extends AddAbstractFragment {
                                     0,0.0, Double.parseDouble(et_AMAmount.getText().toString()), 0.0);
 
                 mListener.onAddTransactions(m);
-                clearAllFields();
                 printAddAcknowledgement(et_AMAmount.getText().toString(), "lent");
             }
         });

@@ -15,7 +15,7 @@ import com.example.shayanetan.borrowise2.Adapters.TransactionsCursorAdapter;
 import com.example.shayanetan.borrowise2.Adapters.UsersCursorAdapter;
 import com.example.shayanetan.borrowise2.R;
 
-public class ListBorrowerFragment extends Fragment {
+public class ViewBorrowerFragment extends Fragment {
 
     public static String VIEW_TYPE = "borrower_viewtype";
 
@@ -24,7 +24,7 @@ public class ListBorrowerFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ListBorrowerFragment() {
+    public ViewBorrowerFragment() {
         // Required empty public constructor
     }
 

@@ -29,6 +29,8 @@ import java.util.Map;
 public class BaseActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
+    public static int CURRENT_ID = 0;
+
     private NavigationView navigationView;
     private DrawerLayout fullLayout;
     private Toolbar toolbar;
@@ -62,6 +64,8 @@ public class BaseActivity extends AppCompatActivity implements
                 return true;
             }
         });
+        navigationView.setCheckedItem(CURRENT_ID);
+
 
         if (useToolbar()) {
             setSupportActionBar(toolbar);
@@ -75,7 +79,7 @@ public class BaseActivity extends AppCompatActivity implements
     private void selectDrawerItem(MenuItem menuItem) {
 
         Intent i = new Intent();
-
+        CURRENT_ID = menuItem.getItemId();
         switch(menuItem.getItemId()) {
             case R.id.menuitem_home:
                 i.setClass(getBaseContext(),HomeActivity.class);
