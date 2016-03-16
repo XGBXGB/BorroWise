@@ -67,7 +67,7 @@
                     android:id="@+id/tv_duedateitem_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:text="@string/lbl_duedate"
                     android:layout_below="@id/tv_itemname"/>
 
@@ -75,12 +75,11 @@
                     android:id="@+id/tv_duedateitem_val"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:text="cheng"
                     android:layout_toRightOf="@id/tv_duedateitem_label"
                     android:layout_below="@id/tv_itemname"/>
             </RelativeLayout>
-
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

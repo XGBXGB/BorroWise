@@ -43,4 +43,5 @@
     <string name="title_activity_home">BorroWise</string>
     <string name="title_activity_view_transaction">Transaction</string>
     <string name="title_activity_history">History</string>
+    <string name="title_activity_user_history">UserHistoryActivity</string>
 </resources>
