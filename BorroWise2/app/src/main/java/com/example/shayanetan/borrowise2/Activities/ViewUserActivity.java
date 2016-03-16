@@ -83,8 +83,16 @@ public class ViewUserActivity extends BaseActivity
     @Override
     public void retrieveTransaction(UsersCursorAdapter adapter, String viewType) {
         Cursor cursor = null;
+<<<<<<< HEAD
         if(viewType.equalsIgnoreCase(ListLenderFragment.VIEW_TYPE)) {
             cursor= dbHelper.querryUsersType("borrow", "0");
+=======
+        if(viewType.equalsIgnoreCase(ViewLenderFragment.VIEW_TYPE)) {
+            cursor= dbHelper.querryUsersType("borrow", "0");
+        }
+        else if(viewType.equalsIgnoreCase(ViewBorrowerFragment.VIEW_TYPE)){
+            cursor= dbHelper.querryUsersType("lend", "0");
+>>>>>>> origin/master
         }
         else if(viewType.equalsIgnoreCase(ListBorrowerFragment.VIEW_TYPE)){
             cursor= dbHelper.querryUsersType("lend", "0");

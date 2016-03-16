@@ -33,15 +33,20 @@
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    
-    <!-- TODO: Remove or change this placeholder text -->
+<!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_add_transaction">BorroWise</string>
-    <string name="title_activity_view_user">Borrowers</string>
+    <string name="title_activity_add_transaction">AddTransactionActivity</string>
+    <string name="title_activity_view_user">ViewUserActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_drawer">DrawerActivity</string>
+<<<<<<< HEAD
     <string name="title_activity_home">BorroWise</string>
     <string name="title_activity_view_transaction">Transaction</string>
     <string name="title_activity_history">History</string>
     <string name="title_activity_user_history">UserHistoryActivity</string>
+=======
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_view_transaction">ViewTransactionActivity</string>
+    <string name="title_activity_history">HistoryActivity</string>
+>>>>>>> origin/master
 </resources>
