@@ -6,21 +6,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.shayanetan.borrowise2.Adapters.TransactionsCursorAdapter;
 import com.example.shayanetan.borrowise2.Adapters.UsersCursorAdapter;
 import com.example.shayanetan.borrowise2.Adapters.ViewPagerAdapter;
-import com.example.shayanetan.borrowise2.Fragments.ViewBorrowedFragment;
-import com.example.shayanetan.borrowise2.Fragments.ViewBorrowerFragment;
-import com.example.shayanetan.borrowise2.Fragments.ViewLenderFragment;
-import com.example.shayanetan.borrowise2.Fragments.ViewLentFragment;
+import com.example.shayanetan.borrowise2.Fragments.ListBorrowerFragment;
+import com.example.shayanetan.borrowise2.Fragments.ListLenderFragment;
 import com.example.shayanetan.borrowise2.Models.DatabaseOpenHelper;
-import com.example.shayanetan.borrowise2.Models.ItemTransaction;
-import com.example.shayanetan.borrowise2.Models.MoneyTransaction;
 import com.example.shayanetan.borrowise2.Views.SlidingTabLayout;
 import com.example.shayanetan.borrowise2.R;
 
 public class ViewUserActivity extends BaseActivity
-        implements ViewLenderFragment.OnFragmentInteractionListener, ViewBorrowerFragment.OnFragmentInteractionListener{
+        implements ListLenderFragment.OnFragmentInteractionListener, ListBorrowerFragment.OnFragmentInteractionListener{
 
     private ViewPager viewPager;
     private ViewPagerAdapter viewPagerAdapter;
@@ -29,8 +24,8 @@ public class ViewUserActivity extends BaseActivity
     private static String TITLE_TAB1 = "BORROWERS";
     private static String TITLE_TAB2 = "LENDERS";
 
-    private ViewBorrowerFragment borrowFragment;
-    private ViewLenderFragment lentFragment;
+    private ListBorrowerFragment borrowFragment;
+    private ListLenderFragment lentFragment;
     private DatabaseOpenHelper dbHelper;
 
     @Override
@@ -44,9 +39,9 @@ public class ViewUserActivity extends BaseActivity
 
         viewPager = (ViewPager)findViewById(R.id.view_pager);
 
-        borrowFragment = new ViewBorrowerFragment();
+        borrowFragment = new ListBorrowerFragment();
         borrowFragment.setOnFragmentInteractionListener(this);
-        lentFragment = new ViewLenderFragment();
+        lentFragment = new ListLenderFragment();
         lentFragment.setOnFragmentInteractionListener(this);
 
         viewPagerAdapter.addFragment(borrowFragment, TITLE_TAB1);
@@ -88,11 +83,11 @@ public class ViewUserActivity extends BaseActivity
     @Override
     public void retrieveTransaction(UsersCursorAdapter adapter, String viewType) {
         Cursor cursor = null;
-        if(viewType.equalsIgnoreCase(ViewLenderFragment.VIEW_TYPE)) {
-            cursor= dbHelper.querryUsersType("lend", "0");
-        }
-        else if(viewType.equalsIgnoreCase(ViewBorrowerFragment.VIEW_TYPE)){
+        if(viewType.equalsIgnoreCase(ListLenderFragment.VIEW_TYPE)) {
             cursor= dbHelper.querryUsersType("borrow", "0");
+        }
+        else if(viewType.equalsIgnoreCase(ListBorrowerFragment.VIEW_TYPE)){
+            cursor= dbHelper.querryUsersType("lend", "0");
         }
         adapter.swapCursor(cursor);
     }
