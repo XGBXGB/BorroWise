@@ -160,7 +160,11 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
         public void onButtonClick(int id, int type);
     }
     public String parseMillisToDate(long millis){
+<<<<<<< HEAD
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+=======
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy");
+>>>>>>> origin/master
         Date resultdate = new Date(millis);
         return sdf.format(resultdate);
     }

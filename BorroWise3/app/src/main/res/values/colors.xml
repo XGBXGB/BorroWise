@@ -11,8 +11,13 @@
     <color name = "dividerColor">#B6B6B6</color>
 
     <color name = "redColor">#D32F2F</color>
+<<<<<<< HEAD
     <color name = "greenColor">#8BC34A</color>
     <color name = "violetColor">#7C4DFF</color>
     <color name = "darkVioletColor">#512DA8</color>
 
 </resources>
+=======
+
+</resources>
+>>>>>>> origin/master

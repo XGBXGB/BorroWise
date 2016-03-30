@@ -25,6 +25,7 @@
         android:id="@+id/navigationView"
         android:layout_width="wrap_content"
         android:fitsSystemWindows="true"
+<<<<<<< HEAD
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
@@ -38,4 +39,10 @@
         <!--android:divider="@color/dividerColor"-->
         <!--android:dividerHeight="1dp"-->
         <!--android:background="@color/cardview_light_background"/>-->
+=======
+        app:headerLayout="@layout/nav_header"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/menu_navigation_drawer"/>
+>>>>>>> origin/master
 </android.support.v4.widget.DrawerLayout>

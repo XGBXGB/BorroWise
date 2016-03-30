@@ -6,9 +6,12 @@
     <dimen name="tab_padding_bottom">16dp</dimen>
     <dimen name="tab_label">14sp</dimen>
     <dimen name="custom_tab_layout_height">72dp</dimen>
+<<<<<<< HEAD
     <dimen name="navigation_icon_size">24dp</dimen>
     <dimen name="filter_button_size">35dp</dimen>
     <dimen name="card_username_textsize">13dp</dimen>
     <dimen name="card_amount_textsize">25dp</dimen>
     <dimen name="card_currency_textsize">15dp</dimen>
+=======
+>>>>>>> origin/master
 </resources>

@@ -30,11 +30,22 @@ public class HistoryLendFragment extends HistoryAbstractFragment {
 
         View layout = inflater.inflate(R.layout.fragment_history_lend, container, false);
         recyclerView = (RecyclerView)layout.findViewById(R.id.recyclerview_history_lent);
+<<<<<<< HEAD
+=======
+        filter = (Spinner) layout.findViewById(R.id.Hspinner_type_lent);
+>>>>>>> origin/master
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(historyCursorAdapter);
         mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_LEND);
 
+<<<<<<< HEAD
+=======
+        ArrayAdapter<CharSequence> adapter
+                = ArrayAdapter.createFromResource(getActivity(), R.array.array_transaction_type, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filter.setAdapter(adapter);
+>>>>>>> origin/master
         return layout;
     }
 

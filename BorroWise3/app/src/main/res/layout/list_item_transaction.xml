@@ -4,6 +4,7 @@
     style="@style/card_transaction"
     android:id="@+id/item_container">
 
+<<<<<<< HEAD
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent">
@@ -12,6 +13,17 @@
             android:id="@+id/layout_username_it"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+=======
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+>>>>>>> origin/master
             android:orientation="horizontal"
             android:padding="5dp"
             android:background="@color/accentDarkColor">
@@ -31,6 +43,7 @@
                 android:text="Shayane Tan"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
+<<<<<<< HEAD
                 android:textSize="@dimen/card_username_textsize"/>
         </LinearLayout>
         <LinearLayout
@@ -38,12 +51,21 @@
             android:layout_below="@id/layout_username_it"
             android:layout_width="match_parent"
             android:layout_height="65dp"
+=======
+                android:textSize="18sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+>>>>>>> origin/master
             android:padding="5dp"
             android:orientation="horizontal">
             <ImageView
                 android:src="@drawable/ic_image_placeholder"
                 android:id="@+id/img_item"
                 android:layout_height="match_parent"
+<<<<<<< HEAD
                 android:layout_width="match_parent"/>
         </LinearLayout>
 
@@ -85,6 +107,51 @@
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+=======
+                android:layout_width="0dp"
+                android:layout_weight="2"/>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_marginLeft="5dp"
+                android:layout_height="match_parent"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_itemname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:textSize="25sp"
+                    android:text="HawkeBag"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tv_duedateitem_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="@string/lbl_duedate"
+                    android:layout_below="@id/tv_itemname"/>
+
+                <TextView
+                    android:id="@+id/tv_duedateitem_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="cheng"
+                    android:layout_toRightOf="@id/tv_duedateitem_label"
+                    android:layout_below="@id/tv_itemname"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+>>>>>>> origin/master
             android:orientation="horizontal">
             <Button
                 android:id="@+id/btn_lost"
@@ -104,6 +171,13 @@
                 android:textColor="@android:color/white"
                 android:background="@color/accentColor"/>
         </LinearLayout>
+<<<<<<< HEAD
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
+=======
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>
+>>>>>>> origin/master

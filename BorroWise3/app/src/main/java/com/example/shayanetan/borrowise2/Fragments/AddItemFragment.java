@@ -1,7 +1,10 @@
 package com.example.shayanetan.borrowise2.Fragments;
 
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.support.design.widget.FloatingActionButton;
+=======
+>>>>>>> origin/master
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -36,9 +39,15 @@ public class AddItemFragment extends AddAbstractFragment {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_add_item, container, false);
 
+<<<<<<< HEAD
         img_btn_switch = (FloatingActionButton) layout.findViewById(R.id.btn_ItemToMoney);
         et_AIItemName = (EditText) layout.findViewById(R.id.et_AIItemName);
 //        et_AIDescription = (EditText) layout.findViewById(R.id.et_AIDescription);
+=======
+        img_btn_switch = (ImageButton) layout.findViewById(R.id.btn_ItemToMoney);
+        et_AIItemName = (EditText) layout.findViewById(R.id.et_AIItemName);
+        et_AIDescription = (EditText) layout.findViewById(R.id.et_AIDescription);
+>>>>>>> origin/master
         atv_person_name = (AutoCompleteTextView) layout.findViewById(R.id.atv_AIPersonName);
 
         btn_borrowed = (Button) layout.findViewById(R.id.btn_AIBorrow);
@@ -59,7 +68,12 @@ public class AddItemFragment extends AddAbstractFragment {
                             parseDateToMillis(btn_start_date.getText().toString()),
                             parseDateToMillis(btn_end_date.getText().toString()),
                             0,0.0,
+<<<<<<< HEAD
                             et_AIItemName.getText().toString(),"");
+=======
+                            et_AIItemName.getText().toString(),
+                            et_AIDescription.getText().toString());
+>>>>>>> origin/master
                     mListener.onAddTransactions(it);
 
                     printAddAcknowledgement(et_AIItemName.getText().toString(), "borrowed");
@@ -80,7 +94,12 @@ public class AddItemFragment extends AddAbstractFragment {
                             parseDateToMillis(btn_start_date.getText().toString()),
                             parseDateToMillis(btn_end_date.getText().toString()),
                             0,0.0,
+<<<<<<< HEAD
                             et_AIItemName.getText().toString(), "");
+=======
+                            et_AIItemName.getText().toString(),
+                            et_AIDescription.getText().toString());
+>>>>>>> origin/master
                     mListener.onAddTransactions(it);
 
                     printAddAcknowledgement(et_AIItemName.getText().toString(), "lent");
@@ -98,6 +117,10 @@ public class AddItemFragment extends AddAbstractFragment {
     }
 
     public void clearAllFields(){
+<<<<<<< HEAD
+=======
+        et_AIDescription.setText("");
+>>>>>>> origin/master
         et_AIItemName.setText("");
         atv_person_name.setText("");
         setDateToCurrent();

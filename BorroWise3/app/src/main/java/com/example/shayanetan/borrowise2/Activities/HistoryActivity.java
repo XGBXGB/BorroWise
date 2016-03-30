@@ -24,8 +24,13 @@ public class HistoryActivity extends BaseActivity  implements HistoryAbstractFra
     private ViewPagerAdapter viewPagerAdapter;
     private SlidingTabLayout slidingTabLayout;
 
+<<<<<<< HEAD
     private static String TITLE_TAB1 = "BORROWED FROM";
     private static String TITLE_TAB2 = "LENT TO";
+=======
+    private static String TITLE_TAB1 = "BORROWED";
+    private static String TITLE_TAB2 = "LENT";
+>>>>>>> origin/master
 
     private HistoryBorrowedFragment historyBorrowedFragment;
     private HistoryLendFragment historyLendFragment;

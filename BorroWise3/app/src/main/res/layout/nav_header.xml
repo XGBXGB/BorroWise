@@ -4,7 +4,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     android:padding="30dp"
     android:background="@color/primaryColor"
+=======
+    android:text="Header"
+    android:padding="30dp"
+    android:background="?attr/colorAccent"
+>>>>>>> origin/master
     android:textColor="@android:color/white"/>
 

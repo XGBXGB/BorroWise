@@ -6,6 +6,7 @@
     android:padding="10dp"
     tools:context="com.example.shayanetan.borrowise2.Fragments.HistoryLendFragment">
 
+<<<<<<< HEAD
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,6 +32,15 @@
             android:textColor="@android:color/white"
             android:background="@drawable/round_button"/>
     </LinearLayout>
+=======
+    <Spinner
+        android:id="@+id/Hspinner_type_lent"
+        android:background="@drawable/black_border"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginBottom="20dp" />
+>>>>>>> origin/master
 
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"

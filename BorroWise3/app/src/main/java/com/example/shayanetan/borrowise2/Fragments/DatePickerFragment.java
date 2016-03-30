@@ -35,7 +35,11 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     public void populateSetDate(int year, int month, int day) {
         String currentDate = month+"/"+day+"/"+year;
         CustomDate d = new CustomDate();
+<<<<<<< HEAD
         btn_date_selector.setText(d.formatDateSlash(currentDate));
+=======
+        btn_date_selector.setText(d.formatDateCommas(currentDate));
+>>>>>>> origin/master
     }
 
 }

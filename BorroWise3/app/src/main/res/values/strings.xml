@@ -3,6 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
 
+<<<<<<< HEAD
     <string name = "lbl_duedate">Due:</string>
     <string name = "lbl_retdate">Returned:</string>
     <string name = "lbl_startdate">Start:</string>
@@ -14,6 +15,14 @@
     <string name = "btn_returned">RETURNED</string>
     <string name = "btn_partial">PARTIAL</string>
     <string name = "btn_full">FULL</string>
+=======
+    <string name = "lbl_duedate">Due Date :</string>
+    <string name = "lbl_retdate">Returned Date :</string>
+    <string name = "btn_borrowed">BORROWED</string>
+    <string name = "btn_returned">RETURNED</string>
+    <string name = "btn_partial">PAID PARTIAL</string>
+    <string name = "btn_full">PAID FULL</string>
+>>>>>>> origin/master
     <string name = "btn_lost">LOST</string>
     <string name = "btn_lent">LENT</string>
     <string-array name="array_transaction_type">
@@ -40,6 +49,7 @@
     <string name="drawer_close">Close navigation drawer</string>
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+<<<<<<< HEAD
     <string name="title_activity_add_transaction">Transaction</string>
 
     <string name="hello_world">Hello world!</string>
@@ -51,4 +61,13 @@
     <string name="title_activity_people">People</string>
     <string name="title_activity_setting">Setting</string>
     <string name ="currency">PHP</string>
+=======
+    <string name="title_activity_add_transaction">AddTransactionActivity</string>
+    <string name="title_activity_view_user">ViewUserActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_view_transaction">ViewTransactionActivity</string>
+    <string name="title_activity_history">HistoryActivity</string>
+>>>>>>> origin/master
 </resources>

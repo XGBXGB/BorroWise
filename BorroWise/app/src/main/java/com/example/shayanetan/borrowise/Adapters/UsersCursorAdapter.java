@@ -4,11 +4,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.media.Image;
 import android.media.Rating;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,7 +33,7 @@ public class UsersCursorAdapter extends CursorRecyclerViewAdapter<UsersCursorAda
 
     //private static final int TYPE_ITEM = 1;
     //private static final int TYPE_MONEY = 2;
-    //AdapterView.OnItemClickListener mOnItemClickListener;
+    //OnItemClickListener mOnItemClickListener;
 
     Context c;
     String namefortoast;
@@ -41,24 +43,35 @@ public class UsersCursorAdapter extends CursorRecyclerViewAdapter<UsersCursorAda
         c = context;
     }
 
+   /* public interface OnItemClickListener{
+        public void onItemClick(int id); //the id being the user's db id
+    }
+
+    public void setOnItemClickListener(OnItemClickListener m){
+        this.mOnItemClickListener = m;
+    }*/
+
+
     @Override
-    public void onBindViewHolder(UsersViewHolder viewHolder, Cursor cursor) {
+    public void onBindViewHolder(final UsersViewHolder viewHolder, Cursor cursor) {
         String name = cursor.getString(cursor.getColumnIndex(User.COLUMN_NAME));
         float rating = (float) cursor.getDouble(cursor.getColumnIndex(User.COLUMN_TOTAL_RATE));
 
         namefortoast = name;
 
         viewHolder.tv_username.setText(name);
-        viewHolder.tv_userrating.setText(""+rating+" stars out of 5 stars");
+        viewHolder.tv_userrating.setText(""+rating);
         viewHolder.rb_ratinguser.setRating(rating);
         viewHolder.user_container.setTag(cursor.getInt(cursor.getColumnIndex(User.COLUMN_ID)));
         viewHolder.user_container.setOnClickListener(
                 new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(c, "Username is " + namefortoast,
-                                Toast.LENGTH_LONG).show();
-
+                        /*Toast.makeText(c, "Username is " + namefortoast,
+                                Toast.LENGTH_LONG).show();*/
+//                        mOnItemClickListener.onItemClick(Integer.parseInt(v.getTag().toString()));
+                        Toast.makeText(c, "Item is " + v.getTag(),
+                                Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -83,14 +96,14 @@ public class UsersCursorAdapter extends CursorRecyclerViewAdapter<UsersCursorAda
     public class UsersViewHolder extends RecyclerView.ViewHolder
     {
         ImageView iv_user;
-        LinearLayout user_container;
+        CardView user_container;
         TextView tv_username, tv_userrating;
         RatingBar rb_ratinguser;
 
         public UsersViewHolder(View itemView)
         {
             super(itemView);
-            user_container = (LinearLayout) itemView.findViewById(R.id.user_container);
+            user_container = (CardView) itemView.findViewById(R.id.user_container);
             iv_user = (ImageView) itemView.findViewById(R.id.iv_user);
             tv_username = (TextView) itemView.findViewById(R.id.tv_username);
             rb_ratinguser = (RatingBar) itemView.findViewById(R.id.rb_ratinguser);

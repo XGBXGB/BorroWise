@@ -3,7 +3,10 @@ package com.example.shayanetan.borrowise2.Fragments;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+<<<<<<< HEAD
 import android.support.design.widget.FloatingActionButton;
+=======
+>>>>>>> origin/master
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
@@ -36,7 +39,11 @@ public abstract class AddAbstractFragment extends Fragment {
     protected AutoCompleteTextView atv_person_name;
     protected Button btn_end_date, btn_start_date;
     protected Button btn_borrowed, btn_lent;
+<<<<<<< HEAD
     protected FloatingActionButton img_btn_switch;
+=======
+    protected ImageButton img_btn_switch;
+>>>>>>> origin/master
 
     protected OnFragmentInteractionListener mListener;
 
@@ -101,7 +108,11 @@ public abstract class AddAbstractFragment extends Fragment {
     public long parseDateToMillis(String toParse){
         long millis=0;
         try {
+<<<<<<< HEAD
             SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy"); // I assume d-M, you may refer to M-d for month-day instead.
+=======
+            SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd, yyyy"); // I assume d-M, you may refer to M-d for month-day instead.
+>>>>>>> origin/master
             Date date = formatter.parse(toParse); // You will need try/catch around this
             millis = date.getTime();
 
@@ -114,7 +125,12 @@ public abstract class AddAbstractFragment extends Fragment {
     public void setDateToCurrent(){
         CustomDate d = new CustomDate();
         String currentDate = (d.getMonth()+1)+ "/" + d.getDay()+ "/ "+ d.getYear();
+<<<<<<< HEAD
         btn_start_date.setText(d.formatDateSlash(currentDate));
         btn_end_date.setText(d.formatDateSlash(currentDate));
+=======
+        btn_start_date.setText(d.formatDateCommas(currentDate));
+        btn_end_date.setText(d.formatDateCommas(currentDate));
+>>>>>>> origin/master
     }
 }

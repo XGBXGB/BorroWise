@@ -3,7 +3,10 @@ package com.example.shayanetan.borrowise2.Fragments;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+<<<<<<< HEAD
 import android.support.v7.widget.GridLayoutManager;
+=======
+>>>>>>> origin/master
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -53,7 +56,11 @@ public class ViewLentFragment extends Fragment {
             }
         });
 
+<<<<<<< HEAD
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+=======
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+>>>>>>> origin/master
         recyclerView.setAdapter(transactionsCursorAdapter);
         mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE);
 

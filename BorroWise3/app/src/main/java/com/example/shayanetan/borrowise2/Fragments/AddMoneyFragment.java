@@ -2,7 +2,10 @@ package com.example.shayanetan.borrowise2.Fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.support.design.widget.FloatingActionButton;
+=======
+>>>>>>> origin/master
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -34,7 +37,11 @@ public class AddMoneyFragment extends AddAbstractFragment {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_add_money, container, false);
 
+<<<<<<< HEAD
         img_btn_switch = (FloatingActionButton) layout.findViewById(R.id.btn_MoneyToItem);
+=======
+        img_btn_switch = (ImageButton) layout.findViewById(R.id.btn_MoneyToItem);
+>>>>>>> origin/master
         btn_borrowed = (Button) layout.findViewById(R.id.btn_AMBorrow);
         btn_lent = (Button) layout.findViewById(R.id.btn_AMLend);
 
