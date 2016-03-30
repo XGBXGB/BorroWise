@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">BorroWise</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name = "lbl_duedate">Due:</string>
+    <string name = "lbl_retdate">Returned:</string>
+    <string name = "lbl_startdate">Start:</string>
+
+    <string name = "lbl_item">ITEM</string>
+    <string name = "lbl_money">MONEY</string>
+
+    <string name = "btn_borrowed">BORROWED</string>
+    <string name = "btn_returned">RETURNED</string>
+    <string name = "btn_partial">PARTIAL</string>
+    <string name = "btn_full">FULL</string>
+    <string name = "btn_lost">LOST</string>
+    <string name = "btn_lent">LENT</string>
+    <string-array name="array_transaction_type">
+        <item>Items</item>
+        <item>Money</item>
+    </string-array>
+
+    <string-array name="Sample_People">
+        <item>Winona Erive</item>
+        <item>Shayane Tan</item>
+        <item>Christian Cote</item>
+    </string-array>
+
+    <string-array name="menu_item_array">
+        <item>Home</item>
+        <item>Transactions</item>
+        <item>History</item>
+        <item>Users</item>
+        <item>Settings</item>
+    </string-array>
+
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_add_transaction">Transaction</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="title_activity_view_user">People</string>
+    <string name="title_activity_home">BorroWise</string>
+    <string name="title_activity_transaction">Transaction</string>
+    <string name="title_activity_history">History</string>
+    <string name="title_activity_people">People</string>
+    <string name="title_activity_setting">Setting</string>
+    <string name ="currency">PHP</string>
+</resources>

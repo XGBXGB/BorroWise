@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/card_transaction"
+    android:id="@+id/money_container">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/layout_user_name_mt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:background="@color/accentDarkColor">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_account"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:id="@+id/tv_account_money"
+                android:layout_width="0dp"
+                android:layout_weight="14"
+                android:layout_marginLeft="3dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Shayane Tan"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="@dimen/card_username_textsize"/>
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/layout_amount_details"
+            android:layout_below="@id/layout_user_name_mt"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/currency"
+                android:textSize="@dimen/card_currency_textsize"/>
+            <TextView
+                android:id="@+id/tv_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/card_amount_textsize"
+                android:text="1000.00"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_horizontal"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_below="@id/layout_amount_details"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/lbl_duedatemoney"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:text="@string/lbl_duedate"/>
+
+            <TextView
+                android:id="@+id/lbl_duedatemoney_val"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:layout_toRightOf="@id/lbl_duedatemoney"
+                android:text="date"/>
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_partial"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="@string/btn_partial"
+                android:textColor="@android:color/white"
+                android:background="@color/primaryColor"/>
+            <Button
+                android:id="@+id/btn_full"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="@string/btn_full"
+                android:textColor="@android:color/white"
+                android:background="@color/accentColor"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
