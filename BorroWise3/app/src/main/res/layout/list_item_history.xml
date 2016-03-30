@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/card_history"
+    android:id="@+id/Hitem_container"
+    android:layout_width="match_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:background="@color/accentDarkColor">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="21dp"
+                android:src="@drawable/ic_account"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:id="@+id/tv_Haccount_item"
+                android:layout_width="0dp"
+                android:layout_weight="14"
+                android:layout_marginLeft="3dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Shayane Tan"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="13sp"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:src="@drawable/ic_image_placeholder"
+            android:id="@+id/img_Hitem"
+            android:layout_marginTop="5dp"
+            android:layout_height="65dp"
+            android:layout_width="match_parent"/>
+        <RatingBar
+            android:id="@+id/rb_Hratingitem"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/ratingBarStyleSmall"
+            android:numStars="5"
+            android:isIndicator="true"
+            android:stepSize="0.5"
+            android:rating="5"
+            android:layout_gravity="center_horizontal"
+            android:background="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/tv_Hitemname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="17sp"
+            android:gravity="center"
+            android:text="HawkeBag"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_Hstartdateitem_label"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_startdate"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/tv_Hstartdateitem_val"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="date"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_Hduedateitem_label"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="@string/lbl_duedate"/>
+
+                <TextView
+                    android:id="@+id/tv_Hduedateitem_val"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="date"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_Hretdateitem_label"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="@string/lbl_retdate"/>
+
+                <TextView
+                    android:id="@+id/tv_Hretdateitem_val"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="date"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_Hstatusitem_label"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="Status: "/>
+
+                <TextView
+                    android:id="@+id/tv_Hstatusitem_val"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="Returned"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
