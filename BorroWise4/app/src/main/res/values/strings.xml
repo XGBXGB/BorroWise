@@ -9,6 +9,7 @@
 
     <string name = "lbl_item">ITEM</string>
     <string name = "lbl_money">MONEY</string>
+    <string name = "lbl_all">ALL</string>
 
     <string name = "btn_borrowed">BORROWED</string>
     <string name = "btn_returned">RETURNED</string>

@@ -11,15 +11,15 @@
         <item
             android:id="@+id/menuitem_transaction"
             android:icon="@drawable/ic_transaction"
-            android:title="Transactions"/>
+            android:title="@string/title_activity_transaction"/>
         <item
             android:id="@+id/menuitem_history"
             android:icon="@drawable/ic_history"
-            android:title="History"/>
+            android:title="@string/title_activity_history"/>
         <item
             android:id="@+id/menuitem_account"
             android:icon="@drawable/ic_account"
-            android:title="Borrowers"/>
+            android:title="@string/title_activity_people"/>
     </group>
     <group
         android:id="@+id/menu_bottom"

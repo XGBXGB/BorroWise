@@ -12,6 +12,16 @@
         android:padding="5dp"
         android:orientation="horizontal">
         <Button
+            android:id="@+id/btn_HBorrowed_all"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:layout_height="@dimen/filter_button_size"
+            android:text="@string/lbl_all"
+            android:textSize="12dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/round_button"/>
+        <Button
             android:id="@+id/btn_HBorrowed_item"
             android:layout_width="0dp"
             android:layout_weight="1"

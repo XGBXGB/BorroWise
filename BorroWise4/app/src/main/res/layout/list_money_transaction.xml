@@ -75,6 +75,7 @@
                 android:layout_weight="3"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
+                android:gravity="right"
                 android:layout_toRightOf="@id/lbl_duedatemoney"
                 android:text="date"/>
         </LinearLayout>
