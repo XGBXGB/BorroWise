@@ -4,6 +4,7 @@ package com.example.shayanetan.borrowise2.Adapters;
  * Created by ShayaneTan on 3/11/2016.
  */
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.shayanetan.borrowise2.Fragments.RatingDialogFragment;
 import com.example.shayanetan.borrowise2.Models.Transaction;
 import com.example.shayanetan.borrowise2.Models.User;
 import com.example.shayanetan.borrowise2.R;

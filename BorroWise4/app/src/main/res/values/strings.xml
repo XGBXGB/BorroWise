@@ -53,4 +53,5 @@
     <string name="title_activity_setting">Setting</string>
     <string name ="currency">PHP</string>
     <string name="title_activity_view_user_profile">ViewUserProfile</string>
+    <string name="title_activity_rating">RatingActivity</string>
 </resources>

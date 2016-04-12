@@ -1,5 +1,6 @@
 package com.example.shayanetan.borrowise2.Activities;
 
+import android.app.DialogFragment;
 import android.database.Cursor;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -9,11 +10,13 @@ import android.widget.Toast;
 
 import com.example.shayanetan.borrowise2.Adapters.TransactionsCursorAdapter;
 import com.example.shayanetan.borrowise2.Adapters.ViewPagerAdapter;
+import com.example.shayanetan.borrowise2.Fragments.RatingDialogFragment;
 import com.example.shayanetan.borrowise2.Fragments.ViewBorrowedFragment;
 import com.example.shayanetan.borrowise2.Fragments.ViewLentFragment;
 import com.example.shayanetan.borrowise2.Models.DatabaseOpenHelper;
 import com.example.shayanetan.borrowise2.Models.ItemTransaction;
 import com.example.shayanetan.borrowise2.Models.MoneyTransaction;
+import com.example.shayanetan.borrowise2.Models.Transaction;
 import com.example.shayanetan.borrowise2.Views.SlidingTabLayout;
 import com.example.shayanetan.borrowise2.R;
 
@@ -30,6 +33,8 @@ public class ViewTransactionActivity extends BaseActivity
     private ViewBorrowedFragment borrowFragment;
     private ViewLentFragment lentFragment;
     private DatabaseOpenHelper dbHelper;
+
+    private int TempID, currType, currBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,31 +89,20 @@ public class ViewTransactionActivity extends BaseActivity
 
     @Override
     public void updateTransaction(int id, int type, int btnType) {
+        this.currBtn = btnType;
         switch (type) {
             case TransactionsCursorAdapter.TYPE_MONEY:
-                if(btnType == TransactionsCursorAdapter.BTN_TYPE_RETURN) {
-                    MoneyTransaction m = (MoneyTransaction) dbHelper.queryTransaction(id);
-                    m.setAmountDeficit(0);
-                    m.setReturnDate(System.currentTimeMillis());
-                    m.setStatus(1);
-                    dbHelper.updateTransaction(m);
-                }else{
-                    Toast.makeText(this, "PARTIALS NOT YET SUPPORTED", Toast.LENGTH_SHORT).show();
-                }
+                currType = TransactionsCursorAdapter.TYPE_MONEY;
                 break;
             case TransactionsCursorAdapter.TYPE_ITEM:
-                if(btnType == TransactionsCursorAdapter.BTN_TYPE_RETURN) {
-                    ItemTransaction i = (ItemTransaction) dbHelper.queryTransaction(id);
-                    i.setReturnDate(System.currentTimeMillis());
-                    i.setStatus(1);
-                    dbHelper.updateTransaction(i);
-                }else{
-                    ItemTransaction i = (ItemTransaction) dbHelper.queryTransaction(id);
-                    i.setStatus(-1);
-                    dbHelper.updateTransaction(i);
-                }
-                break;
+                currType = TransactionsCursorAdapter.TYPE_ITEM;
         }
+        this.TempID = id;
+
+        DialogFragment dialogFragment
+                = new RatingDialogFragment();
+        dialogFragment.show(getFragmentManager(), "");
+
     }
 
     @Override
@@ -122,4 +116,43 @@ public class ViewTransactionActivity extends BaseActivity
         }
         adapter.swapCursor(cursor);
     }
+
+    public void setExpRating(double rating)
+    {
+        int transID = 0;
+        switch (currType) {
+            case TransactionsCursorAdapter.TYPE_MONEY:
+                if(currBtn == TransactionsCursorAdapter.BTN_TYPE_RETURN) {
+                    MoneyTransaction m = (MoneyTransaction) dbHelper.queryTransaction(TempID);
+                    m.setAmountDeficit(0);
+                    m.setReturnDate(System.currentTimeMillis());
+                    m.setStatus(1);
+                    m.setRate(rating);
+                    transID = dbHelper.updateTransaction(m);
+                }else{
+                    Toast.makeText(this, "PARTIALS NOT YET SUPPORTED", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case TransactionsCursorAdapter.TYPE_ITEM:
+                currType = TransactionsCursorAdapter.TYPE_ITEM;
+                if(currBtn == TransactionsCursorAdapter.BTN_TYPE_RETURN) {
+
+                    ItemTransaction i = (ItemTransaction) dbHelper.queryTransaction(TempID);
+                    i.setReturnDate(System.currentTimeMillis());
+                    i.setStatus(1);
+                    i.setRate(rating);
+                    transID = dbHelper.updateTransaction(i);
+                }else{
+                    ItemTransaction i = (ItemTransaction) dbHelper.queryTransaction(TempID);
+                    i.setStatus(-1);
+                    i.setRate(rating);
+                    i.setReturnDate(System.currentTimeMillis());
+                    transID = dbHelper.updateTransaction(i);
+                }
+                break;
+        }
+        Transaction transaction = dbHelper.queryTransaction(transID);
+        dbHelper.updateUserRating(transaction.getUserID());
+    }
 }
+
