@@ -6,6 +6,8 @@ package com.example.shayanetan.borrowise2.Adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.example.shayanetan.borrowise2.Models.Transaction;
 import com.example.shayanetan.borrowise2.Models.User;
 import com.example.shayanetan.borrowise2.R;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -58,9 +61,15 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
         int id = cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID));
         String dueDate = parseMillisToDate(cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_DUE_DATE)));
         String transactionAttribute1 = cursor.getString(cursor.getColumnIndex("Attribute1"));
+        String transactionAttribute3 = cursor.getString(cursor.getColumnIndex("Attribute3"));
 
         switch (viewHolder.getItemViewType()) {
             case TYPE_ITEM:
+                File imgFile = new  File(transactionAttribute3);
+                if(imgFile.exists()){
+                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                    ((BorrowedItemViewHolder)viewHolder).img_item.setImageBitmap(myBitmap);
+                }
                 ((BorrowedItemViewHolder)viewHolder).item_container.setTag(R.id.key_entry_id, id);
                 ((BorrowedItemViewHolder)viewHolder).item_container.setTag(R.id.key_entry_type, TYPE_ITEM);
                 ((BorrowedItemViewHolder)viewHolder).tv_account_item.setText(name);

@@ -1,5 +1,6 @@
 package com.example.shayanetan.borrowise2.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -35,6 +36,7 @@ public class AddItemFragment extends AddAbstractFragment {
     private EditText et_AIItemName,
             et_AIDescription;
     private LinearLayout card_camera;
+    private String filePath="";
 
     public AddItemFragment() {}
 
@@ -83,14 +85,14 @@ public class AddItemFragment extends AddAbstractFragment {
             @Override
             public void onClick(View v) {
 
-                if(mListener != null){
-                    int id =  mListener.onAddNewUser(selected_name, selected_contact_number);
+                if (mListener != null) {
+                    int id = mListener.onAddNewUser(selected_name, selected_contact_number);
 
-                    ItemTransaction it = new ItemTransaction( "Item", id, "borrow", 0,
+                    ItemTransaction it = new ItemTransaction("Item", id, "borrow", 0,
                             parseDateToMillis(btn_start_date.getText().toString()),
                             parseDateToMillis(btn_end_date.getText().toString()),
-                            0,0.0,
-                            et_AIItemName.getText().toString(),"");
+                            0, 0.0,
+                            et_AIItemName.getText().toString(), "", filePath);
                     mListener.onAddTransactions(it);
 
                     printAddAcknowledgement(et_AIItemName.getText().toString(), "borrowed");
@@ -104,14 +106,14 @@ public class AddItemFragment extends AddAbstractFragment {
             @Override
             public void onClick(View v) {
 
-                if(mListener != null){
-                    int id =  mListener.onAddNewUser(selected_name, selected_contact_number);
+                if (mListener != null) {
+                    int id = mListener.onAddNewUser(selected_name, selected_contact_number);
 
-                    ItemTransaction it = new ItemTransaction( "Item", id, "lend", 0,
+                    ItemTransaction it = new ItemTransaction("Item", id, "lend", 0,
                             parseDateToMillis(btn_start_date.getText().toString()),
                             parseDateToMillis(btn_end_date.getText().toString()),
-                            0,0.0,
-                            et_AIItemName.getText().toString(), "");
+                            0, 0.0,
+                            et_AIItemName.getText().toString(), "", filePath);
                     mListener.onAddTransactions(it);
 
                     printAddAcknowledgement(et_AIItemName.getText().toString(), "lent");
@@ -130,20 +132,22 @@ public class AddItemFragment extends AddAbstractFragment {
 
         //Bitmap bp = (Bitmap) data.getExtras().get("data");
         //iv.setImageBitmap(bp);
+        if(requestCode == 0 && resultCode == Activity.RESULT_OK) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            //imageView.setImageBitmap(photo);
+            //knop.setVisibility(Button.VISIBLE);
 
-        Bitmap photo = (Bitmap) data.getExtras().get("data");
-        //imageView.setImageBitmap(photo);
-        //knop.setVisibility(Button.VISIBLE);
 
+            // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
+            Uri tempUri = getImageUri(getActivity().getApplicationContext(), photo);
 
-        // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
-        Uri tempUri = getImageUri(getActivity().getApplicationContext(), photo);
+            // CALL THIS METHOD TO GET THE ACTUAL PATH
+            //File finalFile = new File(getRealPathFromURI(tempUri));
 
-        // CALL THIS METHOD TO GET THE ACTUAL PATH
-        File finalFile = new File(getRealPathFromURI(tempUri));
-
-        System.out.println("CAMERA SAVED FILEPATH: "+getRealPathFromURI(tempUri));
-        Toast.makeText(getActivity(),"CAMERA SAVED FILEPATH: "+ getRealPathFromURI(tempUri), Toast.LENGTH_SHORT).show();
+            filePath = getRealPathFromURI(tempUri);
+            System.out.println("CAMERA SAVED FILEPATH: " + getRealPathFromURI(tempUri));
+            Toast.makeText(getActivity(), "CAMERA SAVED FILEPATH: " + getRealPathFromURI(tempUri), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void printAddAcknowledgement(String entry_name, String type){

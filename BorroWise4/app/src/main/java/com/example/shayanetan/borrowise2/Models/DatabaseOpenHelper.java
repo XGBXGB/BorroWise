@@ -52,6 +52,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 + ItemTransaction.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ItemTransaction.COLUMN_NAME + " TEXT, "
                 + ItemTransaction.COLUMN_DESCRIPTION + " TEXT, "
+                + ItemTransaction.COLUMN_PHOTOPATH + " TEXT, "
                 + ItemTransaction.COLUMN_TRANSACTION_ID + " INTEGER, "
                 + "FOREIGN KEY("+ItemTransaction.COLUMN_TRANSACTION_ID+") REFERENCES transactions(id)); ";
         String sql4 = "CREATE TABLE " + MoneyTransaction.TABLE_NAME + " ("
@@ -112,6 +113,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         if(t.getClassification().equalsIgnoreCase("item")){
             cv.put(ItemTransaction.COLUMN_NAME, ((ItemTransaction) t).getName());
             cv.put(ItemTransaction.COLUMN_DESCRIPTION, ((ItemTransaction)t).getDescription());
+            cv.put(ItemTransaction.COLUMN_PHOTOPATH, ((ItemTransaction) t).getPhotoPath());
             cv.put(ItemTransaction.COLUMN_TRANSACTION_ID, id);
             db.insert(ItemTransaction.TABLE_NAME, null, cv);
         }else{
@@ -156,6 +158,32 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         return u;
     }
 
+    public User queryUser(String name)
+    {
+        User u = null;
+        SQLiteDatabase db = getReadableDatabase();;
+        Cursor c =   db.query(User.TABLE_NAME,
+                null, // == *
+                " " + User.COLUMN_NAME + "= ? ", //WHERE _ = ?
+                new String[]{name},
+                null,
+                null,
+                null);
+
+        if(c.moveToFirst())
+        {
+            u = new User();
+            u.setName(c.getString(c.getColumnIndex(User.COLUMN_NAME)));
+            u.setContactInfo(c.getString(c.getColumnIndex(User.COLUMN_CONTACT_INFO)));
+            u.setTotalRate(c.getDouble(c.getColumnIndex(User.COLUMN_TOTAL_RATE)));
+            u.setId(c.getInt(c.getColumnIndex(User.COLUMN_ID)));
+        }else{
+            u = null;
+        }
+
+        return u;
+    }
+
     public Transaction queryTransaction(int id)
     {
         Transaction t = null;
@@ -188,7 +216,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                         c.getLong(c.getColumnIndex(Transaction.COLUMN_RETURN_DATE)),
                         c.getDouble(c.getColumnIndex(Transaction.COLUMN_RATE)),
                         c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_NAME)),
-                        c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_DESCRIPTION)));
+                        c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_DESCRIPTION)),
+                        c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_PHOTOPATH)));
                 t.setId(id);
             }else{
                 Cursor c2 =   db.query(MoneyTransaction.TABLE_NAME,
@@ -246,6 +275,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                         +Transaction.COLUMN_STATUS+", "+Transaction.COLUMN_START_DATE+", "
                         +Transaction.COLUMN_DUE_DATE+", "+Transaction.COLUMN_RETURN_DATE+", "+Transaction.COLUMN_RATE+", "
                         +ItemTransaction.TABLE_NAME+"."+ItemTransaction.COLUMN_NAME+" AS Attribute1, "+ItemTransaction.TABLE_NAME+"."+ItemTransaction.COLUMN_DESCRIPTION+" AS Attribute2, "
+                        +ItemTransaction.TABLE_NAME+"."+ItemTransaction.COLUMN_PHOTOPATH+" AS Attribute3, "
                         +User.TABLE_NAME+"."+User.COLUMN_NAME+" AS name"
                         + " FROM " + Transaction.TABLE_NAME
                         + " INNER JOIN " + ItemTransaction.TABLE_NAME
@@ -260,6 +290,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                         +Transaction.COLUMN_STATUS+", "+Transaction.COLUMN_START_DATE+", "
                         +Transaction.COLUMN_DUE_DATE+", "+Transaction.COLUMN_RETURN_DATE+", "+Transaction.COLUMN_RATE+", "
                         +MoneyTransaction.TABLE_NAME+"."+MoneyTransaction.COLUMN_TOTAL_AMOUNT_DUE+" AS Attribute1, "+MoneyTransaction.TABLE_NAME+"."+MoneyTransaction.COLUMN_AMOUNT_DEFICIT+" AS Attribute2, "
+                        +"Null AS Attribute3, "
                         +User.TABLE_NAME+"."+User.COLUMN_NAME+" AS name"
                         + " FROM " + Transaction.TABLE_NAME
                         + " INNER JOIN " + MoneyTransaction.TABLE_NAME
@@ -281,6 +312,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                         +Transaction.COLUMN_STATUS+", "+Transaction.COLUMN_START_DATE+", "
                         +Transaction.COLUMN_DUE_DATE+", "+Transaction.COLUMN_RETURN_DATE+", "+Transaction.COLUMN_RATE+", "
                         +ItemTransaction.TABLE_NAME+"."+ItemTransaction.COLUMN_NAME+" AS Attribute1, "+ItemTransaction.TABLE_NAME+"."+ItemTransaction.COLUMN_DESCRIPTION+" AS Attribute2, "
+                        +ItemTransaction.TABLE_NAME+"."+ItemTransaction.COLUMN_PHOTOPATH+" AS Attribute3, "
                         +User.TABLE_NAME+"."+User.COLUMN_NAME+" AS name"
                         + " FROM " + Transaction.TABLE_NAME
                         + " INNER JOIN " + ItemTransaction.TABLE_NAME
@@ -295,6 +327,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                         +Transaction.COLUMN_STATUS+", "+Transaction.COLUMN_START_DATE+", "
                         +Transaction.COLUMN_DUE_DATE+", "+Transaction.COLUMN_RETURN_DATE+", "+Transaction.COLUMN_RATE+", "
                         +MoneyTransaction.TABLE_NAME+"."+MoneyTransaction.COLUMN_TOTAL_AMOUNT_DUE+" AS Attribute1, "+MoneyTransaction.TABLE_NAME+"."+MoneyTransaction.COLUMN_AMOUNT_DEFICIT+" AS Attribute2, "
+                        +"Null AS Attribute3, "
                         +User.TABLE_NAME+"."+User.COLUMN_NAME+" AS name"
                         + " FROM " + Transaction.TABLE_NAME
                         + " INNER JOIN " + MoneyTransaction.TABLE_NAME
@@ -363,7 +396,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                     c.getLong(c.getColumnIndex(Transaction.COLUMN_RETURN_DATE)),
                     c.getDouble(c.getColumnIndex(Transaction.COLUMN_RATE)),
                     c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_NAME)),
-                    c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_DESCRIPTION)));
+                    c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_DESCRIPTION)),
+                    c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_PHOTOPATH)));
                 }else{
                     c2 =   db.query(MoneyTransaction.TABLE_NAME,
                             null, // == *
@@ -383,6 +417,71 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                     c.getDouble(c.getColumnIndex(Transaction.COLUMN_RATE)),
                     c2.getDouble(c2.getColumnIndex(MoneyTransaction.COLUMN_TOTAL_AMOUNT_DUE)),
                     c2.getDouble(c2.getColumnIndex(MoneyTransaction.COLUMN_AMOUNT_DEFICIT)));
+                }
+                t.setId(c.getInt(c.getColumnIndex(User.COLUMN_ID)));
+                transactions.add(t);
+            }while(c.moveToNext());
+
+        } else{
+            transactions = null;
+        }
+        return c;
+    }
+
+    public Cursor queryAllTransactionsGivenUser(String user)
+    {
+        int userID = queryUser(user).getId();
+
+        ArrayList<Transaction> transactions = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.query(Transaction.TABLE_NAME, null, " " + Transaction.COLUMN_USER_ID + "= ? ",
+                new String[]{String.valueOf(userID)}, null, null, null);
+
+        if(c.moveToFirst())
+        {
+            do{
+
+                Cursor c2;
+                Transaction t;
+                if(c.getString(c.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)).equalsIgnoreCase("item")){
+                    c2 =   db.query(ItemTransaction.TABLE_NAME,
+                            null, // == *
+                            " " + ItemTransaction.COLUMN_TRANSACTION_ID + "= ? ", //WHERE _ = ?
+                            new String[]{String.valueOf(c.getInt(c.getColumnIndex(User.COLUMN_ID)))},
+                            null,
+                            null,
+                            null);
+                    c2.moveToFirst();
+                    t = new ItemTransaction(c.getString(c.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)),
+                            c.getInt(c.getColumnIndex(Transaction.COLUMN_USER_ID)),
+                            c.getString(c.getColumnIndex(Transaction.COLUMN_TYPE)),
+                            c.getInt(c.getColumnIndex(Transaction.COLUMN_STATUS)),
+                            c.getLong(c.getColumnIndex(Transaction.COLUMN_START_DATE)),
+                            c.getLong(c.getColumnIndex(Transaction.COLUMN_DUE_DATE)),
+                            c.getLong(c.getColumnIndex(Transaction.COLUMN_RETURN_DATE)),
+                            c.getDouble(c.getColumnIndex(Transaction.COLUMN_RATE)),
+                            c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_NAME)),
+                            c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_DESCRIPTION)),
+                            c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_PHOTOPATH)));
+                }else{
+                    c2 =   db.query(MoneyTransaction.TABLE_NAME,
+                            null, // == *
+                            " " + MoneyTransaction.COLUMN_TRANSACTION_ID + "= ? ", //WHERE _ = ?
+                            new String[]{String.valueOf(c.getInt(c.getColumnIndex(User.COLUMN_ID)))},
+                            null,
+                            null,
+                            null);
+                    c2.moveToFirst();
+                    t = new MoneyTransaction(c.getString(c.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)),
+                            c.getInt(c.getColumnIndex(Transaction.COLUMN_USER_ID)),
+                            c.getString(c.getColumnIndex(Transaction.COLUMN_TYPE)),
+                            c.getInt(c.getColumnIndex(Transaction.COLUMN_STATUS)),
+                            c.getLong(c.getColumnIndex(Transaction.COLUMN_START_DATE)),
+                            c.getLong(c.getColumnIndex(Transaction.COLUMN_DUE_DATE)),
+                            c.getLong(c.getColumnIndex(Transaction.COLUMN_RETURN_DATE)),
+                            c.getDouble(c.getColumnIndex(Transaction.COLUMN_RATE)),
+                            c2.getDouble(c2.getColumnIndex(MoneyTransaction.COLUMN_TOTAL_AMOUNT_DUE)),
+                            c2.getDouble(c2.getColumnIndex(MoneyTransaction.COLUMN_AMOUNT_DEFICIT)));
                 }
                 t.setId(c.getInt(c.getColumnIndex(User.COLUMN_ID)));
                 transactions.add(t);
@@ -455,7 +554,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                             c.getLong(c.getColumnIndex(Transaction.COLUMN_RETURN_DATE)),
                             c.getDouble(c.getColumnIndex(Transaction.COLUMN_RATE)),
                             c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_NAME)),
-                            c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_DESCRIPTION)));
+                            c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_DESCRIPTION)),
+                            c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_PHOTOPATH)));
                 }else{
                     c2 =   db.query(MoneyTransaction.TABLE_NAME,
                             null, // == *
@@ -524,6 +624,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         if(updatedTransaction.getClassification().equalsIgnoreCase("item")) {
             cv.put(ItemTransaction.COLUMN_NAME, ((ItemTransaction)updatedTransaction).getName());
             cv.put(ItemTransaction.COLUMN_DESCRIPTION, ((ItemTransaction)updatedTransaction).getDescription());
+            cv.put(ItemTransaction.COLUMN_PHOTOPATH, ((ItemTransaction)updatedTransaction).getPhotoPath());
             db.update(ItemTransaction.TABLE_NAME, cv, " " + ItemTransaction.COLUMN_TRANSACTION_ID + "= ? ", new String[]{String.valueOf(updatedTransaction.getId())});
         }else{
             cv.put(MoneyTransaction.COLUMN_TOTAL_AMOUNT_DUE, ((MoneyTransaction)updatedTransaction).getTotalAmountDue());
