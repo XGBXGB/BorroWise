@@ -50,6 +50,9 @@
             android:enabled="true"
             android:exported="true" >
         </receiver>
+        <receiver android:name=".Activities.SMSReceiver"
+            android:enabled="true"
+            android:exported="true"/>
     </application>
 
 </manifest>

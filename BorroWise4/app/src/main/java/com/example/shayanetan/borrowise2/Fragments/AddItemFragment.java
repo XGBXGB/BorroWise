@@ -1,5 +1,6 @@
 package com.example.shayanetan.borrowise2.Fragments;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -156,6 +157,7 @@ public class AddItemFragment extends AddAbstractFragment {
             //File finalFile = new File(getRealPathFromURI(tempUri));
 
             filePath = getRealPathFromURI(tempUri);
+
             img_camera.setImageBitmap(photo);
           //  img_camera.set;
             img_camera.setScaleType(ImageView.ScaleType.FIT_XY);

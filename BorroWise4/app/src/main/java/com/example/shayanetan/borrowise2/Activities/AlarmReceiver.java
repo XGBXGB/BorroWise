@@ -24,8 +24,8 @@ import java.util.Date;
 public class AlarmReceiver extends BroadcastReceiver {
 
     private final static int NOTIF_ID = 101;
-    private final static int MA_PENDING_INTENT = 0;
-    private final static int SA_PENDING_INTENT = 1;
+    private final static int MA_PENDING_INTENT = 10;
+    private final static int SA_PENDING_INTENT = 11;
     private static int COUNT = 0;
 
     private DatabaseOpenHelper dbHelper;
@@ -56,25 +56,25 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationCompat.Builder notif_builder = null;
 
         dbHelper = DatabaseOpenHelper.getInstance(context);
-        int transactionId = Integer.parseInt(intent2.getExtras().getString(Transaction.COLUMN_ID));
+        int transactionId = intent2.getExtras().getInt(Transaction.COLUMN_ID);
         String tranType = intent2.getExtras().getString(Transaction.COLUMN_CLASSIFICATION);
 
         Toast.makeText(context,"TRAN TYPE: "+ tranType,Toast.LENGTH_LONG);
 
         if(tranType.equalsIgnoreCase(Transaction.ITEM_TYPE)){
             ItemTransaction it = (ItemTransaction) dbHelper.queryTransaction(transactionId);
-            String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(it.getReturnDate()));
+            String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(it.getDueDate()));
             notif_builder = new NotificationCompat.Builder(context)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle("BorroWise pending item")
-                        .setContentText("Hurry!" + it.getName() + " will already be due on " + dateString)
+                        .setContentText("Hurry! " + it.getName() + " will already be due on " + dateString)
                         .setContentIntent(pendingIntent)
-                        .setTicker("Ticker")
+                        .setTicker("BorroWise")
                         .setNumber(COUNT)
                         .addAction(R.mipmap.ic_launcher, "Jump to Second",second_pendingIntent);
         }else if(tranType.equalsIgnoreCase(Transaction.MONEY_TYPE)){
             MoneyTransaction mt = (MoneyTransaction) dbHelper.queryTransaction(transactionId);
-            String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(mt.getReturnDate()));
+            String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(mt.getDueDate()));
             notif_builder = new NotificationCompat.Builder(context)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle("BorroWise pending item")

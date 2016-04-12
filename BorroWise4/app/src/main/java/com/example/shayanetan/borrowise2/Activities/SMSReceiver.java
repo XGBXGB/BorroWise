@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.telephony.SmsManager;
+import android.util.Log;
 
 import com.example.shayanetan.borrowise2.Models.DatabaseOpenHelper;
 
@@ -24,9 +26,14 @@ public class SMSReceiver extends BroadcastReceiver {
         String phoneNumber = intent.getExtras().getString(NUMBER);
         String message = intent.getExtras().getString(MESSAGE);
 
-        Intent smsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + phoneNumber));
-        intent.putExtra("sms_body", message);
-        context.startActivity(smsIntent);
+        Log.v("CHECK SMS", "PHONE NUMBER: "+ phoneNumber + " MESSAGE: "+message);
+//        SmsManager smsManager = SmsManager.getDefault();
+//        smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+
+        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+        smsIntent.setData(Uri.parse("sms:" + phoneNumber));
+        smsIntent.putExtra("sms_body", message);
+        context.startService(smsIntent);
 
     }
 }

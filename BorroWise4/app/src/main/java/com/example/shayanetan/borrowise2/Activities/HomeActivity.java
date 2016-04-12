@@ -5,8 +5,10 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.shayanetan.borrowise2.Fragments.AddItemFragment;
 import com.example.shayanetan.borrowise2.Fragments.AddAbstractFragment;
@@ -15,7 +17,9 @@ import com.example.shayanetan.borrowise2.Models.Transaction;
 import com.example.shayanetan.borrowise2.Models.User;
 import com.example.shayanetan.borrowise2.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class HomeActivity extends BaseActivity implements AddAbstractFragment.OnFragmentInteractionListener {
 
@@ -70,13 +74,16 @@ public class HomeActivity extends BaseActivity implements AddAbstractFragment.On
     @Override
     public void onAddTransactions(Transaction t) {
        long itemId =  dbHelper.insertTransaction(t);
-        setItemAlarm((int)itemId, t.getReturnDate(), t.getClassification(), t.getType());
+        setItemAlarm((int)itemId, t.getDueDate(), t.getClassification(), t.getType());
     }
 
     public void setItemAlarm(int item_id, long end, String classification, String type){
 
+        Toast.makeText(getBaseContext(), "TYPE: " + type, Toast.LENGTH_LONG);
+
         if(type.equalsIgnoreCase(Transaction.BORROWED_ACTION)){
             //Create an intent to broadcast
+            Log.v("TYPE", "TYPEEE: "+type);
             Intent intent = new Intent();
             intent.setClass(getBaseContext(), AlarmReceiver.class);//even receivers receive intents
             intent.putExtra(Transaction.COLUMN_ID, item_id);
@@ -85,32 +92,41 @@ public class HomeActivity extends BaseActivity implements AddAbstractFragment.On
 
             Calendar alarm = Calendar.getInstance();
             alarm.setTimeInMillis(end);
-            alarm.set(Calendar.HOUR_OF_DAY, 9);
-            alarm.set(Calendar.MINUTE, 7);
+            alarm.set(Calendar.HOUR_OF_DAY, 11);
+            alarm.set(Calendar.MINUTE, 5);
+            alarm.set(Calendar.SECOND, 0);
 
-           // if()
-            alarm.add(Calendar.DAY_OF_MONTH, -1);
+            String dateToday = new SimpleDateFormat("MM/dd/yyyy").format(new Date(Calendar.getInstance().getTimeInMillis()));
+            String dueDate = new SimpleDateFormat("MM/dd/yyyy").format(new Date(end));
+
+
+          if(!dateToday.equalsIgnoreCase(dueDate)) {
+              Log.v("CHECKKK","CALENDAR: " + dateToday+ " DUE: "+dueDate);
+              alarm.add(Calendar.DAY_OF_MONTH, -1);
+          }
 
             AlarmManager alarmManager = (AlarmManager)getSystemService(Service.ALARM_SERVICE);
             alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, alarm.getTimeInMillis(), pendingIntent);
-        }else if(type.equalsIgnoreCase(Transaction.LEND_ACTION)){
 
+        }else if(type.equalsIgnoreCase(Transaction.LEND_ACTION)){
+            Log.v("TYPE", "TYPEEE: "+type);
             Transaction tran = dbHelper.queryTransaction(item_id);
             User u = dbHelper.queryUser(tran.getUserID());
+            Log.v("USERRR", "USERNAMEEE: "+u.getName() + " "+ u.getContactInfo());
 
             Intent intent = new Intent(getBaseContext(), SMSReceiver.class);
             intent.putExtra(SMSReceiver.NUMBER,u.getContactInfo());
             intent.putExtra(SMSReceiver.MESSAGE, "BorroWise Trial");
 
-            PendingIntent pendingIntent = PendingIntent.getService(getBaseContext(), 0, intent, 0);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), item_id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 
             Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.add(Calendar.SECOND,20);
+            calendar.setTimeInMillis(end);
+            calendar.add(Calendar.SECOND, 20);
 
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
 
 
