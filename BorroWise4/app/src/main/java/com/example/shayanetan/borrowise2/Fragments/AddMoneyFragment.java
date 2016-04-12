@@ -1,7 +1,9 @@
 package com.example.shayanetan.borrowise2.Fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -12,6 +14,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.shayanetan.borrowise2.Models.MoneyTransaction;
@@ -37,13 +40,22 @@ public class AddMoneyFragment extends AddAbstractFragment {
         img_btn_switch = (FloatingActionButton) layout.findViewById(R.id.btn_MoneyToItem);
         btn_borrowed = (Button) layout.findViewById(R.id.btn_AMBorrow);
         btn_lent = (Button) layout.findViewById(R.id.btn_AMLend);
-
+        btn_addContact = (ImageView) layout.findViewById(R.id.btn_addContact);
         et_AMAmount = (EditText) layout.findViewById(R.id.et_AMAmount);
         atv_person_name = (AutoCompleteTextView) layout.findViewById(R.id.atv_AMPersonName);
         btn_start_date = (Button) layout.findViewById(R.id.btn_AMStartDate);
         btn_end_date = (Button) layout.findViewById(R.id.btn_AMEndDate);
 
         init(); //method can be found in abstract class
+
+        btn_addContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_INSERT,
+                        ContactsContract.Contacts.CONTENT_URI);
+                startActivity(intent);
+            }
+        });
 
         btn_borrowed.setOnClickListener(new View.OnClickListener() {
             @Override

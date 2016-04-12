@@ -62,12 +62,14 @@
         android:layout_below="@id/layout_item_name"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:weightSum="11"
         android:padding="5dp"
         android:layout_margin="5dp"
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="@dimen/navigation_icon_size"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="@dimen/navigation_icon_size"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="5dp"
@@ -75,13 +77,23 @@
 
         <AutoCompleteTextView
             android:id="@+id/atv_AIPersonName"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="8"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:hint="Person name"
             android:ems="10">
             <requestFocus />
         </AutoCompleteTextView>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:id="@+id/btn_addContact"
+            android:layout_weight="2"
+            android:layout_height="@dimen/navigation_icon_size"
+            android:layout_marginRight="3dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_add_plus"/>
 
     </LinearLayout>
 

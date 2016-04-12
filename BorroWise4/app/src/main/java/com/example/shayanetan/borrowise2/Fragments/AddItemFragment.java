@@ -1,6 +1,8 @@
 package com.example.shayanetan.borrowise2.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +13,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.shayanetan.borrowise2.Models.ItemTransaction;
@@ -35,7 +38,7 @@ public class AddItemFragment extends AddAbstractFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_add_item, container, false);
-
+        btn_addContact = (ImageView) layout.findViewById(R.id.btn_addContact);
         img_btn_switch = (FloatingActionButton) layout.findViewById(R.id.btn_ItemToMoney);
         et_AIItemName = (EditText) layout.findViewById(R.id.et_AIItemName);
 //        et_AIDescription = (EditText) layout.findViewById(R.id.et_AIDescription);
@@ -47,6 +50,15 @@ public class AddItemFragment extends AddAbstractFragment {
         btn_end_date = (Button) layout.findViewById(R.id.btn_AIEndDate);
 
         init(); // method found in abstact class
+
+        btn_addContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_INSERT,
+                        ContactsContract.Contacts.CONTENT_URI);
+                startActivity(intent);
+            }
+        });
 
         btn_borrowed.setOnClickListener(new View.OnClickListener() {
             @Override

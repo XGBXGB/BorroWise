@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.shayanetan.borrowise2.Adapters.ContactsCursorAdapter;
 import com.example.shayanetan.borrowise2.Models.CustomDate;
@@ -31,6 +32,7 @@ public abstract class AddAbstractFragment extends Fragment {
     protected String selected_name;
     protected String selected_contact_number;
     protected ContactsCursorAdapter contactsCursorAdapter;
+    protected ImageView btn_addContact;
 
     protected FragmentActivity myContext;
     protected AutoCompleteTextView atv_person_name;
