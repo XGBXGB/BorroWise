@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.shayanetan.borrowise2.Models.MoneyTransaction;
+import com.example.shayanetan.borrowise2.Models.Transaction;
 import com.example.shayanetan.borrowise2.R;
 
 
@@ -63,7 +64,7 @@ public class AddMoneyFragment extends AddAbstractFragment {
 
                 int id = mListener.onAddNewUser(selected_name, selected_contact_number);
 
-                MoneyTransaction m = new MoneyTransaction("Money", id, "borrow", 0,
+                MoneyTransaction m = new MoneyTransaction(Transaction.MONEY_TYPE, id, Transaction.BORROWED_ACTION, 0,
                                      parseDateToMillis(btn_start_date.getText().toString()),
                                      parseDateToMillis(btn_end_date.getText().toString()),
                                      0,0.0, Double.parseDouble(et_AMAmount.getText().toString()), 0.0);
@@ -78,7 +79,7 @@ public class AddMoneyFragment extends AddAbstractFragment {
 
                 int id = mListener.onAddNewUser(selected_name, selected_contact_number);
 
-                MoneyTransaction m = new MoneyTransaction("Money", id, "lend", 0,
+                MoneyTransaction m = new MoneyTransaction(Transaction.MONEY_TYPE, id, Transaction.LEND_ACTION, 0,
                                     parseDateToMillis(btn_start_date.getText().toString()),
                                     parseDateToMillis(btn_end_date.getText().toString()),
                                     0,0.0, Double.parseDouble(et_AMAmount.getText().toString()), 0.0);

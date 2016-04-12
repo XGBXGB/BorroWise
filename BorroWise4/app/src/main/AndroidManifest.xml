@@ -3,8 +3,13 @@
     package="com.example.shayanetan.borrowise2" >
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+=======
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+>>>>>>> origin/master
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -40,6 +45,11 @@
             android:name=".Activities.ViewUserProfileActivity"
             android:label="@string/title_activity_view_user_profile" >
         </activity>
+        <receiver
+            android:name=".Activities.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true" >
+        </receiver>
     </application>
 
 </manifest>

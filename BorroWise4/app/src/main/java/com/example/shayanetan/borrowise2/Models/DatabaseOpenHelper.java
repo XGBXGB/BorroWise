@@ -110,7 +110,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         long id = db.insert(Transaction.TABLE_NAME, null, cv);
 
         cv = new ContentValues();
-        if(t.getClassification().equalsIgnoreCase("item")){
+        if(t.getClassification().equalsIgnoreCase(Transaction.ITEM_TYPE)){
             cv.put(ItemTransaction.COLUMN_NAME, ((ItemTransaction) t).getName());
             cv.put(ItemTransaction.COLUMN_DESCRIPTION, ((ItemTransaction)t).getDescription());
             cv.put(ItemTransaction.COLUMN_PHOTOPATH, ((ItemTransaction) t).getPhotoPath());
@@ -444,7 +444,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
                 Cursor c2;
                 Transaction t;
-                if(c.getString(c.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)).equalsIgnoreCase("item")){
+                if(c.getString(c.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)).equalsIgnoreCase(Transaction.ITEM_TYPE)){
                     c2 =   db.query(ItemTransaction.TABLE_NAME,
                             null, // == *
                             " " + ItemTransaction.COLUMN_TRANSACTION_ID + "= ? ", //WHERE _ = ?
@@ -537,7 +537,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
                 Cursor c2;
                 Transaction t;
-                if(c.getString(c.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)).equalsIgnoreCase("item")){
+                if(c.getString(c.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)).equalsIgnoreCase(Transaction.ITEM_TYPE)){
                     c2 =   db.query(ItemTransaction.TABLE_NAME,
                             null, // == *
                             " " + ItemTransaction.COLUMN_TRANSACTION_ID + "= ? ", //WHERE _ = ?
@@ -663,7 +663,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     /*
     *DELETE OBJECT MODULE
     */
-
 
     public int checkUserIfExists(String name, String number){
         SQLiteDatabase db = getReadableDatabase();
