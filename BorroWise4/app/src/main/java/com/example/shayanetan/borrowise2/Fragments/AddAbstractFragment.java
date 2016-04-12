@@ -64,7 +64,24 @@ public abstract class AddAbstractFragment extends Fragment {
         myContext = (FragmentActivity) getActivity();
         Cursor contacts = null;
         contactsCursorAdapter = new ContactsCursorAdapter(myContext, contacts, 0);
+        atv_person_name.setThreshold(1);
         atv_person_name.setAdapter(contactsCursorAdapter);
+        atv_person_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] projection = new String[] {
+                        ContactsContract.CommonDataKinds.Phone._ID,
+                        ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                        ContactsContract.CommonDataKinds.Phone.TYPE,
+                        ContactsContract.CommonDataKinds.Phone.NUMBER};
+
+                Cursor contacts = getActivity().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, projection,null, null,
+                        ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC");
+                contactsCursorAdapter = new ContactsCursorAdapter(myContext, contacts, 0);
+                atv_person_name.setAdapter(contactsCursorAdapter);
+                atv_person_name.showDropDown();
+            }
+        });
         atv_person_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
