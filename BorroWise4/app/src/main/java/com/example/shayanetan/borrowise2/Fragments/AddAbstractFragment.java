@@ -1,11 +1,17 @@
 package com.example.shayanetan.borrowise2.Fragments;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +21,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.example.shayanetan.borrowise2.Activities.AlarmReceiver;
 import com.example.shayanetan.borrowise2.Adapters.ContactsCursorAdapter;
 import com.example.shayanetan.borrowise2.Models.CustomDate;
 import com.example.shayanetan.borrowise2.Models.Transaction;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -51,6 +59,7 @@ public abstract class AddAbstractFragment extends Fragment {
     protected abstract void onFragmentSwitch();
     protected abstract void clearAllFields();
     protected abstract void printAddAcknowledgement(String entry_name, String type);
+
     public interface OnFragmentInteractionListener{
         //TODO: Update argument type and name
         public int onAddNewUser(String name, String contact_info);

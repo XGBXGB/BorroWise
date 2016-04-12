@@ -15,6 +15,14 @@ public abstract class Transaction {
     public static final String COLUMN_RETURN_DATE = "return_date";
     public static final String COLUMN_RATE = "rate";
 
+
+    public static final String ITEM_TYPE = "Item";
+    public static final String MONEY_TYPE = "Money";
+
+    public static final String LEND_ACTION = "lend";
+    public static final String BORROWED_ACTION = "borrow";
+
+
     protected int id;
     protected String classification;
     protected int userID;

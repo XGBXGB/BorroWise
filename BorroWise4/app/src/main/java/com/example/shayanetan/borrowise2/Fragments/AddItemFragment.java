@@ -1,12 +1,16 @@
 package com.example.shayanetan.borrowise2.Fragments;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -23,7 +27,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.shayanetan.borrowise2.Activities.AlarmReceiver;
 import com.example.shayanetan.borrowise2.Models.ItemTransaction;
+import com.example.shayanetan.borrowise2.Models.Transaction;
 import com.example.shayanetan.borrowise2.R;
 
 import java.io.ByteArrayOutputStream;
@@ -35,7 +41,8 @@ public class AddItemFragment extends AddAbstractFragment {
     private FragmentTransaction transaction;
     private EditText et_AIItemName,
             et_AIDescription;
-    private LinearLayout card_camera;
+    private ImageView img_camera;
+    private View card_camera;
     private String filePath="";
 
     public AddItemFragment() {}
@@ -50,7 +57,8 @@ public class AddItemFragment extends AddAbstractFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_add_item, container, false);
-        card_camera = (LinearLayout) layout.findViewById(R.id.card_camera);
+        img_camera = (ImageView) layout.findViewById(R.id.img_camera);
+        card_camera = (View) layout.findViewById(R.id.card_camera);
         btn_addContact = (ImageView) layout.findViewById(R.id.btn_addContact);
         img_btn_switch = (FloatingActionButton) layout.findViewById(R.id.btn_ItemToMoney);
         et_AIItemName = (EditText) layout.findViewById(R.id.et_AIItemName);
@@ -88,7 +96,7 @@ public class AddItemFragment extends AddAbstractFragment {
                 if (mListener != null) {
                     int id = mListener.onAddNewUser(selected_name, selected_contact_number);
 
-                    ItemTransaction it = new ItemTransaction("Item", id, "borrow", 0,
+                    ItemTransaction it = new ItemTransaction(Transaction.ITEM_TYPE, id, Transaction.BORROWED_ACTION, 0,
                             parseDateToMillis(btn_start_date.getText().toString()),
                             parseDateToMillis(btn_end_date.getText().toString()),
                             0, 0.0,
@@ -96,6 +104,8 @@ public class AddItemFragment extends AddAbstractFragment {
                     mListener.onAddTransactions(it);
 
                     printAddAcknowledgement(et_AIItemName.getText().toString(), "borrowed");
+
+
                 }
 
                 clearAllFields();
@@ -109,13 +119,14 @@ public class AddItemFragment extends AddAbstractFragment {
                 if (mListener != null) {
                     int id = mListener.onAddNewUser(selected_name, selected_contact_number);
 
-                    ItemTransaction it = new ItemTransaction("Item", id, "lend", 0,
+                    ItemTransaction it = new ItemTransaction(Transaction.ITEM_TYPE, id, Transaction.LEND_ACTION, 0,
                             parseDateToMillis(btn_start_date.getText().toString()),
                             parseDateToMillis(btn_end_date.getText().toString()),
                             0, 0.0,
                             et_AIItemName.getText().toString(), "", filePath);
-                    mListener.onAddTransactions(it);
 
+
+                    mListener.onAddTransactions(it);
                     printAddAcknowledgement(et_AIItemName.getText().toString(), "lent");
                 }
 
@@ -145,6 +156,10 @@ public class AddItemFragment extends AddAbstractFragment {
             //File finalFile = new File(getRealPathFromURI(tempUri));
 
             filePath = getRealPathFromURI(tempUri);
+            img_camera.setImageBitmap(photo);
+          //  img_camera.set;
+            img_camera.setScaleType(ImageView.ScaleType.FIT_XY);
+
             System.out.println("CAMERA SAVED FILEPATH: " + getRealPathFromURI(tempUri));
             Toast.makeText(getActivity(), "CAMERA SAVED FILEPATH: " + getRealPathFromURI(tempUri), Toast.LENGTH_SHORT).show();
         }
@@ -157,6 +172,7 @@ public class AddItemFragment extends AddAbstractFragment {
     public void clearAllFields(){
         et_AIItemName.setText("");
         atv_person_name.setText("");
+        img_camera.setImageResource(R.drawable.ic_camera);
         setDateToCurrent();
     }
 

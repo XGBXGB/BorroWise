@@ -1,5 +1,6 @@
 package com.example.shayanetan.borrowise2.Activities;
 
+import android.database.Cursor;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -108,6 +109,14 @@ public class ViewUserProfileActivity extends BaseActivity implements ViewUserBor
 
     @Override
     public void retrieveTransaction(UsersCursorAdapter adapter, String viewType) {
-
+//        Cursor cursor = null;
+//        if(viewType.equalsIgnoreCase(ViewUserLentFragment.VIEW_TYPE)) {
+//            cursor= dbHelper.queryAllTransactionsGivenUser();
+//                    querryUsersType("borrow", "0,1,-1");
+//        }
+//        else if(viewType.equalsIgnoreCase(ViewUserBorrowedFragment.VIEW_TYPE)){
+//            cursor= dbHelper.querryUsersType("lend", "0,1,-1");
+//        }
+//        adapter.swapCursor(cursor);
     }
 }
