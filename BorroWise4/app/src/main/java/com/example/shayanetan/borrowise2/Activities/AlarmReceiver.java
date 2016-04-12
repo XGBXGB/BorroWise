@@ -57,7 +57,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         dbHelper = DatabaseOpenHelper.getInstance(context);
         int transactionId = Integer.parseInt(intent2.getExtras().getString(Transaction.COLUMN_ID));
-        String tranType = intent2.getExtras().getString(Transaction.COLUMN_TYPE);
+        String tranType = intent2.getExtras().getString(Transaction.COLUMN_CLASSIFICATION);
 
         Toast.makeText(context,"TRAN TYPE: "+ tranType,Toast.LENGTH_LONG);
 
