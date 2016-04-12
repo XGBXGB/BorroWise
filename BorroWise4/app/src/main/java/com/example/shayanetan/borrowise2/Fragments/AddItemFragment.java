@@ -1,8 +1,13 @@
 package com.example.shayanetan.borrowise2.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -14,10 +19,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.shayanetan.borrowise2.Models.ItemTransaction;
 import com.example.shayanetan.borrowise2.R;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 
 
 public class AddItemFragment extends AddAbstractFragment {
@@ -25,6 +34,7 @@ public class AddItemFragment extends AddAbstractFragment {
     private FragmentTransaction transaction;
     private EditText et_AIItemName,
             et_AIDescription;
+    private LinearLayout card_camera;
 
     public AddItemFragment() {}
 
@@ -38,6 +48,7 @@ public class AddItemFragment extends AddAbstractFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_add_item, container, false);
+        card_camera = (LinearLayout) layout.findViewById(R.id.card_camera);
         btn_addContact = (ImageView) layout.findViewById(R.id.btn_addContact);
         img_btn_switch = (FloatingActionButton) layout.findViewById(R.id.btn_ItemToMoney);
         et_AIItemName = (EditText) layout.findViewById(R.id.et_AIItemName);
@@ -50,6 +61,14 @@ public class AddItemFragment extends AddAbstractFragment {
         btn_end_date = (Button) layout.findViewById(R.id.btn_AIEndDate);
 
         init(); // method found in abstact class
+
+        card_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, 0);
+            }
+        });
 
         btn_addContact.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +124,28 @@ public class AddItemFragment extends AddAbstractFragment {
         return layout;
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //Bitmap bp = (Bitmap) data.getExtras().get("data");
+        //iv.setImageBitmap(bp);
+
+        Bitmap photo = (Bitmap) data.getExtras().get("data");
+        //imageView.setImageBitmap(photo);
+        //knop.setVisibility(Button.VISIBLE);
+
+
+        // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
+        Uri tempUri = getImageUri(getActivity().getApplicationContext(), photo);
+
+        // CALL THIS METHOD TO GET THE ACTUAL PATH
+        File finalFile = new File(getRealPathFromURI(tempUri));
+
+        System.out.println("CAMERA SAVED FILEPATH: "+getRealPathFromURI(tempUri));
+        Toast.makeText(getActivity(),"CAMERA SAVED FILEPATH: "+ getRealPathFromURI(tempUri), Toast.LENGTH_SHORT).show();
+    }
+
     public void printAddAcknowledgement(String entry_name, String type){
         Toast.makeText(getActivity(),entry_name+ " has been successfully "+ type + " !", Toast.LENGTH_SHORT).show();
     }
@@ -114,6 +155,21 @@ public class AddItemFragment extends AddAbstractFragment {
         atv_person_name.setText("");
         setDateToCurrent();
     }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public String getRealPathFromURI(Uri uri) {
+        Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(idx);
+    }
+
     @Override
     protected void onFragmentSwitch() {
         img_btn_switch.setOnClickListener(new View.OnClickListener() {
