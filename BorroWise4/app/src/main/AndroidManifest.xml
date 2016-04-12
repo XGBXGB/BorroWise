@@ -21,7 +21,6 @@
             android:name=".Activities.ViewUserActivity"
             android:label="@string/title_activity_view_user" >
         </activity>
-
         <activity
             android:name=".Activities.HomeActivity"
             android:label="@string/title_activity_home"
@@ -35,6 +34,10 @@
         <activity
             android:name=".Activities.HistoryActivity"
             android:label="@string/title_activity_history" >
+        </activity>
+        <activity
+            android:name=".Activities.ViewUserProfileActivity"
+            android:label="@string/title_activity_view_user_profile" >
         </activity>
     </application>
 

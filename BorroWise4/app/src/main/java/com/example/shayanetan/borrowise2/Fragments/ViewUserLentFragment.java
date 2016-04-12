@@ -15,16 +15,16 @@ import com.example.shayanetan.borrowise2.Adapters.TransactionsCursorAdapter;
 import com.example.shayanetan.borrowise2.Adapters.UsersCursorAdapter;
 import com.example.shayanetan.borrowise2.R;
 
-public class ViewBorrowerFragment extends Fragment {
+public class ViewUserLentFragment extends Fragment {
 
-    public static String VIEW_TYPE = "borrower_viewtype";
+    public static String VIEW_TYPE = "lender_viewtype";
 
     private RecyclerView recyclerView;
     private UsersCursorAdapter usersCursorAdapter;
 
     private OnFragmentInteractionListener mListener;
 
-    public ViewBorrowerFragment() {
+    public ViewUserLentFragment() {
         // Required empty public constructor
     }
 
@@ -39,10 +39,10 @@ public class ViewBorrowerFragment extends Fragment {
         usersCursorAdapter = new UsersCursorAdapter(getActivity().getBaseContext(),null);
 
         // Inflate the layout for this fragment
-        View layout = inflater.inflate(R.layout.fragment_users_borrowed, container, false);
+        View layout = inflater.inflate(R.layout.fragment_users_lent, container, false);
 
         //initiate adapter and set recycler view adapter
-        recyclerView = (RecyclerView)layout.findViewById(R.id.recyclerview_users_borrowed);
+        recyclerView = (RecyclerView)layout.findViewById(R.id.recyclerview_users_lent);
 
 
 

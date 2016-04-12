@@ -1,0 +1,69 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="com.example.shayanetan.borrowise2.Activities.ViewUserProfileActivity">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="160dp"
+        android:orientation="horizontal"
+        android:background="@color/accentColor">
+        <ImageView
+            android:id="@+id/img_userprofile"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="45dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_account_dark"/>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+            <TextView
+                android:id="@+id/tv_userprofile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shayane Tan"
+                android:textStyle="bold"
+                android:textSize="25dp"/>
+
+            <RatingBar
+                android:id="@+id/rb_userprofile_rating"
+                android:layout_below="@id/tv_userprofile_name"
+                android:layout_gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/ratingBarStyleIndicator"
+                android:numStars="5"
+                android:isIndicator="true"
+                android:stepSize="0.5"
+                android:rating="3.5"/>
+            <TextView
+                android:id="@+id/tv_userprofile_rating"
+                android:layout_toRightOf="@id/rb_userprofile_rating"
+                android:layout_below="@id/tv_userprofile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="8dp"
+                android:text="3.5"
+                android:textSize="20sp"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <com.example.shayanetan.borrowise2.Views.SlidingTabLayout
+        android:id="@+id/sliding_tab_userprofile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryColor" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager_userprofile"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
+
+</LinearLayout>

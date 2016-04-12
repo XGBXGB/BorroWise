@@ -1,69 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/card_transaction"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
     android:id="@+id/user_container">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:padding="15dp">
+    <ImageView
+        android:src="@drawable/ic_account_dark"
+        android:id="@+id/iv_user"
+        android:layout_gravity="center_vertical"
+        android:layout_height="30dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"/>
 
-        <ImageView
-            android:src="@drawable/ic_account_dark"
-            android:id="@+id/iv_user"
-            android:layout_height="100dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"/>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="3">
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:text="Shayane Tan"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="3"
-            android:paddingTop="10dp">
-
-
-
+            android:orientation="horizontal">
+            <RatingBar
+                android:id="@+id/rb_ratinguser"
+                android:layout_gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/ratingBarStyleSmall"
+                android:numStars="5"
+                android:isIndicator="true"
+                android:stepSize="0.5"
+                android:rating="3.5"/>
             <TextView
-                android:id="@+id/tv_username"
-                android:layout_marginLeft="10dp"
-                android:layout_width="match_parent"
+                android:id="@+id/tv_userrating"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:text="Shayane Tan"
-                android:textSize="30sp"
-                android:textStyle="bold"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <RatingBar
-                    android:id="@+id/rb_ratinguser"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="?android:attr/ratingBarStyleIndicator"
-                    android:numStars="5"
-                    android:isIndicator="true"
-                    android:stepSize="0.5"
-                    android:rating="3.5"/>
-                <TextView
-                    android:layout_marginTop="12dp"
-                    android:id="@+id/tv_userrating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="3.5"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="20sp"/>
-            </LinearLayout>
-
+                android:layout_marginLeft="15dp"
+                android:text="3.5"
+                android:textSize="13sp"/>
         </LinearLayout>
 
     </LinearLayout>
 
-
-</android.support.v7.widget.CardView>
+</LinearLayout>

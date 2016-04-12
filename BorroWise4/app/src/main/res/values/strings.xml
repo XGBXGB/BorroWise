@@ -52,4 +52,5 @@
     <string name="title_activity_people">People</string>
     <string name="title_activity_setting">Setting</string>
     <string name ="currency">PHP</string>
+    <string name="title_activity_view_user_profile">ViewUserProfile</string>
 </resources>

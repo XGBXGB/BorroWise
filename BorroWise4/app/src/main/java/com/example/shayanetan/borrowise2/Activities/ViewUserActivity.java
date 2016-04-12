@@ -1,37 +1,23 @@
 package com.example.shayanetan.borrowise2.Activities;
 
+import android.content.Intent;
 import android.database.Cursor;
-import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.shayanetan.borrowise2.Adapters.TransactionsCursorAdapter;
 import com.example.shayanetan.borrowise2.Adapters.UsersCursorAdapter;
-import com.example.shayanetan.borrowise2.Adapters.ViewPagerAdapter;
-import com.example.shayanetan.borrowise2.Fragments.ViewBorrowedFragment;
-import com.example.shayanetan.borrowise2.Fragments.ViewBorrowerFragment;
-import com.example.shayanetan.borrowise2.Fragments.ViewLenderFragment;
-import com.example.shayanetan.borrowise2.Fragments.ViewLentFragment;
 import com.example.shayanetan.borrowise2.Models.DatabaseOpenHelper;
-import com.example.shayanetan.borrowise2.Models.ItemTransaction;
-import com.example.shayanetan.borrowise2.Models.MoneyTransaction;
-import com.example.shayanetan.borrowise2.Views.SlidingTabLayout;
+import com.example.shayanetan.borrowise2.Models.User;
 import com.example.shayanetan.borrowise2.R;
 
-public class ViewUserActivity extends BaseActivity
-        implements ViewLenderFragment.OnFragmentInteractionListener, ViewBorrowerFragment.OnFragmentInteractionListener{
+public class ViewUserActivity extends BaseActivity {
 
-    private ViewPager viewPager;
-    private ViewPagerAdapter viewPagerAdapter;
-    private SlidingTabLayout slidingTabLayout;
-
-    private static String TITLE_TAB1 = "BORROWERS";
-    private static String TITLE_TAB2 = "LENDERS";
-
-    private ViewBorrowerFragment borrowFragment;
-    private ViewLenderFragment lentFragment;
     private DatabaseOpenHelper dbHelper;
+    private RecyclerView recView;
+    private UsersCursorAdapter uca;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,27 +25,20 @@ public class ViewUserActivity extends BaseActivity
         setContentView(R.layout.activity_view_user);
 
         dbHelper = DatabaseOpenHelper.getInstance(getBaseContext());
-        // transactionsCursorAdapter = new TransactionsCursorAdapter(getBaseContext(),null);
-        viewPagerAdapter = new ViewPagerAdapter(this.getSupportFragmentManager());
+        uca = new UsersCursorAdapter(getBaseContext(),null);
+        uca.setmOnItemClickListener(new UsersCursorAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(int id) {
+                Intent userProf = new Intent();
+                userProf.setClass(getBaseContext(), ViewUserProfileActivity.class);
+                userProf.putExtra(User.COLUMN_ID, id);
+                startActivity(userProf);
+            }
+        });
 
-        viewPager = (ViewPager)findViewById(R.id.view_pager);
-
-        borrowFragment = new ViewBorrowerFragment();
-        borrowFragment.setOnFragmentInteractionListener(this);
-        lentFragment = new ViewLenderFragment();
-        lentFragment.setOnFragmentInteractionListener(this);
-
-        viewPagerAdapter.addFragment(borrowFragment, TITLE_TAB1);
-        viewPagerAdapter.addFragment(lentFragment, TITLE_TAB2);
-
-        // viewPagerAdapter.addFragment(new TransactionLentFragment(), TITLE_TAB2);
-        viewPager.setAdapter(viewPagerAdapter);
-
-        slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tab);
-        // True if Tabs are same Width
-        slidingTabLayout.setDistributeEvenly(true);
-        slidingTabLayout.setViewPager(viewPager);
-
+        recView = (RecyclerView) findViewById(R.id.rec_view_user);
+        recView.setAdapter(uca);
+        recView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
     }
 
     @Override
@@ -67,6 +46,16 @@ public class ViewUserActivity extends BaseActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_view_transaction, menu);
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        //activity cycle
+        //the update function of the rec_view is in the onCreate()
+        //but after calling the addNoteAtivity it will proceed to onResume to place t update code statements to onResume();
+        super.onResume();
+        Cursor cursor = dbHelper.queryAllUsersC();
+        uca.swapCursor(cursor); //change data source
     }
 
     @Override
@@ -84,16 +73,4 @@ public class ViewUserActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-
-    @Override
-    public void retrieveTransaction(UsersCursorAdapter adapter, String viewType) {
-        Cursor cursor = null;
-        if(viewType.equalsIgnoreCase(ViewLenderFragment.VIEW_TYPE)) {
-            cursor= dbHelper.querryUsersType("borrow", "0,1,-1");
-        }
-        else if(viewType.equalsIgnoreCase(ViewBorrowerFragment.VIEW_TYPE)){
-            cursor= dbHelper.querryUsersType("lend", "0,1,-1");
-        }
-        adapter.swapCursor(cursor);
-    }
 }

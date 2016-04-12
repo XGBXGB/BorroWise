@@ -2,7 +2,6 @@ package com.example.shayanetan.borrowise2.Adapters;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +23,7 @@ public class UsersCursorAdapter extends CursorRecyclerViewAdapter<UsersCursorAda
 
     //private static final int TYPE_ITEM = 1;
     //private static final int TYPE_MONEY = 2;
-    //OnItemClickListener mOnItemClickListener;
+      onItemClickListener mOnItemClickListener;
 
     Context c;
     String namefortoast;
@@ -34,13 +33,13 @@ public class UsersCursorAdapter extends CursorRecyclerViewAdapter<UsersCursorAda
         c = context;
     }
 
-   /* public interface OnItemClickListener{
-        public void onItemClick(int id); //the id being the user's db id
+    public interface onItemClickListener{
+        public void onItemClick(int id);
     }
 
-    public void setOnItemClickListener(OnItemClickListener m){
+    public void setmOnItemClickListener(onItemClickListener m){
         this.mOnItemClickListener = m;
-    }*/
+    }
 
 
     @Override
@@ -58,11 +57,7 @@ public class UsersCursorAdapter extends CursorRecyclerViewAdapter<UsersCursorAda
                 new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        /*Toast.makeText(c, "Username is " + namefortoast,
-                                Toast.LENGTH_LONG).show();*/
-//                        mOnItemClickListener.onItemClick(Integer.parseInt(v.getTag().toString()));
-                        Toast.makeText(c, "Item is " + v.getTag(),
-                                Toast.LENGTH_SHORT).show();
+                        mOnItemClickListener.onItemClick(Integer.parseInt(v.getTag().toString()));
                     }
                 }
         );
@@ -87,14 +82,14 @@ public class UsersCursorAdapter extends CursorRecyclerViewAdapter<UsersCursorAda
     public class UsersViewHolder extends RecyclerView.ViewHolder
     {
         ImageView iv_user;
-        CardView user_container;
+        View user_container;
         TextView tv_username, tv_userrating;
         RatingBar rb_ratinguser;
 
         public UsersViewHolder(View itemView)
         {
             super(itemView);
-            user_container = (CardView) itemView.findViewById(R.id.user_container);
+            user_container = (View) itemView.findViewById(R.id.user_container);
             iv_user = (ImageView) itemView.findViewById(R.id.iv_user);
             tv_username = (TextView) itemView.findViewById(R.id.tv_username);
             rb_ratinguser = (RatingBar) itemView.findViewById(R.id.rb_ratinguser);
