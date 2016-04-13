@@ -174,7 +174,7 @@ public class AddItemFragment extends AddAbstractFragment {
     public void clearAllFields(){
         et_AIItemName.setText("");
         atv_person_name.setText("");
-        img_camera.setImageResource(R.drawable.ic_camera);
+        img_camera.setImageResource(R.drawable.ic_camera_small);
         setDateToCurrent();
     }
 

@@ -37,11 +37,11 @@
         </LinearLayout>
 
         <ImageView
-            android:src="@drawable/ic_image_placeholder"
+            android:background="@color/dividerColor"
             android:id="@+id/img_Hitem"
-            android:layout_marginTop="5dp"
-            android:layout_height="65dp"
-            android:layout_width="match_parent"/>
+            android:layout_height="80dp"
+            android:layout_width="match_parent"
+            android:scaleType="fitXY"/>
         <RatingBar
             android:id="@+id/rb_Hratingitem"
             android:layout_marginTop="5dp"

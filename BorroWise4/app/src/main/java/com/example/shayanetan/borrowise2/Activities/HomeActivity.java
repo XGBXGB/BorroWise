@@ -1,10 +1,12 @@
 package com.example.shayanetan.borrowise2.Activities;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -88,12 +90,12 @@ public class HomeActivity extends BaseActivity implements AddAbstractFragment.On
             intent.setClass(getBaseContext(), AlarmReceiver.class);//even receivers receive intents
             intent.putExtra(Transaction.COLUMN_ID, item_id);
             intent.putExtra(Transaction.COLUMN_CLASSIFICATION, classification);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), item_id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), item_id, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
             Calendar alarm = Calendar.getInstance();
             alarm.setTimeInMillis(end);
-            alarm.set(Calendar.HOUR_OF_DAY, 11);
-            alarm.set(Calendar.MINUTE, 5);
+            alarm.set(Calendar.HOUR_OF_DAY, 14);
+            alarm.set(Calendar.MINUTE, 30);
             alarm.set(Calendar.SECOND, 0);
 
             String dateToday = new SimpleDateFormat("MM/dd/yyyy").format(new Date(Calendar.getInstance().getTimeInMillis()));
@@ -106,27 +108,32 @@ public class HomeActivity extends BaseActivity implements AddAbstractFragment.On
           }
 
             AlarmManager alarmManager = (AlarmManager)getSystemService(Service.ALARM_SERVICE);
-            alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, alarm.getTimeInMillis(), pendingIntent);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarm.getTimeInMillis(), pendingIntent);
+
 
         }else if(type.equalsIgnoreCase(Transaction.LEND_ACTION)){
-            Log.v("TYPE", "TYPEEE: "+type);
+            Log.v("TYPE", "TYPEEE: " + type);
             Transaction tran = dbHelper.queryTransaction(item_id);
             User u = dbHelper.queryUser(tran.getUserID());
-            Log.v("USERRR", "USERNAMEEE: "+u.getName() + " "+ u.getContactInfo());
+            Log.v("USERRR", "USERNAMEEE: " + u.getName() + " " + u.getContactInfo());
 
             Intent intent = new Intent(getBaseContext(), SMSReceiver.class);
             intent.putExtra(SMSReceiver.NUMBER,u.getContactInfo());
             intent.putExtra(SMSReceiver.MESSAGE, "BorroWise Trial");
+            intent.putExtra(Transaction.COLUMN_ID, item_id);
 
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), item_id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), item_id, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
             AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(end);
-            calendar.add(Calendar.SECOND, 20);
+            Calendar smsAlarm = Calendar.getInstance();
+            smsAlarm.setTimeInMillis(end);
+            smsAlarm.set(Calendar.HOUR_OF_DAY, 14);
+            smsAlarm.set(Calendar.MINUTE, 30);
+            smsAlarm.set(Calendar.SECOND, 60);
 
-            alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, smsAlarm.getTimeInMillis(), pendingIntent);
+
         }
 
 

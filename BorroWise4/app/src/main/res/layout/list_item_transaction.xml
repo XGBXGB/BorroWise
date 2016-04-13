@@ -38,10 +38,9 @@
             android:layout_below="@id/layout_username_it"
             android:layout_width="match_parent"
             android:layout_height="65dp"
-            android:padding="5dp"
             android:orientation="horizontal">
             <ImageView
-                android:src="@drawable/ic_image_placeholder"
+                android:background="@color/dividerColor"
                 android:id="@+id/img_item"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"/>
@@ -62,23 +61,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/tv_duedateitem_label"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:text="@string/lbl_duedate"
                 android:layout_below="@id/tv_itemname"/>
 
             <TextView
                 android:id="@+id/tv_duedateitem_val"
-                android:layout_width="0dp"
-                android:layout_weight="3"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:text="@string/lbl_duedate"
+                android:textStyle="bold"
                 android:gravity="right"
                 android:layout_toRightOf="@id/tv_duedateitem_label"
                 android:layout_below="@id/tv_itemname"/>

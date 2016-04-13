@@ -35,22 +35,15 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 
         // TODO: This method is called when the BroadcastReceiver is receiving
-        // an Intent broadcast.
-        //go back to main activity
+
         Intent intent = new Intent();
         intent.setClass(context, HomeActivity.class);
-
-        //also have a request code because you can have two pending intents with diffirent activity
         PendingIntent pendingIntent = PendingIntent.getActivity(context,MA_PENDING_INTENT, intent, PendingIntent.FLAG_UPDATE_CURRENT);//flag_update_current depends on the extras
-        //note: flag_update_current won't allow android to create a new pending intent
 
-        //go back to second activity
         Intent secondact_intent= new Intent();
-
-        intent.setClass(context, ViewTransactionActivity.class);
-        //also have a request code because you can have two pending intents with diffirent activity
+        secondact_intent.setClass(context,ViewTransactionActivity.class);
         PendingIntent second_pendingIntent = PendingIntent.getActivity(context,SA_PENDING_INTENT, secondact_intent, PendingIntent.FLAG_UPDATE_CURRENT);//flag_update_current depends on the extras
-        //note: flag_update_current won't allow android to create a new pending intent
+
 
         //create a notification
         NotificationCompat.Builder notif_builder = null;
@@ -71,18 +64,18 @@ public class AlarmReceiver extends BroadcastReceiver {
                         .setContentIntent(pendingIntent)
                         .setTicker("BorroWise")
                         .setNumber(COUNT)
-                        .addAction(R.mipmap.ic_launcher, "Jump to Second",second_pendingIntent);
+                        .addAction(R.drawable.ic_item_dark, "View Item",second_pendingIntent);
         }else if(tranType.equalsIgnoreCase(Transaction.MONEY_TYPE)){
             MoneyTransaction mt = (MoneyTransaction) dbHelper.queryTransaction(transactionId);
             String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(mt.getDueDate()));
             notif_builder = new NotificationCompat.Builder(context)
                     .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentTitle("BorroWise pending item")
-                    .setContentText("Hurry!" + mt.getTotalAmountDue() + " will already be due on " + dateString)
+                    .setContentTitle("BorroWise pending amount due")
+                    .setContentText("Hurry! " + mt.getTotalAmountDue() + " will already be due on " + dateString)
                     .setContentIntent(pendingIntent)
                     .setTicker("Ticker")
                     .setNumber(COUNT)
-                    .addAction(R.mipmap.ic_launcher, "Jump to Second",second_pendingIntent);
+                    .addAction(R.drawable.ic_money_dark, "View Amount",second_pendingIntent);
         }
 
         if(notif_builder != null) {

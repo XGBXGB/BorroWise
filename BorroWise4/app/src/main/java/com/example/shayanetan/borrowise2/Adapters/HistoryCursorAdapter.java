@@ -55,24 +55,33 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
         String name = cursor.getString(cursor.getColumnIndex(User.COLUMN_NAME));
         String returnDate="";
         String dueDate = parseMillisToDate(cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_DUE_DATE)));
+        String startDate = parseMillisToDate(cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_START_DATE)));
+        double rating = cursor.getDouble(cursor.getColumnIndex(Transaction.COLUMN_RATE));
+        String transactionAttribute1 = cursor.getString(cursor.getColumnIndex("Attribute1"));
+
         if(cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_STATUS)) == -1) {
             returnDate = "N/A";
         }
         else{
             returnDate = parseMillisToDate(cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_RETURN_DATE)));
         }
-        String startDate = parseMillisToDate(cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_START_DATE)));
-        double rating = cursor.getDouble(cursor.getColumnIndex(Transaction.COLUMN_RATE));
-        String transactionAttribute1 = cursor.getString(cursor.getColumnIndex("Attribute1"));
+
         switch (viewHolder.getItemViewType()) {
             case TYPE_ITEM:
                 String status = cursor.getString(cursor.getColumnIndex(Transaction.COLUMN_STATUS));
+                String statusFinal = "";
+
                 ((BorrowedItemViewHolder)viewHolder).tv_Haccount_item.setText(name);
                 ((BorrowedItemViewHolder)viewHolder).tv_Hduedateitem_val.setText(dueDate);
                 ((BorrowedItemViewHolder)viewHolder).tv_Hitemname.setText(transactionAttribute1);
                 ((BorrowedItemViewHolder)viewHolder).tv_Hretdateitem_val.setText(returnDate);
                 ((BorrowedItemViewHolder)viewHolder).tv_Hstartdateitem_val.setText(startDate);
-                ((BorrowedItemViewHolder)viewHolder).tv_Hstatusitem_val.setText(status);
+
+                switch (status){
+                    case "1": statusFinal = "Returned"; break;
+                    case "-1": statusFinal = "Lost"; break;
+                }
+                ((BorrowedItemViewHolder)viewHolder).tv_Hstatusitem_val.setText(statusFinal);
                 ((BorrowedItemViewHolder)viewHolder).rb_Hratingitem.setRating((float)rating);
                 break;
 

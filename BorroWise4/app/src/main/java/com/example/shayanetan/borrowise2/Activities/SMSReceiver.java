@@ -1,14 +1,20 @@
 package com.example.shayanetan.borrowise2.Activities;
 
+import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.shayanetan.borrowise2.Models.DatabaseOpenHelper;
+import com.example.shayanetan.borrowise2.Models.Transaction;
 
 /**
  * Created by ShayaneTan on 4/12/2016.
@@ -17,23 +23,71 @@ public class SMSReceiver extends BroadcastReceiver {
     public static final String NUMBER = "Number";
     public static final String MESSAGE = "Message";
 
+    public static final String SENT = "SMS_SENT";
+    public static final String DELIVERED = "SMS_DELIVERED";
+
     private DatabaseOpenHelper dbHelper;
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, Intent intent) {
 
 
         String phoneNumber = intent.getExtras().getString(NUMBER);
         String message = intent.getExtras().getString(MESSAGE);
+        int item_id = intent.getExtras().getInt(Transaction.COLUMN_ID);
 
         Log.v("CHECK SMS", "PHONE NUMBER: "+ phoneNumber + " MESSAGE: "+message);
-//        SmsManager smsManager = SmsManager.getDefault();
-//        smsManager.sendTextMessage(phoneNumber, null, message, null, null);
 
-        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-        smsIntent.setData(Uri.parse("sms:" + phoneNumber));
-        smsIntent.putExtra("sms_body", message);
-        context.startService(smsIntent);
+        PendingIntent sentPI = PendingIntent.getBroadcast(context,item_id,new Intent(SENT),PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent deliveredPI = PendingIntent.getBroadcast(context, item_id, new Intent(DELIVERED), PendingIntent.FLAG_UPDATE_CURRENT);
+
+//        context.registerReceiver(new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                switch(getResultCode()){
+//                    case Activity.RESULT_OK:
+//                        Toast.makeText(context, "SMS sent",
+//                                Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
+//                        Toast.makeText(context, "Generic failure",
+//                                Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case SmsManager.RESULT_ERROR_NO_SERVICE:
+//                        Toast.makeText(context, "No service",
+//                                Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case SmsManager.RESULT_ERROR_NULL_PDU:
+//                        Toast.makeText(context, "Null PDU",
+//                                Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case SmsManager.RESULT_ERROR_RADIO_OFF:
+//                        Toast.makeText(context, "Radio off",
+//                                Toast.LENGTH_SHORT).show();
+//                        break;
+//                }
+//
+//            }
+//        }, new IntentFilter(SENT));
+//
+//        //---when the SMS has been delivered---
+//        context.registerReceiver(new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context arg0, Intent arg1) {
+//                switch (getResultCode()) {
+//                    case Activity.RESULT_OK:
+//                        Toast.makeText(context, "SMS delivered",
+//                                Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case Activity.RESULT_CANCELED:
+//                        Toast.makeText(context, "SMS not delivered",
+//                                Toast.LENGTH_SHORT).show();
+//                        break;
+//                }
+//            }
+//        }, new IntentFilter(DELIVERED));
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage(phoneNumber, null, message, null,null);
 
     }
 }
