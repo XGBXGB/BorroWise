@@ -19,12 +19,12 @@
 
         <ImageView
             android:id="@+id/img_camera"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_camera"
+            android:src="@drawable/ic_camera_small"
             android:adjustViewBounds="true"
-            android:scaleType="fitXY" />
+            android:scaleType="centerCrop" />
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
