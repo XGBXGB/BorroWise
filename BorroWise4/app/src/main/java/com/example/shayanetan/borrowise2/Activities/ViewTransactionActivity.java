@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.shayanetan.borrowise2.Adapters.TransactionsCursorAdapter;
 import com.example.shayanetan.borrowise2.Adapters.ViewPagerAdapter;
+import com.example.shayanetan.borrowise2.Fragments.AmountDialogFragment;
 import com.example.shayanetan.borrowise2.Fragments.RatingDialogFragment;
 import com.example.shayanetan.borrowise2.Fragments.ViewBorrowedFragment;
 import com.example.shayanetan.borrowise2.Fragments.ViewLentFragment;
@@ -99,9 +100,24 @@ public class ViewTransactionActivity extends BaseActivity
         }
         this.TempID = id;
 
-        DialogFragment dialogFragment
-                = new RatingDialogFragment();
-        dialogFragment.show(getFragmentManager(), "");
+        if(currBtn == TransactionsCursorAdapter.BTN_TYPE_PARTIAL) {
+
+            AmountDialogFragment df = new AmountDialogFragment();
+            df.show(getFragmentManager(), "");
+
+           // MoneyTransaction m = (MoneyTransaction) dbHelper.queryTransaction(TempID);
+            //m.setAmountDeficit(0);
+           // m.setReturnDate(System.currentTimeMillis());
+           // m.setStatus(1);
+            //m.setRate(rating);
+            //transID = dbHelper.updateTransaction(m);
+        }
+        else
+        {
+            DialogFragment dialogFragment
+                    = new RatingDialogFragment();
+            dialogFragment.show(getFragmentManager(), "");
+        }
 
     }
 
@@ -124,13 +140,19 @@ public class ViewTransactionActivity extends BaseActivity
             case TransactionsCursorAdapter.TYPE_MONEY:
                 if(currBtn == TransactionsCursorAdapter.BTN_TYPE_RETURN) {
                     MoneyTransaction m = (MoneyTransaction) dbHelper.queryTransaction(TempID);
-                    m.setAmountDeficit(0);
+                    m.setAmountDeficit(m.getAmountDeficit());
                     m.setReturnDate(System.currentTimeMillis());
                     m.setStatus(1);
                     m.setRate(rating);
                     transID = dbHelper.updateTransaction(m);
                 }else{
-                    Toast.makeText(this, "PARTIALS NOT YET SUPPORTED", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, "PARTIALS NOT YET SUPPORTED", Toast.LENGTH_SHORT).show();
+                    MoneyTransaction m = (MoneyTransaction) dbHelper.queryTransaction(TempID);
+                   // m.setAmountDeficit(m.getAmountDeficit());
+                   // m.setReturnDate(System.currentTimeMillis());
+                   // m.setStatus(1);
+                    m.setRate(rating);
+                    transID = dbHelper.updateTransaction(m);
                 }
                 break;
             case TransactionsCursorAdapter.TYPE_ITEM:
@@ -153,6 +175,29 @@ public class ViewTransactionActivity extends BaseActivity
         }
         Transaction transaction = dbHelper.queryTransaction(transID);
         dbHelper.updateUserRating(transaction.getUserID());
+    }
+
+    public void transactPartial(Double partialAmt)
+    {
+        MoneyTransaction m = (MoneyTransaction) dbHelper.queryTransaction(TempID);
+        m.setAmountDeficit(m.getAmountDeficit() - partialAmt);
+        m.setReturnDate(System.currentTimeMillis());
+        m.setStatus(0);
+        Toast.makeText(this, "Deficit " + m.getAmountDeficit(), Toast.LENGTH_LONG).show();
+        if(m.getAmountDeficit() == 0)
+        {
+            DialogFragment dialogFragment
+                    = new RatingDialogFragment();
+            dialogFragment.show(getFragmentManager(), "");
+
+            MoneyTransaction m2 = (MoneyTransaction) dbHelper.queryTransaction(TempID);
+            m2.setAmountDeficit(m.getAmountDeficit() - partialAmt);
+            m2.setReturnDate(System.currentTimeMillis());
+            m2.setStatus(1);
+            TempID = dbHelper.updateTransaction(m2);
+        }
+        else
+            TempID = dbHelper.updateTransaction(m);
     }
 }
 

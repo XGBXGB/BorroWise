@@ -67,7 +67,7 @@ public class AddMoneyFragment extends AddAbstractFragment {
                 MoneyTransaction m = new MoneyTransaction(Transaction.MONEY_TYPE, id, Transaction.BORROWED_ACTION, 0,
                                      parseDateToMillis(btn_start_date.getText().toString()),
                                      parseDateToMillis(btn_end_date.getText().toString()),
-                                     0,0.0, Double.parseDouble(et_AMAmount.getText().toString()), 0.0);
+                                     0,0.0, Double.parseDouble(et_AMAmount.getText().toString()), Double.parseDouble(et_AMAmount.getText().toString()));
                 mListener.onAddTransactions(m);
                 printAddAcknowledgement(et_AMAmount.getText().toString(), "borrowed");
             }
