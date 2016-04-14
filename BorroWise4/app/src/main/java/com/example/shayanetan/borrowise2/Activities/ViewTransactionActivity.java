@@ -148,6 +148,30 @@ public class ViewTransactionActivity extends BaseActivity
     }
 
     @Override
+    public void retrieveTransaction(TransactionsCursorAdapter adapter, String viewType, String filterType) {
+        Cursor cursor = null;
+
+        Log.v("PASOKKKKK", "HALU");
+        if(viewType.equalsIgnoreCase(ViewLentFragment.VIEW_TYPE) && filterType.equalsIgnoreCase("all")) {
+            cursor= dbHelper.querryLendTransactionsJoinUser("0");
+        }
+        else if(viewType.equalsIgnoreCase(ViewLentFragment.VIEW_TYPE) && (filterType.equalsIgnoreCase("Item")
+                || filterType.equalsIgnoreCase("Money")))
+        {
+            cursor = dbHelper.querryLendTransactionsJoinUser("0", filterType);
+        }
+        else if(viewType.equalsIgnoreCase(ViewBorrowedFragment.VIEW_TYPE)&& filterType.equalsIgnoreCase("all")){
+            cursor = dbHelper.querryBorrowTransactionsJoinUser("0");
+        }
+        else if(viewType.equalsIgnoreCase(ViewBorrowedFragment.VIEW_TYPE) && (filterType.equalsIgnoreCase("Item")
+                || filterType.equalsIgnoreCase("Money")))
+        {
+            cursor = dbHelper.querryBorrowTransactionsJoinUser("0", filterType);
+        }
+        adapter.swapCursor(cursor);
+    }
+
+    @Override
     public void updateAmount(TransactionsCursorAdapter adapter, String viewType, double partialAmt) {
 
 

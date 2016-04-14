@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.example.shayanetan.borrowise2.Adapters.TransactionsCursorAdapter;
@@ -24,6 +25,8 @@ public class ViewLentFragment extends Fragment {
     private TransactionsCursorAdapter transactionsCursorAdapter;
 
     private OnFragmentInteractionListener mListener;
+
+    private Button btn_TLent_all, btn_TLent_item, btn_TLent_money;
 
     public ViewLentFragment() {
         // Required empty public constructor
@@ -57,6 +60,36 @@ public class ViewLentFragment extends Fragment {
         recyclerView.setAdapter(transactionsCursorAdapter);
         mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE);
 
+
+        btn_TLent_all = (Button) layout.findViewById(R.id.btn_TBorrowed_all);
+        btn_TLent_item = (Button) layout.findViewById(R.id.btn_TBorrowed_item);
+        btn_TLent_money = (Button) layout.findViewById(R.id.btn_TBorrowed_money);
+
+        btn_TLent_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE);
+            }
+        });
+
+        btn_TLent_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, "Item");
+            }
+        });
+
+        btn_TLent_money.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, "Money");
+            }
+        });
+
+
+
+
+
         return layout;
     }
 
@@ -75,6 +108,7 @@ public class ViewLentFragment extends Fragment {
 
         public void updateTransaction(int id, int type, int btnType, TransactionsCursorAdapter adapter, String viewType);
         public void retrieveTransaction(TransactionsCursorAdapter adapter, String viewType);
+        public void retrieveTransaction(TransactionsCursorAdapter adapter, String viewType, String filterType);
     }
     public void setOnFragmentInteractionListener(OnFragmentInteractionListener mListener){
         this.mListener = mListener;

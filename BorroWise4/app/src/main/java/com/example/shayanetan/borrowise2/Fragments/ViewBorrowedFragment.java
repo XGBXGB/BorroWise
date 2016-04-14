@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.example.shayanetan.borrowise2.Adapters.TransactionsCursorAdapter;
@@ -25,6 +26,8 @@ public class ViewBorrowedFragment extends Fragment {
     private TransactionsCursorAdapter transactionsCursorAdapter;
 
     private OnFragmentInteractionListener mListener;
+
+    private Button btn_TBorrowed_all, btn_TBorrowed_item, btn_TBorrowed_money;
 
     public ViewBorrowedFragment() {
         // Required empty public constructor
@@ -60,6 +63,35 @@ public class ViewBorrowedFragment extends Fragment {
         recyclerView.setAdapter(transactionsCursorAdapter);
         mListener.retrieveTransaction(transactionsCursorAdapter,VIEW_TYPE);
 
+        /*********************************************************************/
+        btn_TBorrowed_all = (Button) layout.findViewById(R.id.btn_TBorrowed_all);
+        btn_TBorrowed_item = (Button) layout.findViewById(R.id.btn_TBorrowed_item);
+        btn_TBorrowed_money = (Button) layout.findViewById(R.id.btn_TBorrowed_money);
+
+        btn_TBorrowed_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE);
+            }
+        });
+
+        btn_TBorrowed_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, "Item");
+            }
+        });
+
+        btn_TBorrowed_money.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, "Money");
+            }
+        });
+
+
+
+
         return layout;
     }
 
@@ -74,6 +106,7 @@ public class ViewBorrowedFragment extends Fragment {
     public interface OnFragmentInteractionListener{
         public void updateTransaction(int id, int type, int btnType,TransactionsCursorAdapter adapter, String viewType);
         public void retrieveTransaction(TransactionsCursorAdapter adapter, String viewType);
+        public void retrieveTransaction(TransactionsCursorAdapter adapter, String viewType, String filterType);
     }
     public void setOnFragmentInteractionListener(OnFragmentInteractionListener mListener){
         this.mListener = mListener;
