@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.example.shayanetan.borrowise2.Adapters.TransactionsCursorAdapter;
+import com.example.shayanetan.borrowise2.Models.Transaction;
 import com.example.shayanetan.borrowise2.R;
 
 public class ViewLentFragment extends Fragment {
@@ -61,9 +62,9 @@ public class ViewLentFragment extends Fragment {
         mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE);
 
 
-        btn_TLent_all = (Button) layout.findViewById(R.id.btn_TBorrowed_all);
-        btn_TLent_item = (Button) layout.findViewById(R.id.btn_TBorrowed_item);
-        btn_TLent_money = (Button) layout.findViewById(R.id.btn_TBorrowed_money);
+        btn_TLent_all = (Button) layout.findViewById(R.id.btn_TLent_all);
+        btn_TLent_item = (Button) layout.findViewById(R.id.btn_TLent_item);
+        btn_TLent_money = (Button) layout.findViewById(R.id.btn_TLent_money);
 
         btn_TLent_all.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,20 +76,16 @@ public class ViewLentFragment extends Fragment {
         btn_TLent_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, "Item");
+                mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, Transaction.ITEM_TYPE);
             }
         });
 
         btn_TLent_money.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, "Money");
+                mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, Transaction.MONEY_TYPE);
             }
         });
-
-
-
-
 
         return layout;
     }

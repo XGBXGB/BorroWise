@@ -78,14 +78,14 @@ public class ViewBorrowedFragment extends Fragment {
         btn_TBorrowed_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, "Item");
+                mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, Transaction.ITEM_TYPE);
             }
         });
 
         btn_TBorrowed_money.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, "Money");
+                mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, Transaction.MONEY_TYPE);
             }
         });
 
