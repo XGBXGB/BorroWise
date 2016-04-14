@@ -81,6 +81,9 @@ public class BaseActivity extends AppCompatActivity implements
             case R.id.menuitem_account:
                 i.setClass(getBaseContext(),ViewUserActivity.class);
                 break;
+            case R.id.menuitem_settings:
+                i.setClass(getBaseContext(),SettingsActivity.class);
+                break;
             default:
                 i.setClass(getBaseContext(),HomeActivity.class);
         }

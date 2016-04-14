@@ -5,7 +5,9 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.Menu;
@@ -28,6 +30,11 @@ public class HomeActivity extends BaseActivity implements AddAbstractFragment.On
 
     private AddItemFragment itemFragment;
     private DatabaseOpenHelper dbHelper;
+
+    final static String SP_KEY_BORROW_TIME = "BORROWTIME";
+    final static String SP_KEY_BORROW_DAYS = "BORROWDAYS";
+    final static String SP_KEY_LEND_TIME = "LENDTIME";
+    final static String SP_KEY_LEND_DAYS = "LENDDAYS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +89,12 @@ public class HomeActivity extends BaseActivity implements AddAbstractFragment.On
     public void setItemAlarm(int item_id, long end, String classification, String type){
 
         Toast.makeText(getBaseContext(), "TYPE: " + type, Toast.LENGTH_LONG);
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String borrowDay = sp.getString(SP_KEY_BORROW_DAYS, null);
+        String borrowTime = sp.getString(SP_KEY_BORROW_TIME, null);
+        String lendDay = sp.getString(SP_KEY_LEND_DAYS, null);
+        String lendTime = sp.getString(SP_KEY_LEND_TIME, null);
 
         if(type.equalsIgnoreCase(Transaction.BORROWED_ACTION)){
             //Create an intent to broadcast

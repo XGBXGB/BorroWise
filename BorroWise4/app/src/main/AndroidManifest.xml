@@ -38,6 +38,10 @@
             android:label="@string/title_activity_history" >
         </activity>
         <activity
+            android:name=".Activities.SettingsActivity"
+            android:label="Settings" >
+        </activity>
+        <activity
             android:name=".Activities.ViewUserProfileActivity"
             android:label="@string/title_activity_view_user_profile" >
         </activity>

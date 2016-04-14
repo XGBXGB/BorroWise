@@ -1,0 +1,127 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context="com.example.shayanetan.borrowise2.Activities.SettingsActivity">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lend Module"
+            android:textSize="30sp"
+            android:paddingTop="20dp"
+            android:paddingLeft="10dp"
+            android:textColor="#000000"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:text="Alarm time: "
+                android:textSize="22sp"/>
+
+            <Button
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:background="@drawable/accent_dark_border"
+                android:id="@+id/btn_lendTime"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:text="Days before: "
+                android:textSize="22sp"/>
+
+            <EditText
+                android:layout_width=" 100dp"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:id="@+id/et_lendDays"/>
+        </LinearLayout>
+
+
+        <TextView android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Borrow Module"
+            android:textSize="30sp"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="30dp"
+            android:textColor="#000000"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:paddingLeft="20dp"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:text="Alarm time: "
+                android:textSize="22sp"/>
+
+            <Button
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:background="@drawable/accent_dark_border"
+                android:id="@+id/btn_borrowTime"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:text="Days before: "
+                android:textSize="22sp"/>
+
+            <EditText
+                android:layout_width=" 100dp"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:id="@+id/et_borrowDays"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_alignParentBottom="true">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/accentDarkColor"
+            android:text="Save Changes"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:padding="12dp"
+            android:textAllCaps="false"
+            android:id="@+id/btn_save"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -6,6 +6,8 @@ package com.example.shayanetan.borrowise2.Adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.example.shayanetan.borrowise2.Models.Transaction;
 import com.example.shayanetan.borrowise2.Models.User;
 import com.example.shayanetan.borrowise2.R;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -58,6 +61,7 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
         String startDate = parseMillisToDate(cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_START_DATE)));
         double rating = cursor.getDouble(cursor.getColumnIndex(Transaction.COLUMN_RATE));
         String transactionAttribute1 = cursor.getString(cursor.getColumnIndex("Attribute1"));
+        String transactionAttribute3 = cursor.getString(cursor.getColumnIndex("Attribute3"));
 
         if(cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_STATUS)) == -1) {
             returnDate = "N/A";
@@ -71,6 +75,12 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
                 String status = cursor.getString(cursor.getColumnIndex(Transaction.COLUMN_STATUS));
                 String statusFinal = "";
 
+
+                File imgFile = new  File(transactionAttribute3);
+                if(imgFile.exists()){
+                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                    ((BorrowedItemViewHolder)viewHolder).img_Hitem.setImageBitmap(myBitmap);
+                }
                 ((BorrowedItemViewHolder)viewHolder).tv_Haccount_item.setText(name);
                 ((BorrowedItemViewHolder)viewHolder).tv_Hduedateitem_val.setText(dueDate);
                 ((BorrowedItemViewHolder)viewHolder).tv_Hitemname.setText(transactionAttribute1);
