@@ -19,10 +19,11 @@ public class RatingDialogFragment extends DialogFragment {
 
     private TransactionsCursorAdapter transactionsCursorAdapter;
     private String viewType;
+    private String filterType;
     private OnFragmentInteractionListener mListener;
 
     public interface OnFragmentInteractionListener{
-        public void updateRating(TransactionsCursorAdapter transactionsCursorAdapter, String viewType, double rating);
+        public void updateRating(TransactionsCursorAdapter transactionsCursorAdapter, String viewType, String filterType, double rating);
     }
 
     public void setViewType(String viewType) {
@@ -33,6 +34,9 @@ public class RatingDialogFragment extends DialogFragment {
         this.transactionsCursorAdapter = transactionsCursorAdapter;
     }
 
+    public void setFilterType(String filterType) {
+        this.filterType = filterType;
+    }
     public void setOnFragmentInteractionListener(OnFragmentInteractionListener mListener){
         this.mListener = mListener;
     }
@@ -54,7 +58,7 @@ public class RatingDialogFragment extends DialogFragment {
                                 /* EditText etxtName = (EditText) v.findViewById(R.id.etxt_name);
                                 ((MainActivity)getActivity()).onNoSelected(etxtName.getText().toString());*/
                                 RatingBar rb = (RatingBar) v.findViewById(R.id.DialogRB);
-                                mListener.updateRating(transactionsCursorAdapter, viewType,rb.getRating());
+                                mListener.updateRating(transactionsCursorAdapter, viewType,filterType,rb.getRating());
                               //  ((ViewTransactionActivity)getActivity()).setExpRating(rb.getRating());
                             }
                         }

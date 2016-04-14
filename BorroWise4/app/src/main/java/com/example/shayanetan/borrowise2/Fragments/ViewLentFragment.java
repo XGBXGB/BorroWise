@@ -22,6 +22,8 @@ public class ViewLentFragment extends Fragment {
     public static String VIEW_TYPE = "lent_viewtype";
 
     private RecyclerView recyclerView;
+    private String filterType;
+
     private Spinner filter;
     private TransactionsCursorAdapter transactionsCursorAdapter;
 
@@ -42,6 +44,7 @@ public class ViewLentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        filterType = "All";
         transactionsCursorAdapter = new TransactionsCursorAdapter(getActivity().getBaseContext(), null);
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_view_lent, container, false);
@@ -52,14 +55,18 @@ public class ViewLentFragment extends Fragment {
         transactionsCursorAdapter.setmOnClickListener(new TransactionsCursorAdapter.OnButtonClickListener() {
             @Override
             public void onButtonClick(int id, int type, int btnType) {
-                mListener.updateTransaction(id, type, btnType, transactionsCursorAdapter, VIEW_TYPE);
-                mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE);
+                mListener.updateTransaction(id, type, btnType, transactionsCursorAdapter, VIEW_TYPE, filterType);
+              //  mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE);
             }
         });
 
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.setAdapter(transactionsCursorAdapter);
-        mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE);
+
+        if(filterType.equalsIgnoreCase("All"))
+            mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE);
+        else
+            mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, filterType);
 
 
         btn_TLent_all = (Button) layout.findViewById(R.id.btn_TLent_all);
@@ -76,6 +83,7 @@ public class ViewLentFragment extends Fragment {
         btn_TLent_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                filterType = Transaction.ITEM_TYPE;
                 mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, Transaction.ITEM_TYPE);
             }
         });
@@ -83,6 +91,7 @@ public class ViewLentFragment extends Fragment {
         btn_TLent_money.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                filterType = Transaction.MONEY_TYPE;
                 mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, Transaction.MONEY_TYPE);
             }
         });
@@ -103,7 +112,7 @@ public class ViewLentFragment extends Fragment {
     }
     public interface OnFragmentInteractionListener{
 
-        public void updateTransaction(int id, int type, int btnType, TransactionsCursorAdapter adapter, String viewType);
+        public void updateTransaction(int id, int type, int btnType, TransactionsCursorAdapter adapter, String viewType, String filterType);
         public void retrieveTransaction(TransactionsCursorAdapter adapter, String viewType);
         public void retrieveTransaction(TransactionsCursorAdapter adapter, String viewType, String filterType);
     }

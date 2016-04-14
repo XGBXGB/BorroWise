@@ -100,7 +100,7 @@ public class ViewTransactionActivity extends BaseActivity
     }
 
     @Override
-    public void updateTransaction(int id, int type, int btnType, TransactionsCursorAdapter adapter, String viewType) {
+    public void updateTransaction(int id, int type, int btnType, TransactionsCursorAdapter adapter, String viewType, String filterType) {
         this.currBtn = btnType;
         switch (type) {
             case TransactionsCursorAdapter.TYPE_MONEY:
@@ -110,7 +110,7 @@ public class ViewTransactionActivity extends BaseActivity
                 currType = TransactionsCursorAdapter.TYPE_ITEM;
         }
         this.TempID = id;
-        Log.v("update TRANS ID!!!!!! ",""+id);
+        Log.v("update TRANS ID!!!!!! ", "" + id);
         Toast.makeText(getBaseContext(), "update TRANS ID!!!!!! " +id, Toast.LENGTH_LONG).show();
 
         if(currBtn == TransactionsCursorAdapter.BTN_TYPE_PARTIAL) {
@@ -119,6 +119,7 @@ public class ViewTransactionActivity extends BaseActivity
             df.setOnFragmentInteractionListener(this);
             df.setTransactionsCursorAdapter(adapter);
             df.setViewType(viewType);
+            df.setFilterType(filterType);
             df.show(getFragmentManager(), "");
         }
         else
@@ -127,10 +128,10 @@ public class ViewTransactionActivity extends BaseActivity
             df.setOnFragmentInteractionListener(this);
             df.setTransactionsCursorAdapter(adapter);
             df.setViewType(viewType);
+            df.setFilterType(filterType);
             df.show(getFragmentManager(), "");
         }
 
-        retrieveTransaction(adapter, viewType);
     }
 
     @Override
@@ -161,7 +162,7 @@ public class ViewTransactionActivity extends BaseActivity
     }
 
     @Override
-    public void updateAmount(TransactionsCursorAdapter adapter, String viewType, double partialAmt) {
+    public void updateAmount(TransactionsCursorAdapter adapter, String viewType, String filterType, double partialAmt) {
 
 
         MoneyTransaction m = (MoneyTransaction) dbHelper.queryTransaction(TempID);
@@ -178,6 +179,7 @@ public class ViewTransactionActivity extends BaseActivity
             df.setOnFragmentInteractionListener(this);
             df.setTransactionsCursorAdapter(adapter);
             df.setViewType(viewType);
+            df.setFilterType(filterType);
             df.show(getFragmentManager(), "");
 
             MoneyTransaction m2 = (MoneyTransaction) dbHelper.queryTransaction(TempID);
@@ -191,11 +193,14 @@ public class ViewTransactionActivity extends BaseActivity
         else
             TempID = dbHelper.updateTransaction(m);
 
-        retrieveTransaction(adapter, viewType);
+        if(filterType.equalsIgnoreCase("All"))
+            retrieveTransaction(adapter, viewType);
+        else
+            retrieveTransaction(adapter, viewType, filterType);
     }
 
     @Override
-    public void updateRating(TransactionsCursorAdapter adapter, String viewType, double rating) {
+    public void updateRating(TransactionsCursorAdapter adapter, String viewType, String filterType, double rating) {
         int transID = 0;
         switch (currType) {
             case TransactionsCursorAdapter.TYPE_MONEY:
@@ -238,7 +243,10 @@ public class ViewTransactionActivity extends BaseActivity
         }
         Transaction transaction = dbHelper.queryTransaction(transID);
         dbHelper.updateUserRating(transaction.getUserID());
-        retrieveTransaction(adapter, viewType);
+        if(filterType.equalsIgnoreCase("All"))
+            retrieveTransaction(adapter, viewType);
+        else
+            retrieveTransaction(adapter, viewType, filterType);
     }
 }
 

@@ -25,12 +25,17 @@ public class AmountDialogFragment extends DialogFragment {
     private OnFragmentInteractionListener mListener;
     private TransactionsCursorAdapter transactionsCursorAdapter;
     private String viewType;
+    private String filterType;
+
 
     public interface OnFragmentInteractionListener{
 
-        public void updateAmount(TransactionsCursorAdapter transactionsCursorAdapter, String viewType, double partialAmount);
+        public void updateAmount(TransactionsCursorAdapter transactionsCursorAdapter, String viewType, String filterType, double partialAmount);
     }
 
+    public void setFilterType(String filterType) {
+        this.filterType = filterType;
+    }
     public void setViewType(String viewType) {
         this.viewType = viewType;
     }
@@ -56,7 +61,7 @@ public class AmountDialogFragment extends DialogFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 EditText etPartialAmt = (EditText) v.findViewById(R.id.etPartialAmt);
-                                mListener.updateAmount(transactionsCursorAdapter, viewType,Double.parseDouble(etPartialAmt.getText().toString()));
+                                mListener.updateAmount(transactionsCursorAdapter, viewType, filterType,Double.parseDouble(etPartialAmt.getText().toString()));
                                // ((ViewTransactionActivity) getActivity()).transactPartial();
                                 //((ViewTransactionActivity) getActivity()).setExpRating(rb.getRating());
                             }

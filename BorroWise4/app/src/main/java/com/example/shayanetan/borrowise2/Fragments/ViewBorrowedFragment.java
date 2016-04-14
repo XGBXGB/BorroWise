@@ -20,6 +20,7 @@ import com.example.shayanetan.borrowise2.R;
 public class ViewBorrowedFragment extends Fragment {
 
     public static String VIEW_TYPE = "borrowed_viewtype";
+    private String filterType;
 
     private RecyclerView recyclerView;
     private Spinner filter;
@@ -43,6 +44,7 @@ public class ViewBorrowedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        filterType = "All";
         transactionsCursorAdapter = new TransactionsCursorAdapter(getActivity().getBaseContext(), null);
 
         // Inflate the layout for this fragment
@@ -54,14 +56,18 @@ public class ViewBorrowedFragment extends Fragment {
         transactionsCursorAdapter.setmOnClickListener(new TransactionsCursorAdapter.OnButtonClickListener() {
             @Override
             public void onButtonClick(int id, int type, int btnType) {
-                mListener.updateTransaction(id, type, btnType, transactionsCursorAdapter,VIEW_TYPE);
-                mListener.retrieveTransaction(transactionsCursorAdapter,VIEW_TYPE);
+                mListener.updateTransaction(id, type, btnType, transactionsCursorAdapter, VIEW_TYPE, filterType);
+                //    mListener.retrieveTransaction(transactionsCursorAdapter,VIEW_TYPE);
             }
         });
 
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.setAdapter(transactionsCursorAdapter);
-        mListener.retrieveTransaction(transactionsCursorAdapter,VIEW_TYPE);
+
+        if(filterType.equalsIgnoreCase("All"))
+            mListener.retrieveTransaction(transactionsCursorAdapter,VIEW_TYPE);
+        else
+            mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, filterType);
 
         /*********************************************************************/
         btn_TBorrowed_all = (Button) layout.findViewById(R.id.btn_TBorrowed_all);
@@ -71,6 +77,7 @@ public class ViewBorrowedFragment extends Fragment {
         btn_TBorrowed_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                filterType = "All";
                 mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE);
             }
         });
@@ -78,6 +85,7 @@ public class ViewBorrowedFragment extends Fragment {
         btn_TBorrowed_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                filterType = Transaction.ITEM_TYPE;
                 mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, Transaction.ITEM_TYPE);
             }
         });
@@ -85,6 +93,7 @@ public class ViewBorrowedFragment extends Fragment {
         btn_TBorrowed_money.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                filterType = Transaction.MONEY_TYPE;
                 mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, Transaction.MONEY_TYPE);
             }
         });
@@ -104,7 +113,7 @@ public class ViewBorrowedFragment extends Fragment {
 
 
     public interface OnFragmentInteractionListener{
-        public void updateTransaction(int id, int type, int btnType,TransactionsCursorAdapter adapter, String viewType);
+        public void updateTransaction(int id, int type, int btnType,TransactionsCursorAdapter adapter, String viewType, String filterType);
         public void retrieveTransaction(TransactionsCursorAdapter adapter, String viewType);
         public void retrieveTransaction(TransactionsCursorAdapter adapter, String viewType, String filterType);
     }
