@@ -35,10 +35,10 @@ public abstract class HistoryAbstractFragment extends Fragment {
     public void init(){
 
         historyCursorAdapter = new HistoryCursorAdapter(getActivity(),null);
-        historyCursorAdapter.setmOnClickListener(new HistoryCursorAdapter.OnButtonClickListener() {
+        historyCursorAdapter.setmOnLongClickListener(new HistoryCursorAdapter.OnButtonClickListener() {
             @Override
-            public void onButtonClick(int id, int type) {
-                mListener.updateTransaction(id, type);
+            public void onButtonClick(int id, String type, String classification) {
+                mListener.deleteTransaction(historyCursorAdapter,id, type, classification);
             }
         });
     }
@@ -49,7 +49,7 @@ public abstract class HistoryAbstractFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void updateTransaction(int id, int type);
+        public void deleteTransaction(HistoryCursorAdapter adapter,int id, String type, String classification);
         public void retrieveTransaction(HistoryCursorAdapter adapter, String type);
     }
 }

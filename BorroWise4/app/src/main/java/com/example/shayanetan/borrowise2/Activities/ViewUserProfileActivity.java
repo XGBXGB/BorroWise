@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.shayanetan.borrowise2.Adapters.HistoryCursorAdapter;
 import com.example.shayanetan.borrowise2.Adapters.UsersCursorAdapter;
 import com.example.shayanetan.borrowise2.Adapters.ViewPagerAdapter;
 import com.example.shayanetan.borrowise2.Fragments.ViewBorrowedFragment;
@@ -33,12 +34,14 @@ public class ViewUserProfileActivity extends BaseActivity implements ViewUserBor
     private ViewPager viewPager;
     private ViewPagerAdapter viewPagerAdapter;
 
-    private static String TITLE_TAB1 = "BORROWED";
-    private static String TITLE_TAB2 = "LENT";
+    private static String TITLE_TAB1 = "BORROWED FROM YOU";
+    private static String TITLE_TAB2 = "LENT TO YOU";
 
     private ViewUserBorrowedFragment borrowFragment;
     private ViewUserLentFragment lentFragment;
     private DatabaseOpenHelper dbHelper;
+
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,14 @@ public class ViewUserProfileActivity extends BaseActivity implements ViewUserBor
 
 
         dbHelper = DatabaseOpenHelper.getInstance(getBaseContext());
+        imageView = (ImageView) findViewById(R.id.img_userprofile);
+        tv_name = (TextView) findViewById(R.id.tv_userprofile_name);
+        tv_ratingbar = (TextView) findViewById(R.id.tv_userprofile_rating);
+        ratingBar = (RatingBar) findViewById(R.id.rb_userprofile_rating);
+
+        setProfileDetails();
+
+
         // transactionsCursorAdapter = new TransactionsCursorAdapter(getBaseContext(),null);
         viewPagerAdapter = new ViewPagerAdapter(this.getSupportFragmentManager());
 
@@ -69,18 +80,14 @@ public class ViewUserProfileActivity extends BaseActivity implements ViewUserBor
         slidingTab.setViewPager(viewPager);
 
 
-        imageView = (ImageView) findViewById(R.id.img_userprofile);
-        tv_name = (TextView) findViewById(R.id.tv_userprofile_name);
-        tv_ratingbar = (TextView) findViewById(R.id.tv_userprofile_rating);
-        ratingBar = (RatingBar) findViewById(R.id.rb_userprofile_rating);
 
-        setProfileDetails();
 
     }
 
     public void setProfileDetails(){
         User u = dbHelper.queryUser(getIntent().getExtras().getInt(User.COLUMN_ID));
-        tv_name.setText(u.getName());
+        username = u.getName();
+        tv_name.setText(username);
         ratingBar.setRating((float) ((u.getTotalRate()*5)/100));
         tv_ratingbar.setText(String.valueOf(u.getTotalRate()));
 
@@ -108,15 +115,14 @@ public class ViewUserProfileActivity extends BaseActivity implements ViewUserBor
     }
 
     @Override
-    public void retrieveTransaction(UsersCursorAdapter adapter, String viewType) {
-//        Cursor cursor = null;
-//        if(viewType.equalsIgnoreCase(ViewUserLentFragment.VIEW_TYPE)) {
-//            cursor= dbHelper.queryAllTransactionsGivenUser();
-//                    querryUsersType("borrow", "0,1,-1");
-//        }
-//        else if(viewType.equalsIgnoreCase(ViewUserBorrowedFragment.VIEW_TYPE)){
-//            cursor= dbHelper.querryUsersType("lend", "0,1,-1");
-//        }
-//        adapter.swapCursor(cursor);
+    public void retrieveTransaction(HistoryCursorAdapter adapter, String viewType) {
+        Cursor cursor = null;
+        if(viewType.equalsIgnoreCase(ViewUserLentFragment.VIEW_TYPE)) {
+            cursor= dbHelper.queryAllLendTransactionsGivenUser(username);
+        }
+        else if(viewType.equalsIgnoreCase(ViewUserBorrowedFragment.VIEW_TYPE)){
+            cursor= dbHelper.queryAllBorrowedTransactionsGivenUser(username);
+        }
+        adapter.swapCursor(cursor);
     }
 }

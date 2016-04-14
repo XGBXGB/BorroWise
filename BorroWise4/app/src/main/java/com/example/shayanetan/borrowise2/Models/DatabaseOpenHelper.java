@@ -305,6 +305,43 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         return cursor.moveToFirst() ? cursor : null;
     }
 
+    public Cursor querryAllTransactionsJoinUser(String status){
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_ID + " AS _id, " + Transaction.COLUMN_CLASSIFICATION + ", "
+                        + Transaction.COLUMN_USER_ID + ", " + Transaction.COLUMN_TYPE + ", "
+                        + Transaction.COLUMN_STATUS + ", " + Transaction.COLUMN_START_DATE + ", "
+                        + Transaction.COLUMN_DUE_DATE + ", " + Transaction.COLUMN_RETURN_DATE + ", " + Transaction.COLUMN_RATE + ", "
+                        + ItemTransaction.TABLE_NAME + "." + ItemTransaction.COLUMN_NAME + " AS Attribute1, " + ItemTransaction.TABLE_NAME + "." + ItemTransaction.COLUMN_DESCRIPTION + " AS Attribute2, "
+                        + ItemTransaction.TABLE_NAME + "." + ItemTransaction.COLUMN_PHOTOPATH + " AS Attribute3, "
+                        + User.TABLE_NAME + "." + User.COLUMN_NAME + " AS name"
+                        + " FROM " + Transaction.TABLE_NAME
+                        + " INNER JOIN " + ItemTransaction.TABLE_NAME
+                        + " ON " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_ID + "=" + ItemTransaction.TABLE_NAME + "." + ItemTransaction.COLUMN_TRANSACTION_ID
+                        + " INNER JOIN " + User.TABLE_NAME
+                        + " ON " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_USER_ID + "=" + User.TABLE_NAME + "." + User.COLUMN_ID
+                        + " WHERE "
+                        + Transaction.TABLE_NAME + "." + Transaction.COLUMN_STATUS + " IN (" + status + ") "
+                        + " UNION "
+                        + "SELECT " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_ID + " AS _id, " + Transaction.COLUMN_CLASSIFICATION + ", "
+                        + Transaction.COLUMN_USER_ID + ", " + Transaction.COLUMN_TYPE + ", "
+                        + Transaction.COLUMN_STATUS + ", " + Transaction.COLUMN_START_DATE + ", "
+                        + Transaction.COLUMN_DUE_DATE + ", " + Transaction.COLUMN_RETURN_DATE + ", " + Transaction.COLUMN_RATE + ", "
+                        + MoneyTransaction.TABLE_NAME + "." + MoneyTransaction.COLUMN_TOTAL_AMOUNT_DUE + " AS Attribute1, " + MoneyTransaction.TABLE_NAME + "." + MoneyTransaction.COLUMN_AMOUNT_DEFICIT + " AS Attribute2, "
+                        + "Null AS Attribute3, "
+                        + User.TABLE_NAME + "." + User.COLUMN_NAME + " AS name"
+                        + " FROM " + Transaction.TABLE_NAME
+                        + " INNER JOIN " + MoneyTransaction.TABLE_NAME
+                        + " ON " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_ID + "=" + MoneyTransaction.TABLE_NAME + "." + MoneyTransaction.COLUMN_TRANSACTION_ID
+                        + " INNER JOIN " + User.TABLE_NAME
+                        + " ON " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_USER_ID + "=" + User.TABLE_NAME + "." + User.COLUMN_ID
+                        + " WHERE "
+                        + Transaction.TABLE_NAME + "." + Transaction.COLUMN_STATUS + " IN (" + status + ") "
+                , null);
+        return cursor.moveToFirst() ? cursor : null;
+    }
+
     public Cursor querryLendTransactionsJoinUser(String status){
 
         SQLiteDatabase db = getReadableDatabase();
@@ -380,7 +417,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
                 Cursor c2;
                 Transaction t;
-                if(c.getString(c.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)).equalsIgnoreCase("item")){
+                if(c.getString(c.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)).equalsIgnoreCase(Transaction.ITEM_TYPE)){
                     c2 =   db.query(ItemTransaction.TABLE_NAME,
                             null, // == *
                             " " + ItemTransaction.COLUMN_TRANSACTION_ID + "= ? ", //WHERE _ = ?
@@ -430,69 +467,82 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         return c;
     }
 
-    public Cursor queryAllTransactionsGivenUser(String user)
-    {
-        int userID = queryUser(user).getId();
-
-        ArrayList<Transaction> transactions = new ArrayList<>();
+    public Cursor queryAllLendTransactionsGivenUser(String user){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.query(Transaction.TABLE_NAME, null, " " + Transaction.COLUMN_USER_ID + "= ? ",
-                new String[]{String.valueOf(userID)}, null, null, null);
+        Cursor cursor = db.rawQuery(
+                "SELECT " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_ID + " AS _id, " + Transaction.COLUMN_CLASSIFICATION + ", "
+                        + Transaction.COLUMN_USER_ID + ", " + Transaction.COLUMN_TYPE + ", "
+                        + Transaction.COLUMN_STATUS + ", " + Transaction.COLUMN_START_DATE + ", "
+                        + Transaction.COLUMN_DUE_DATE + ", " + Transaction.COLUMN_RETURN_DATE + ", " + Transaction.COLUMN_RATE + ", "
+                        + ItemTransaction.TABLE_NAME + "." + ItemTransaction.COLUMN_NAME + " AS Attribute1, " + ItemTransaction.TABLE_NAME + "." + ItemTransaction.COLUMN_DESCRIPTION + " AS Attribute2, "
+                        + ItemTransaction.TABLE_NAME + "." + ItemTransaction.COLUMN_PHOTOPATH + " AS Attribute3, "
+                        + User.TABLE_NAME + "." + User.COLUMN_NAME + " AS name, "
+                        + User.COLUMN_TOTAL_RATE
+                        + " FROM " + Transaction.TABLE_NAME
+                        + " INNER JOIN " + ItemTransaction.TABLE_NAME
+                        + " ON " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_ID + "=" + ItemTransaction.TABLE_NAME + "." + ItemTransaction.COLUMN_TRANSACTION_ID
+                        + " INNER JOIN " + User.TABLE_NAME
+                        + " ON " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_USER_ID + "=" + User.TABLE_NAME + "." + User.COLUMN_ID
+                        + " WHERE " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_TYPE + "='borrow' AND "
+                        + User.TABLE_NAME + "." + User.COLUMN_NAME + " LIKE '" + user + "'"
+                        + " UNION "
+                        + "SELECT " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_ID + " AS _id, " + Transaction.COLUMN_CLASSIFICATION + ", "
+                        + Transaction.COLUMN_USER_ID + ", " + Transaction.COLUMN_TYPE + ", "
+                        + Transaction.COLUMN_STATUS + ", " + Transaction.COLUMN_START_DATE + ", "
+                        + Transaction.COLUMN_DUE_DATE + ", " + Transaction.COLUMN_RETURN_DATE + ", " + Transaction.COLUMN_RATE + ", "
+                        + MoneyTransaction.TABLE_NAME + "." + MoneyTransaction.COLUMN_TOTAL_AMOUNT_DUE + " AS Attribute1, " + MoneyTransaction.TABLE_NAME + "." + MoneyTransaction.COLUMN_AMOUNT_DEFICIT + " AS Attribute2, "
+                        + "Null AS Attribute3, "
+                        + User.TABLE_NAME + "." + User.COLUMN_NAME + " AS name, "
+                        + User.COLUMN_TOTAL_RATE
+                        + " FROM " + Transaction.TABLE_NAME
+                        + " INNER JOIN " + MoneyTransaction.TABLE_NAME
+                        + " ON " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_ID + "=" + MoneyTransaction.TABLE_NAME + "." + MoneyTransaction.COLUMN_TRANSACTION_ID
+                        + " INNER JOIN " + User.TABLE_NAME
+                        + " ON " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_USER_ID + "=" + User.TABLE_NAME + "." + User.COLUMN_ID
+                        + " WHERE " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_TYPE + "='borrow' AND "
+                        + User.TABLE_NAME + "." + User.COLUMN_NAME + " LIKE '" + user + "'"
+                , null);
+        return cursor.moveToFirst() ? cursor : null;
+    }
 
-        if(c.moveToFirst())
-        {
-            do{
 
-                Cursor c2;
-                Transaction t;
-                if(c.getString(c.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)).equalsIgnoreCase(Transaction.ITEM_TYPE)){
-                    c2 =   db.query(ItemTransaction.TABLE_NAME,
-                            null, // == *
-                            " " + ItemTransaction.COLUMN_TRANSACTION_ID + "= ? ", //WHERE _ = ?
-                            new String[]{String.valueOf(c.getInt(c.getColumnIndex(User.COLUMN_ID)))},
-                            null,
-                            null,
-                            null);
-                    c2.moveToFirst();
-                    t = new ItemTransaction(c.getString(c.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)),
-                            c.getInt(c.getColumnIndex(Transaction.COLUMN_USER_ID)),
-                            c.getString(c.getColumnIndex(Transaction.COLUMN_TYPE)),
-                            c.getInt(c.getColumnIndex(Transaction.COLUMN_STATUS)),
-                            c.getLong(c.getColumnIndex(Transaction.COLUMN_START_DATE)),
-                            c.getLong(c.getColumnIndex(Transaction.COLUMN_DUE_DATE)),
-                            c.getLong(c.getColumnIndex(Transaction.COLUMN_RETURN_DATE)),
-                            c.getDouble(c.getColumnIndex(Transaction.COLUMN_RATE)),
-                            c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_NAME)),
-                            c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_DESCRIPTION)),
-                            c2.getString(c2.getColumnIndex(ItemTransaction.COLUMN_PHOTOPATH)));
-                }else{
-                    c2 =   db.query(MoneyTransaction.TABLE_NAME,
-                            null, // == *
-                            " " + MoneyTransaction.COLUMN_TRANSACTION_ID + "= ? ", //WHERE _ = ?
-                            new String[]{String.valueOf(c.getInt(c.getColumnIndex(User.COLUMN_ID)))},
-                            null,
-                            null,
-                            null);
-                    c2.moveToFirst();
-                    t = new MoneyTransaction(c.getString(c.getColumnIndex(Transaction.COLUMN_CLASSIFICATION)),
-                            c.getInt(c.getColumnIndex(Transaction.COLUMN_USER_ID)),
-                            c.getString(c.getColumnIndex(Transaction.COLUMN_TYPE)),
-                            c.getInt(c.getColumnIndex(Transaction.COLUMN_STATUS)),
-                            c.getLong(c.getColumnIndex(Transaction.COLUMN_START_DATE)),
-                            c.getLong(c.getColumnIndex(Transaction.COLUMN_DUE_DATE)),
-                            c.getLong(c.getColumnIndex(Transaction.COLUMN_RETURN_DATE)),
-                            c.getDouble(c.getColumnIndex(Transaction.COLUMN_RATE)),
-                            c2.getDouble(c2.getColumnIndex(MoneyTransaction.COLUMN_TOTAL_AMOUNT_DUE)),
-                            c2.getDouble(c2.getColumnIndex(MoneyTransaction.COLUMN_AMOUNT_DEFICIT)));
-                }
-                t.setId(c.getInt(c.getColumnIndex(User.COLUMN_ID)));
-                transactions.add(t);
-            }while(c.moveToNext());
-
-        } else{
-            transactions = null;
-        }
-        return c;
+    public Cursor queryAllBorrowedTransactionsGivenUser(String user)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_ID + " AS _id, " + Transaction.COLUMN_CLASSIFICATION + ", "
+                        + Transaction.COLUMN_USER_ID + ", " + Transaction.COLUMN_TYPE + ", "
+                        + Transaction.COLUMN_STATUS + ", " + Transaction.COLUMN_START_DATE + ", "
+                        + Transaction.COLUMN_DUE_DATE + ", " + Transaction.COLUMN_RETURN_DATE + ", " + Transaction.COLUMN_RATE + ", "
+                        + ItemTransaction.TABLE_NAME + "." + ItemTransaction.COLUMN_NAME + " AS Attribute1, " + ItemTransaction.TABLE_NAME + "." + ItemTransaction.COLUMN_DESCRIPTION + " AS Attribute2, "
+                        + ItemTransaction.TABLE_NAME + "." + ItemTransaction.COLUMN_PHOTOPATH + " AS Attribute3, "
+                        + User.TABLE_NAME + "." + User.COLUMN_NAME + " AS name, "
+                        + User.COLUMN_TOTAL_RATE
+                        + " FROM " + Transaction.TABLE_NAME
+                        + " INNER JOIN " + ItemTransaction.TABLE_NAME
+                        + " ON " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_ID + "=" + ItemTransaction.TABLE_NAME + "." + ItemTransaction.COLUMN_TRANSACTION_ID
+                        + " INNER JOIN " + User.TABLE_NAME
+                        + " ON " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_USER_ID + "=" + User.TABLE_NAME + "." + User.COLUMN_ID
+                        + " WHERE " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_TYPE + "='lend' AND "
+                        + User.TABLE_NAME + "." + User.COLUMN_NAME + " LIKE '" + user+"'"
+                        + " UNION "
+                        + "SELECT " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_ID + " AS _id, " + Transaction.COLUMN_CLASSIFICATION + ", "
+                        + Transaction.COLUMN_USER_ID + ", " + Transaction.COLUMN_TYPE + ", "
+                        + Transaction.COLUMN_STATUS + ", " + Transaction.COLUMN_START_DATE + ", "
+                        + Transaction.COLUMN_DUE_DATE + ", " + Transaction.COLUMN_RETURN_DATE + ", " + Transaction.COLUMN_RATE + ", "
+                        + MoneyTransaction.TABLE_NAME + "." + MoneyTransaction.COLUMN_TOTAL_AMOUNT_DUE + " AS Attribute1, " + MoneyTransaction.TABLE_NAME + "." + MoneyTransaction.COLUMN_AMOUNT_DEFICIT + " AS Attribute2, "
+                        + "Null AS Attribute3, "
+                        + User.TABLE_NAME + "." + User.COLUMN_NAME + " AS name, "
+                        + User.COLUMN_TOTAL_RATE
+                        + " FROM " + Transaction.TABLE_NAME
+                        + " INNER JOIN " + MoneyTransaction.TABLE_NAME
+                        + " ON " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_ID + "=" + MoneyTransaction.TABLE_NAME + "." + MoneyTransaction.COLUMN_TRANSACTION_ID
+                        + " INNER JOIN " + User.TABLE_NAME
+                        + " ON " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_USER_ID + "=" + User.TABLE_NAME + "." + User.COLUMN_ID
+                        + " WHERE " + Transaction.TABLE_NAME + "." + Transaction.COLUMN_TYPE + "='lend' AND "
+                        + User.TABLE_NAME + "." + User.COLUMN_NAME + " LIKE '" + user +"'"
+                , null);
+        return cursor.moveToFirst() ? cursor : null;
     }
     /*
     *QUERY CURSOR MODULE

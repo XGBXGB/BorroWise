@@ -81,9 +81,11 @@ public class HistoryActivity extends BaseActivity  implements HistoryAbstractFra
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void updateTransaction(int id, int type) {
 
+    @Override
+    public void deleteTransaction(HistoryCursorAdapter adapter, int id, String type, String classification) {
+        dbHelper.deleteTransaction(id, classification);
+        retrieveTransaction(adapter, type);
     }
 
     @Override

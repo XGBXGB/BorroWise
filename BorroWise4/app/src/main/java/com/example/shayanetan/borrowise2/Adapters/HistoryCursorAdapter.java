@@ -54,7 +54,7 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, Cursor cursor) {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final Cursor cursor) {
         String name = cursor.getString(cursor.getColumnIndex(User.COLUMN_NAME));
         String returnDate="";
         String dueDate = parseMillisToDate(cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_DUE_DATE)));
@@ -62,15 +62,18 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
         double rating = cursor.getDouble(cursor.getColumnIndex(Transaction.COLUMN_RATE));
         String transactionAttribute1 = cursor.getString(cursor.getColumnIndex("Attribute1"));
         String transactionAttribute3 = cursor.getString(cursor.getColumnIndex("Attribute3"));
+        final String type = cursor.getString(cursor.getColumnIndex(Transaction.COLUMN_TYPE));
+        int statusInteger = cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_STATUS));
 
-        if(cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_STATUS)) == -1) {
+        if( statusInteger == -1 || statusInteger == 0) {
             returnDate = "N/A";
         }
         else{
             returnDate = parseMillisToDate(cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_RETURN_DATE)));
         }
 
-        switch (viewHolder.getItemViewType()) {
+        final int itemViewType = viewHolder.getItemViewType();
+        switch (itemViewType) {
             case TYPE_ITEM:
                 String status = cursor.getString(cursor.getColumnIndex(Transaction.COLUMN_STATUS));
                 String statusFinal = "";
@@ -90,9 +93,19 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
                 switch (status){
                     case "1": statusFinal = "Returned"; break;
                     case "-1": statusFinal = "Lost"; break;
+                    case "0": statusFinal = "Ongoing"; break;
                 }
                 ((BorrowedItemViewHolder)viewHolder).tv_Hstatusitem_val.setText(statusFinal);
-                ((BorrowedItemViewHolder)viewHolder).rb_Hratingitem.setRating((float)rating);
+                ((BorrowedItemViewHolder)viewHolder).rb_Hratingitem.setRating((float) rating);
+
+                ((BorrowedItemViewHolder)viewHolder).item_container.setTag(cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID)));
+                ((BorrowedItemViewHolder)viewHolder).item_container.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        mOnClickListener.onButtonClick(Integer.parseInt(v.getTag().toString()), type, Transaction.ITEM_TYPE);
+                        return true;
+                    }
+                });
                 break;
 
             case TYPE_MONEY:
@@ -101,7 +114,15 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
                 ((BorrowedMoneyViewHolder)viewHolder).tv_Hstartdatemoney_val.setText(startDate);
                 ((BorrowedMoneyViewHolder)viewHolder).tv_Hretdatemoney_val.setText(returnDate);
                 ((BorrowedMoneyViewHolder)viewHolder).tv_Hamount.setText(transactionAttribute1);
-                ((BorrowedMoneyViewHolder)viewHolder).rb_Hratingmoney.setRating((float)rating);
+                ((BorrowedMoneyViewHolder)viewHolder).rb_Hratingmoney.setRating((float) rating);
+                ((BorrowedMoneyViewHolder)viewHolder).money_container.setTag(cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID)));
+                ((BorrowedMoneyViewHolder)viewHolder).money_container.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        mOnClickListener.onButtonClick(Integer.parseInt(v.getTag().toString()), type, Transaction.MONEY_TYPE);
+                        return true;
+                    }
+                });
                 break;
         }
     }
@@ -145,7 +166,7 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
             rb_Hratingitem = (RatingBar) itemView.findViewById(R.id.rb_Hratingitem);
 
             img_Hitem = (ImageView) itemView.findViewById(R.id.img_Hitem);
-            item_container = itemView.findViewById(R.id.item_container);
+            item_container = itemView.findViewById(R.id.Hitem_container);
         }
 
     }
@@ -168,15 +189,16 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
             tv_Hduedatemoney_val = (TextView) itemView.findViewById(R.id.tv_Hduedatemoney_val);
             tv_Hretdatemoney_val = (TextView) itemView.findViewById(R.id.tv_Hretdatemoney_val);
             rb_Hratingmoney = (RatingBar) itemView.findViewById(R.id.rb_Hratingmoney);
-            money_container = itemView.findViewById(R.id.money_container);
+            money_container = itemView.findViewById(R.id.Hmoney_container);
         }
     }
 
-    public void setmOnClickListener(OnButtonClickListener m){
+    public void setmOnLongClickListener(OnButtonClickListener m){
         this.mOnClickListener = m;
     }
+
     public interface OnButtonClickListener{
-        public void onButtonClick(int id, int type);
+        public void onButtonClick(int id, String type, String classification);
     }
     public String parseMillisToDate(long millis){
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");

@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -26,6 +27,7 @@ import com.example.shayanetan.borrowise2.R;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -97,6 +99,7 @@ public class SettingsActivity extends BaseActivity {
 
 
                 spEditor.commit();
+                updateAlarms();
                 Toast.makeText(getBaseContext(), "Changes Saved! btime: "+btn_borrowTime.getText().toString(), Toast.LENGTH_SHORT).show();
 
             }
@@ -119,7 +122,20 @@ public class SettingsActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    
+    public void updateAlarms(){
+        Cursor cursor = dbHelper.querryAllTransactionsJoinUser("0");
+
+        if(cursor.moveToFirst()){
+            do {
+                int id = cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID));
+                String classification = cursor.getString(cursor.getColumnIndex(Transaction.COLUMN_CLASSIFICATION));
+                String type = cursor.getString(cursor.getColumnIndex(Transaction.COLUMN_TYPE));
+                long dueDate = cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_DUE_DATE));
+
+                setItemAlarm(id, dueDate, classification, type);
+            }while(cursor.moveToNext());
+        }
+    }
 
     public void setItemAlarm(int item_id, long end, String classification, String type){
 
@@ -255,8 +271,6 @@ public class SettingsActivity extends BaseActivity {
 
 
     }
-
-
 
 
 }

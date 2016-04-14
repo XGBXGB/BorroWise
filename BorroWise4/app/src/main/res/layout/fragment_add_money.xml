@@ -10,7 +10,7 @@
         android:layout_height="200dp"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:background="@color/primaryDarkColor"
+        android:background="@color/primaryColor"
         android:padding="5dp"
         android:id="@+id/card_money">
         <TextView
@@ -41,7 +41,7 @@
         android:id="@+id/btn_MoneyToItem"
         android:src="@drawable/ic_item"
         app:fabSize="normal"
-        app:backgroundTint="@color/violetColor"
+        app:backgroundTint="@color/blueColor"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
         android:layout_width="wrap_content"
