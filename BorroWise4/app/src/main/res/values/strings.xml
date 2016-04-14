@@ -6,6 +6,7 @@
     <string name = "lbl_duedate">Due:</string>
     <string name = "lbl_retdate">Returned:</string>
     <string name = "lbl_startdate">Start:</string>
+    <string name = "lbl_status">Status:</string>
 
     <string name = "lbl_item">ITEM</string>
     <string name = "lbl_money">MONEY</string>

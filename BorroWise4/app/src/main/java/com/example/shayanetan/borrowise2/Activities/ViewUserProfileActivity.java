@@ -88,7 +88,7 @@ public class ViewUserProfileActivity extends BaseActivity implements ViewUserBor
         User u = dbHelper.queryUser(getIntent().getExtras().getInt(User.COLUMN_ID));
         username = u.getName();
         tv_name.setText(username);
-        ratingBar.setRating((float) ((u.getTotalRate()*5)/100));
+        ratingBar.setRating((float) u.getTotalRate());
         tv_ratingbar.setText(String.valueOf(u.getTotalRate()));
 
     }

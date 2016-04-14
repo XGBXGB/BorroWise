@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.example.shayanetan.borrowise2.Fragments.AddItemFragment;
 import com.example.shayanetan.borrowise2.Fragments.AddAbstractFragment;
 import com.example.shayanetan.borrowise2.Models.DatabaseOpenHelper;
+import com.example.shayanetan.borrowise2.Models.ItemTransaction;
+import com.example.shayanetan.borrowise2.Models.MoneyTransaction;
 import com.example.shayanetan.borrowise2.Models.Transaction;
 import com.example.shayanetan.borrowise2.Models.User;
 import com.example.shayanetan.borrowise2.R;
@@ -85,8 +87,8 @@ public class HomeActivity extends BaseActivity implements AddAbstractFragment.On
     @Override
     public void onAddTransactions(Transaction t) {
        long itemId =  dbHelper.insertTransaction(t);
-        Log.v("NEW TRANS ID!!!!!! ",""+itemId);
-        Toast.makeText(getBaseContext(), "NEW TRANS ID!!!!!! " +itemId, Toast.LENGTH_LONG).show();
+        Log.v("NEW TRANS ID!!!!!! ", "" + itemId);
+     //   Toast.makeText(getBaseContext(), "NEW TRANS ID!!!!!! " +itemId, Toast.LENGTH_LONG).show();
         setItemAlarm((int) itemId, t.getDueDate(), t.getClassification(), t.getType());
     }
 
@@ -161,22 +163,32 @@ public class HomeActivity extends BaseActivity implements AddAbstractFragment.On
 
 
         }else if(type.equalsIgnoreCase(Transaction.LEND_ACTION)){
-            Log.v("TYPE", "TYPEEE: " + type);
-            Transaction tran = dbHelper.queryTransaction(item_id);
-            User u = dbHelper.queryUser(tran.getUserID());
-            Log.v("USERRR", "USERNAMEEE: " + u.getName() + " " + u.getContactInfo());
+            User u = null;
+
+            String message = "";
+
+            if(classification.equalsIgnoreCase(Transaction.ITEM_TYPE)) {
+                ItemTransaction it = (ItemTransaction) dbHelper.queryTransaction(item_id);
+                u = dbHelper.queryUser(it.getUserID());
+
+                message = "[BorroWise Reminder] \n"
+                        + " Hi " + u.getName() + "! Please be reminded to return the borrowed item " + it.getName()+ "today!";
+            }else{
+                MoneyTransaction mt = (MoneyTransaction) dbHelper.queryTransaction(item_id);
+                u = dbHelper.queryUser(mt.getUserID());
+
+                message = "[BorroWise Reminder] \n"
+                        + " Hi " + u.getName() + "! Please be reminded to return the borrowed money PHP " + mt.getAmountDeficit()+ " today!";
+            }
 
             Intent intent = new Intent(getBaseContext(), SMSReceiver.class);
             intent.putExtra(SMSReceiver.NUMBER,u.getContactInfo());
-            intent.putExtra(SMSReceiver.MESSAGE, "BorroWise Trial");
+            intent.putExtra(SMSReceiver.MESSAGE, message);
             intent.putExtra(Transaction.COLUMN_ID, item_id);
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), item_id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-
-
-
 
             Calendar smsAlarm = Calendar.getInstance();
             smsAlarm.setTimeInMillis(end);
@@ -207,7 +219,7 @@ public class HomeActivity extends BaseActivity implements AddAbstractFragment.On
 
 
             if(!dateToday.equalsIgnoreCase(dueDate)) {
-                Log.v("In lend: CHECKKK", "CALENDAR: " + dateToday + " DUE: " + dueDate);
+              //  Log.v("In lend: CHECKKK", "CALENDAR: " + dateToday + " DUE: " + dueDate);
                 if(lendDay != null) {
                     int duration = Integer.parseInt(lendDay);
                     for(int i=duration; i>0; i--){

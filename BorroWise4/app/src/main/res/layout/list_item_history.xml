@@ -147,7 +147,7 @@
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
-                    android:text="Status: "/>
+                    android:text="@string/lbl_status"/>
 
                 <TextView
                     android:id="@+id/tv_Hstatusitem_val"

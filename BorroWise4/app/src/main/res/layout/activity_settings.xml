@@ -4,16 +4,48 @@
     android:layout_height="match_parent"
     tools:context="com.example.shayanetan.borrowise2.Activities.SettingsActivity">
 
+    <LinearLayout
+        android:id="@+id/layout_settings_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@color/accentDarkColor"
+            android:text="CANCEL"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:padding="12dp"
+            android:textAllCaps="false"
+            android:id="@+id/btn_cancel" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@color/accentDarkColor"
+            android:text="SAVE"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:padding="12dp"
+            android:textAllCaps="false"
+            android:id="@+id/btn_save" />
+
+    </LinearLayout>
+
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
+        android:layout_below="@id/layout_settings_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lend Module"
-            android:textSize="30sp"
-            android:paddingTop="20dp"
+            android:text="SMS Settings"
+            android:textSize="20sp"
+            android:paddingTop="18dp"
             android:paddingLeft="10dp"
             android:textColor="#000000"/>
 
@@ -21,18 +53,20 @@
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:paddingLeft="20dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
                 android:text="Alarm time: "
-                android:textSize="22sp"/>
+                android:textSize="18sp"/>
 
             <Button
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:background="@drawable/accent_dark_border"
                 android:id="@+id/btn_lendTime"/>
         </LinearLayout>
@@ -45,42 +79,44 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
+                android:paddingLeft="15dp"
                 android:text="Days before: "
-                android:textSize="22sp"/>
+                android:textSize="18sp"/>
 
             <EditText
                 android:layout_width=" 100dp"
                 android:layout_height="wrap_content"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:id="@+id/et_lendDays"/>
         </LinearLayout>
 
 
         <TextView android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Borrow Module"
-            android:textSize="30sp"
-            android:paddingLeft="10dp"
-            android:layout_marginTop="30dp"
+            android:text="Notification Settings"
+            android:textSize="20sp"
+            android:paddingLeft="18dp"
+            android:layout_marginTop="25dp"
             android:textColor="#000000"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:paddingLeft="20dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
                 android:text="Alarm time: "
-                android:textSize="22sp"/>
+                android:textSize="18sp"/>
 
             <Button
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:background="@drawable/accent_dark_border"
                 android:id="@+id/btn_borrowTime"/>
         </LinearLayout>
@@ -93,35 +129,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
+                android:paddingLeft="15dp"
                 android:text="Days before: "
-                android:textSize="22sp"/>
+                android:textSize="18sp"/>
 
             <EditText
                 android:layout_width=" 100dp"
                 android:layout_height="wrap_content"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:id="@+id/et_borrowDays"/>
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:layout_alignParentBottom="true">
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/accentDarkColor"
-            android:text="Save Changes"
-            android:textColor="#FFFFFF"
-            android:textSize="25sp"
-            android:padding="12dp"
-            android:textAllCaps="false"
-            android:id="@+id/btn_save"
-            />
-    </LinearLayout>
+
 
 </RelativeLayout>

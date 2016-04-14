@@ -64,12 +64,15 @@ public class AddMoneyFragment extends AddAbstractFragment {
 
                 int id = mListener.onAddNewUser(selected_name, selected_contact_number);
 
+                double amount =  Double.parseDouble(et_AMAmount.getText().toString());
                 MoneyTransaction m = new MoneyTransaction(Transaction.MONEY_TYPE, id, Transaction.BORROWED_ACTION, 0,
                                      parseDateToMillis(btn_start_date.getText().toString()),
                                      parseDateToMillis(btn_end_date.getText().toString()),
-                                     0,0.0, Double.parseDouble(et_AMAmount.getText().toString()), Double.parseDouble(et_AMAmount.getText().toString()));
+                                     0,0.0,amount, amount);
                 mListener.onAddTransactions(m);
                 printAddAcknowledgement(et_AMAmount.getText().toString(), "borrowed");
+
+                clearAllFields();
             }
         });
 
@@ -79,13 +82,16 @@ public class AddMoneyFragment extends AddAbstractFragment {
 
                 int id = mListener.onAddNewUser(selected_name, selected_contact_number);
 
+                double amount =  Double.parseDouble(et_AMAmount.getText().toString());
                 MoneyTransaction m = new MoneyTransaction(Transaction.MONEY_TYPE, id, Transaction.LEND_ACTION, 0,
                                     parseDateToMillis(btn_start_date.getText().toString()),
                                     parseDateToMillis(btn_end_date.getText().toString()),
-                                    0,0.0, Double.parseDouble(et_AMAmount.getText().toString()), 0.0);
+                                    0,0.0, amount,amount);
 
                 mListener.onAddTransactions(m);
                 printAddAcknowledgement(et_AMAmount.getText().toString(), "lent");
+
+                clearAllFields();
             }
         });
 
@@ -93,7 +99,12 @@ public class AddMoneyFragment extends AddAbstractFragment {
     }
 
     public void printAddAcknowledgement(String entry_name, String type){
-        Toast.makeText(getActivity(), "PHP "+ entry_name + " has been successfully " + type + " !", Toast.LENGTH_SHORT).show();
+
+        if(type.equalsIgnoreCase("lent"))
+            Toast.makeText(getActivity(), "PHP "+ entry_name + " has been successfully " + type + " to "+selected_name+"!", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getActivity(), "PHP "+ entry_name + " has been successfully " + type + " from "+selected_name+"!", Toast.LENGTH_SHORT).show();
+
     }
 
     public void clearAllFields(){

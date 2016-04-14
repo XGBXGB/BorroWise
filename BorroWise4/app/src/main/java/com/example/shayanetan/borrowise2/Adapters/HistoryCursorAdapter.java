@@ -72,12 +72,17 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
             returnDate = parseMillisToDate(cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_RETURN_DATE)));
         }
 
+        String status = cursor.getString(cursor.getColumnIndex(Transaction.COLUMN_STATUS));
+        String statusFinal = "";
+        switch (status){
+            case "1": statusFinal = "Returned"; break;
+            case "-1": statusFinal = "Lost"; break;
+            case "0": statusFinal = "Ongoing"; break;
+        }
+
         final int itemViewType = viewHolder.getItemViewType();
         switch (itemViewType) {
             case TYPE_ITEM:
-                String status = cursor.getString(cursor.getColumnIndex(Transaction.COLUMN_STATUS));
-                String statusFinal = "";
-
 
                 File imgFile = new  File(transactionAttribute3);
                 if(imgFile.exists()){
@@ -90,11 +95,6 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
                 ((BorrowedItemViewHolder)viewHolder).tv_Hretdateitem_val.setText(returnDate);
                 ((BorrowedItemViewHolder)viewHolder).tv_Hstartdateitem_val.setText(startDate);
 
-                switch (status){
-                    case "1": statusFinal = "Returned"; break;
-                    case "-1": statusFinal = "Lost"; break;
-                    case "0": statusFinal = "Ongoing"; break;
-                }
                 ((BorrowedItemViewHolder)viewHolder).tv_Hstatusitem_val.setText(statusFinal);
                 ((BorrowedItemViewHolder)viewHolder).rb_Hratingitem.setRating((float) rating);
 
@@ -113,6 +113,7 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
                 ((BorrowedMoneyViewHolder)viewHolder).tv_Hduedatemoney_val.setText(dueDate);
                 ((BorrowedMoneyViewHolder)viewHolder).tv_Hstartdatemoney_val.setText(startDate);
                 ((BorrowedMoneyViewHolder)viewHolder).tv_Hretdatemoney_val.setText(returnDate);
+                ((BorrowedMoneyViewHolder)viewHolder).tv_Hstatusmoney_val.setText(statusFinal);
                 ((BorrowedMoneyViewHolder)viewHolder).tv_Hamount.setText(transactionAttribute1);
                 ((BorrowedMoneyViewHolder)viewHolder).rb_Hratingmoney.setRating((float) rating);
                 ((BorrowedMoneyViewHolder)viewHolder).money_container.setTag(cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID)));
@@ -177,7 +178,7 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
     public class BorrowedMoneyViewHolder extends RecyclerView.ViewHolder{
         // TODO
 
-        TextView tv_Haccount_money, tv_Hamount, tv_Hstartdatemoney_val,tv_Hduedatemoney_val,tv_Hretdatemoney_val;
+        TextView tv_Haccount_money, tv_Hamount, tv_Hstartdatemoney_val,tv_Hduedatemoney_val,tv_Hretdatemoney_val, tv_Hstatusmoney_val;
         RatingBar rb_Hratingmoney;
         View money_container;
 
@@ -190,6 +191,7 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
             tv_Hretdatemoney_val = (TextView) itemView.findViewById(R.id.tv_Hretdatemoney_val);
             rb_Hratingmoney = (RatingBar) itemView.findViewById(R.id.rb_Hratingmoney);
             money_container = itemView.findViewById(R.id.Hmoney_container);
+            tv_Hstatusmoney_val = (TextView) itemView.findViewById(R.id.tv_Hstatusmoney_val);
         }
     }
 

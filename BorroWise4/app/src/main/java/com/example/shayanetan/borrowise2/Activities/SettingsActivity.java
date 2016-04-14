@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.example.shayanetan.borrowise2.Adapters.UsersCursorAdapter;
 import com.example.shayanetan.borrowise2.Fragments.TimePickerFragment;
 import com.example.shayanetan.borrowise2.Models.DatabaseOpenHelper;
+import com.example.shayanetan.borrowise2.Models.ItemTransaction;
+import com.example.shayanetan.borrowise2.Models.MoneyTransaction;
 import com.example.shayanetan.borrowise2.Models.Transaction;
 import com.example.shayanetan.borrowise2.Models.User;
 import com.example.shayanetan.borrowise2.R;
@@ -34,7 +36,7 @@ import java.util.Date;
 public class SettingsActivity extends BaseActivity {
 
     private EditText et_borrowDays, et_lendDays;
-    private Button btn_borrowTime, btn_lendTime, btn_save;
+    private Button btn_borrowTime, btn_lendTime, btn_save, btn_cancel;
     private DatabaseOpenHelper dbHelper;
 
     @Override
@@ -47,6 +49,7 @@ public class SettingsActivity extends BaseActivity {
         et_borrowDays = (EditText) findViewById(R.id.et_borrowDays);
         et_lendDays = (EditText) findViewById(R.id.et_lendDays);
         btn_save = (Button) findViewById(R.id.btn_save);
+        btn_cancel = (Button) findViewById(R.id.btn_cancel);
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String borrowDay = sp.getString(HomeActivity.SP_KEY_BORROW_DAYS, null);
@@ -101,7 +104,14 @@ public class SettingsActivity extends BaseActivity {
                 spEditor.commit();
                 updateAlarms();
                 Toast.makeText(getBaseContext(), "Changes Saved! btime: "+btn_borrowTime.getText().toString(), Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
 
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -208,22 +218,32 @@ public class SettingsActivity extends BaseActivity {
 
 
         }else if(type.equalsIgnoreCase(Transaction.LEND_ACTION)){
-            Log.v("TYPE", "TYPEEE: " + type);
-            Transaction tran = dbHelper.queryTransaction(item_id);
-            User u = dbHelper.queryUser(tran.getUserID());
-            Log.v("USERRR", "USERNAMEEE: " + u.getName() + " " + u.getContactInfo());
+            User u = null;
+
+            String message = "";
+
+            if(classification.equalsIgnoreCase(Transaction.ITEM_TYPE)) {
+                ItemTransaction it = (ItemTransaction) dbHelper.queryTransaction(item_id);
+                u = dbHelper.queryUser(it.getUserID());
+
+                message = "[BorroWise Reminder] \n"
+                        + " Hi " + u.getName() + "! Please be reminded to return the borrowed item " + it.getName()+ "today!";
+            }else{
+                MoneyTransaction mt = (MoneyTransaction) dbHelper.queryTransaction(item_id);
+                u = dbHelper.queryUser(mt.getUserID());
+
+                message = "[BorroWise Reminder] \n"
+                        + " Hi " + u.getName() + "! Please be reminded to return the borrowed money PHP " + mt.getAmountDeficit()+ " today!";
+            }
 
             Intent intent = new Intent(getBaseContext(), SMSReceiver.class);
             intent.putExtra(SMSReceiver.NUMBER,u.getContactInfo());
-            intent.putExtra(SMSReceiver.MESSAGE, "BorroWise Trial");
+            intent.putExtra(SMSReceiver.MESSAGE, message);
             intent.putExtra(Transaction.COLUMN_ID, item_id);
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), item_id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-
-
-
 
             Calendar smsAlarm = Calendar.getInstance();
             smsAlarm.setTimeInMillis(end);

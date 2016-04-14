@@ -168,7 +168,11 @@ public class AddItemFragment extends AddAbstractFragment {
     }
 
     public void printAddAcknowledgement(String entry_name, String type){
-        Toast.makeText(getActivity(),entry_name+ " has been successfully "+ type + " !", Toast.LENGTH_SHORT).show();
+        if(type.equalsIgnoreCase("lent"))
+            Toast.makeText(getActivity(),entry_name+ " has been successfully "+ type + " to "+selected_name+" !", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getActivity(),entry_name+ " has been successfully "+ type + " from "+selected_name+" !", Toast.LENGTH_SHORT).show();
+
     }
 
     public void clearAllFields(){
