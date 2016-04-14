@@ -85,7 +85,9 @@ public class HomeActivity extends BaseActivity implements AddAbstractFragment.On
     @Override
     public void onAddTransactions(Transaction t) {
        long itemId =  dbHelper.insertTransaction(t);
-        setItemAlarm((int)itemId, t.getDueDate(), t.getClassification(), t.getType());
+        Log.v("NEW TRANS ID!!!!!! ",""+itemId);
+        Toast.makeText(getBaseContext(), "NEW TRANS ID!!!!!! " +itemId, Toast.LENGTH_LONG).show();
+        setItemAlarm((int) itemId, t.getDueDate(), t.getClassification(), t.getType());
     }
 
     public void setItemAlarm(int item_id, long end, String classification, String type){
@@ -105,25 +107,31 @@ public class HomeActivity extends BaseActivity implements AddAbstractFragment.On
             intent.setClass(getBaseContext(), AlarmReceiver.class);//even receivers receive intents
             intent.putExtra(Transaction.COLUMN_ID, item_id);
             intent.putExtra(Transaction.COLUMN_CLASSIFICATION, classification);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), item_id, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), item_id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-            DateFormat sdf = new SimpleDateFormat("hh:mm");
-            Date date = null;
-            try {
-                date = sdf.parse(borrowTime);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
+
 
             Calendar alarm = Calendar.getInstance();
             alarm.setTimeInMillis(end);
+            Log.v("BEFORE ALARM:", "" + alarm.getTimeInMillis());
             if(borrowTime != null) {
-                alarm.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR));
+                DateFormat sdf = new SimpleDateFormat("HH:mm");
+                Date date = null;
+                try {
+                    date = sdf.parse(borrowTime);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+
+                alarm.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
+                Log.v("cHour: ", calendar.get(Calendar.HOUR_OF_DAY) + "");
                 alarm.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
+                Log.v("cMinute: ", calendar.get(Calendar.MINUTE) + "");
                 alarm.set(Calendar.SECOND, 0);
+                Log.v("AFTER ALARM:", ""+alarm.getTimeInMillis());
             }else{
                 alarm.set(Calendar.HOUR_OF_DAY, 10);
                 alarm.set(Calendar.MINUTE,0);
@@ -135,8 +143,17 @@ public class HomeActivity extends BaseActivity implements AddAbstractFragment.On
 
 
           if(!dateToday.equalsIgnoreCase(dueDate)) {
-              Log.v("CHECKKK","CALENDAR: " + dateToday+ " DUE: "+dueDate);
-              alarm.add(Calendar.DAY_OF_MONTH, -1);
+              Log.v("CHECKKK", "CALENDAR: " + dateToday + " DUE: " + dueDate);
+              if(borrowDay != null) {
+                  int duration = Integer.parseInt(borrowDay);
+                  Log.v("inside if"," duration: "+duration);
+                  for(int i=duration; i>0; i--){
+                      alarm.add(Calendar.DAY_OF_MONTH, -i);
+                  }
+              }else {
+                  Log.v("inside if"," duration: else");
+                  alarm.add(Calendar.DAY_OF_MONTH, -1);
+              }
           }
 
             AlarmManager alarmManager = (AlarmManager)getSystemService(Service.ALARM_SERVICE);
@@ -154,32 +171,51 @@ public class HomeActivity extends BaseActivity implements AddAbstractFragment.On
             intent.putExtra(SMSReceiver.MESSAGE, "BorroWise Trial");
             intent.putExtra(Transaction.COLUMN_ID, item_id);
 
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), item_id, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), item_id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 
 
-            DateFormat sdf = new SimpleDateFormat("hh:mm");
-            Date date = null;
-            try {
-                date = sdf.parse(borrowTime);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
+
 
             Calendar smsAlarm = Calendar.getInstance();
             smsAlarm.setTimeInMillis(end);
 
             if(lendTime != null) {
-                smsAlarm.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR));
+                DateFormat sdf = new SimpleDateFormat("HH:mm");
+                Date date = null;
+                try {
+                    date = sdf.parse(lendTime);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+
+                smsAlarm.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
                 smsAlarm.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
                 smsAlarm.set(Calendar.SECOND, 0);
             }else{
                 smsAlarm.set(Calendar.HOUR_OF_DAY, 10);
                 smsAlarm.set(Calendar.MINUTE,0);
                 smsAlarm.set(Calendar.SECOND, 0);
+            }
+
+
+            String dateToday = new SimpleDateFormat("MM/dd/yyyy").format(new Date(Calendar.getInstance().getTimeInMillis()));
+            String dueDate = new SimpleDateFormat("MM/dd/yyyy").format(new Date(end));
+
+
+            if(!dateToday.equalsIgnoreCase(dueDate)) {
+                Log.v("In lend: CHECKKK", "CALENDAR: " + dateToday + " DUE: " + dueDate);
+                if(lendDay != null) {
+                    int duration = Integer.parseInt(lendDay);
+                    for(int i=duration; i>0; i--){
+                        smsAlarm.add(Calendar.DAY_OF_MONTH, -i);
+                    }
+                }else {
+                    smsAlarm.add(Calendar.DAY_OF_MONTH, -1);
+                }
             }
 
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, smsAlarm.getTimeInMillis(), pendingIntent);

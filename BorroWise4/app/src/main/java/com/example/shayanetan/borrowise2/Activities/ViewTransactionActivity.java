@@ -110,6 +110,8 @@ public class ViewTransactionActivity extends BaseActivity
                 currType = TransactionsCursorAdapter.TYPE_ITEM;
         }
         this.TempID = id;
+        Log.v("update TRANS ID!!!!!! ",""+id);
+        Toast.makeText(getBaseContext(), "update TRANS ID!!!!!! " +id, Toast.LENGTH_LONG).show();
 
         if(currBtn == TransactionsCursorAdapter.BTN_TYPE_PARTIAL) {
 
@@ -169,8 +171,9 @@ public class ViewTransactionActivity extends BaseActivity
             m2.setAmountDeficit(m.getAmountDeficit() - partialAmt);
             m2.setReturnDate(System.currentTimeMillis());
             m2.setStatus(1);
-
+            Log.v("BEFORE TEMPID: ", ""+TempID);
             TempID = dbHelper.updateTransaction(m2);
+            Log.v("AFTER TEMPID: ",""+TempID);
         }
         else
             TempID = dbHelper.updateTransaction(m);
@@ -183,6 +186,8 @@ public class ViewTransactionActivity extends BaseActivity
         int transID = 0;
         switch (currType) {
             case TransactionsCursorAdapter.TYPE_MONEY:
+                Log.v("rating TRANS ID!!!!!! ",""+TempID);
+                Toast.makeText(getBaseContext(), "rating TRANS ID!!!!!! " +TempID, Toast.LENGTH_LONG).show();
                 if(currBtn == TransactionsCursorAdapter.BTN_TYPE_RETURN) {
                     MoneyTransaction m = (MoneyTransaction) dbHelper.queryTransaction(TempID);
                     m.setAmountDeficit(m.getAmountDeficit());

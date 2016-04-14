@@ -144,7 +144,7 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
             tv_Hstatusitem_val = (TextView) itemView.findViewById(R.id.tv_Hstatusitem_val);
             rb_Hratingitem = (RatingBar) itemView.findViewById(R.id.rb_Hratingitem);
 
-            img_Hitem = (ImageView) itemView.findViewById(R.id.img_item);
+            img_Hitem = (ImageView) itemView.findViewById(R.id.img_Hitem);
             item_container = itemView.findViewById(R.id.item_container);
         }
 

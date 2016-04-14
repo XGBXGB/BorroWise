@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -618,9 +619,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         cv.put(Transaction.COLUMN_DUE_DATE, updatedTransaction.getDueDate());
         cv.put(Transaction.COLUMN_RETURN_DATE, updatedTransaction.getReturnDate());
         cv.put(Transaction.COLUMN_RATE, updatedTransaction.getRate());
-
+        Log.v("Update transID: ",""+updatedTransaction.getId());
         int id = db.update(updatedTransaction.TABLE_NAME, cv, " " + updatedTransaction.COLUMN_ID + "= ? ", new String[]{String.valueOf(updatedTransaction.getId())});
-
+        Log.v("RETURNED BY DBUpdate:",""+id);
         cv = new ContentValues();
         if(updatedTransaction.getClassification().equalsIgnoreCase(Transaction.ITEM_TYPE)) {
             cv.put(ItemTransaction.COLUMN_NAME, ((ItemTransaction)updatedTransaction).getName());
@@ -632,7 +633,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             cv.put(MoneyTransaction.COLUMN_AMOUNT_DEFICIT, ((MoneyTransaction)updatedTransaction).getAmountDeficit());
             db.update(MoneyTransaction.TABLE_NAME, cv, " " + MoneyTransaction.COLUMN_TRANSACTION_ID + "= ? ", new String[]{String.valueOf(updatedTransaction.getId())});
         }
-        return id;
+        return updatedTransaction.getId();
     }
     /*
     *UPDATE OBJECT MODULE
