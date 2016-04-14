@@ -23,7 +23,6 @@ public class ViewBorrowedFragment extends Fragment {
     private String filterType;
 
     private RecyclerView recyclerView;
-    private Spinner filter;
     private TransactionsCursorAdapter transactionsCursorAdapter;
 
     private OnFragmentInteractionListener mListener;

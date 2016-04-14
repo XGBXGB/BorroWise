@@ -15,6 +15,7 @@ import com.example.shayanetan.borrowise2.Fragments.HistoryAbstractFragment;
 import com.example.shayanetan.borrowise2.Fragments.HistoryBorrowedFragment;
 import com.example.shayanetan.borrowise2.Fragments.HistoryLendFragment;
 import com.example.shayanetan.borrowise2.Fragments.ViewBorrowedFragment;
+import com.example.shayanetan.borrowise2.Fragments.ViewLentFragment;
 import com.example.shayanetan.borrowise2.Models.DatabaseOpenHelper;
 import com.example.shayanetan.borrowise2.R;
 import com.example.shayanetan.borrowise2.Views.SlidingTabLayout;
@@ -103,4 +104,33 @@ public class HistoryActivity extends BaseActivity  implements HistoryAbstractFra
         if(cursor != null)
              adapter.swapCursor(cursor);
     }
+
+    @Override
+    public void retrieveTransaction(HistoryCursorAdapter adapter, String type, String filter) {
+
+        Cursor cursor = null;
+        switch(type){
+            case HistoryCursorAdapter.TYPE_BORROWED:
+                cursor = dbHelper.querryBorrowTransactionsJoinUser("1,-1", filter);
+                break;
+            case HistoryCursorAdapter.TYPE_LEND:
+                cursor = dbHelper.querryLendTransactionsJoinUser("1,-1", filter);
+                break;
+        }
+        if(cursor != null)
+            adapter.swapCursor(cursor);
+
+       /* Cursor cursor = null;
+
+        if(type.equalsIgnoreCase(ViewLentFragment.VIEW_TYPE)){
+            cursor = dbHelper.querryLendTransactionsJoinUser("1", filter);
+        }
+        else if(type.equalsIgnoreCase(ViewBorrowedFragment.VIEW_TYPE )) {
+            cursor = dbHelper.querryBorrowTransactionsJoinUser("1", filter);
+        }
+        adapter.swapCursor(cursor);
+        */
+    }
+
+
 }

@@ -51,5 +51,6 @@ public abstract class HistoryAbstractFragment extends Fragment {
         // TODO: Update argument type and name
         public void deleteTransaction(HistoryCursorAdapter adapter,int id, String type, String classification);
         public void retrieveTransaction(HistoryCursorAdapter adapter, String type);
+        public void retrieveTransaction(HistoryCursorAdapter adapter, String type, String filter);
     }
 }
