@@ -4,9 +4,11 @@ import android.database.Cursor;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.shayanetan.borrowise2.Adapters.HistoryCursorAdapter;
 import com.example.shayanetan.borrowise2.Adapters.TransactionsCursorAdapter;
@@ -49,6 +51,7 @@ public class HistoryActivity extends BaseActivity  implements HistoryAbstractFra
 
         historyBorrowedFragment = new HistoryBorrowedFragment();
         historyBorrowedFragment.setOnFragmentInteractionListener(this);
+
         historyLendFragment = new HistoryLendFragment();
         historyLendFragment.setOnFragmentInteractionListener(this);
 
@@ -98,6 +101,7 @@ public class HistoryActivity extends BaseActivity  implements HistoryAbstractFra
                 cursor = dbHelper.querryBorrowTransactionsJoinUser("1,-1");
                 break;
             case HistoryCursorAdapter.TYPE_LEND:
+                Toast.makeText(getBaseContext(),"PASOK LEND NO FILETR",Toast.LENGTH_LONG);
                 cursor = dbHelper.querryLendTransactionsJoinUser("1,-1");
                 break;
         }
@@ -111,14 +115,18 @@ public class HistoryActivity extends BaseActivity  implements HistoryAbstractFra
         Cursor cursor = null;
         switch(type){
             case HistoryCursorAdapter.TYPE_BORROWED:
+
                 cursor = dbHelper.querryBorrowTransactionsJoinUser("1,-1", filter);
                 break;
             case HistoryCursorAdapter.TYPE_LEND:
+                Log.v("LEND FINLTER", "PASOK LEND WIH FILTER: "+filter);
+
                 cursor = dbHelper.querryLendTransactionsJoinUser("1,-1", filter);
                 break;
         }
-        if(cursor != null)
-            adapter.swapCursor(cursor);
+
+        adapter.swapCursor(cursor);
+
 
        /* Cursor cursor = null;
 

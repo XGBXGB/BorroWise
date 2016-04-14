@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.shayanetan.borrowise2.Adapters.HistoryCursorAdapter;
 import com.example.shayanetan.borrowise2.Models.Transaction;
@@ -64,6 +65,7 @@ public class HistoryLendFragment extends HistoryAbstractFragment {
             @Override
             public void onClick(View v) {
                 filterType = Transaction.ITEM_TYPE;
+                Toast.makeText(getActivity().getBaseContext(), "PASOK FRAGMENT LEND ITEM", Toast.LENGTH_LONG);
                 mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_LEND, Transaction.ITEM_TYPE);
             }
         });
@@ -75,8 +77,6 @@ public class HistoryLendFragment extends HistoryAbstractFragment {
                 mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_LEND, Transaction.MONEY_TYPE);
             }
         });
-
-
 
         return layout;
     }
