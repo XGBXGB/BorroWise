@@ -37,8 +37,8 @@ public class ViewLentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        transactionsCursorAdapter = new TransactionsCursorAdapter(getActivity().getBaseContext(),null);
 
+        transactionsCursorAdapter = new TransactionsCursorAdapter(getActivity().getBaseContext(), null);
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_view_lent, container, false);
 
@@ -48,7 +48,7 @@ public class ViewLentFragment extends Fragment {
         transactionsCursorAdapter.setmOnClickListener(new TransactionsCursorAdapter.OnButtonClickListener() {
             @Override
             public void onButtonClick(int id, int type, int btnType) {
-                mListener.updateTransaction(id, type, btnType);
+                mListener.updateTransaction(id, type, btnType, transactionsCursorAdapter, VIEW_TYPE);
                 mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE);
             }
         });
@@ -68,8 +68,12 @@ public class ViewLentFragment extends Fragment {
     }
 
 
+    public void setTransactionsCursorAdapter(TransactionsCursorAdapter transactionsCursorAdapter){
+        this.transactionsCursorAdapter = transactionsCursorAdapter;
+    }
     public interface OnFragmentInteractionListener{
-        public void updateTransaction(int id, int type, int btnType);
+
+        public void updateTransaction(int id, int type, int btnType, TransactionsCursorAdapter adapter, String viewType);
         public void retrieveTransaction(TransactionsCursorAdapter adapter, String viewType);
     }
     public void setOnFragmentInteractionListener(OnFragmentInteractionListener mListener){

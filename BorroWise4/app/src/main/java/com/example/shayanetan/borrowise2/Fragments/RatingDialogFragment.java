@@ -10,11 +10,33 @@ import android.view.View;
 import android.widget.RatingBar;
 
 import com.example.shayanetan.borrowise2.Activities.ViewTransactionActivity;
+import com.example.shayanetan.borrowise2.Adapters.TransactionsCursorAdapter;
 import com.example.shayanetan.borrowise2.R;
 
 public class RatingDialogFragment extends DialogFragment {
 
     View v;
+
+    private TransactionsCursorAdapter transactionsCursorAdapter;
+    private String viewType;
+    private OnFragmentInteractionListener mListener;
+
+    public interface OnFragmentInteractionListener{
+        public void updateRating(TransactionsCursorAdapter transactionsCursorAdapter, String viewType, double rating);
+    }
+
+    public void setViewType(String viewType) {
+        this.viewType = viewType;
+    }
+
+    public void setTransactionsCursorAdapter(TransactionsCursorAdapter transactionsCursorAdapter) {
+        this.transactionsCursorAdapter = transactionsCursorAdapter;
+    }
+
+    public void setOnFragmentInteractionListener(OnFragmentInteractionListener mListener){
+        this.mListener = mListener;
+    }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
@@ -32,7 +54,8 @@ public class RatingDialogFragment extends DialogFragment {
                                 /* EditText etxtName = (EditText) v.findViewById(R.id.etxt_name);
                                 ((MainActivity)getActivity()).onNoSelected(etxtName.getText().toString());*/
                                 RatingBar rb = (RatingBar) v.findViewById(R.id.DialogRB);
-                                ((ViewTransactionActivity)getActivity()).setExpRating(rb.getRating());
+                                mListener.updateRating(transactionsCursorAdapter, viewType,rb.getRating());
+                              //  ((ViewTransactionActivity)getActivity()).setExpRating(rb.getRating());
                             }
                         }
                 ).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

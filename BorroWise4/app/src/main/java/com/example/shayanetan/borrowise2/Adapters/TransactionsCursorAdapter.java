@@ -62,8 +62,9 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
         String name = cursor.getString(cursor.getColumnIndex(User.COLUMN_NAME));
         int id = cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID));
         String dueDate = parseMillisToDate(cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_DUE_DATE)));
-        String transactionAttribute1 = cursor.getString(cursor.getColumnIndex("Attribute1"));
-        String transactionAttribute3 = cursor.getString(cursor.getColumnIndex("Attribute3"));
+        String transactionAttribute1 = cursor.getString(cursor.getColumnIndex("Attribute1")); //item and description
+        String transactionAttribute2 = cursor.getString(cursor.getColumnIndex("Attribute2"));
+        String transactionAttribute3 = cursor.getString(cursor.getColumnIndex("Attribute3")); //path ng picture file
 
         switch (viewHolder.getItemViewType()) {
             case TYPE_ITEM:
@@ -106,7 +107,7 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
                 ((BorrowedMoneyViewHolder)viewHolder).money_container.setTag(R.id.key_entry_type, TYPE_MONEY);
                 ((BorrowedMoneyViewHolder)viewHolder).tv_account_money.setText(name);
                 ((BorrowedMoneyViewHolder)viewHolder).tv_duedate_val.setText(dueDate);
-                ((BorrowedMoneyViewHolder)viewHolder).tv_amount.setText(transactionAttribute1);
+                ((BorrowedMoneyViewHolder)viewHolder).tv_amount.setText(transactionAttribute2);
                 ((BorrowedMoneyViewHolder)viewHolder).btn_full.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {

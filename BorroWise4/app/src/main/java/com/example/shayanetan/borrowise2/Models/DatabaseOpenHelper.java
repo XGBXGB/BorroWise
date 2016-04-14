@@ -622,7 +622,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         int id = db.update(updatedTransaction.TABLE_NAME, cv, " " + updatedTransaction.COLUMN_ID + "= ? ", new String[]{String.valueOf(updatedTransaction.getId())});
 
         cv = new ContentValues();
-        if(updatedTransaction.getClassification().equalsIgnoreCase("item")) {
+        if(updatedTransaction.getClassification().equalsIgnoreCase(Transaction.ITEM_TYPE)) {
             cv.put(ItemTransaction.COLUMN_NAME, ((ItemTransaction)updatedTransaction).getName());
             cv.put(ItemTransaction.COLUMN_DESCRIPTION, ((ItemTransaction)updatedTransaction).getDescription());
             cv.put(ItemTransaction.COLUMN_PHOTOPATH, ((ItemTransaction)updatedTransaction).getPhotoPath());
@@ -652,7 +652,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = getWritableDatabase();
 
-        if(classification.equalsIgnoreCase("item")) {
+        if(classification.equalsIgnoreCase(Transaction.ITEM_TYPE)) {
             db.delete(ItemTransaction.TABLE_NAME, " " + ItemTransaction.COLUMN_TRANSACTION_ID + "= ? ", new String[]{String.valueOf(id)});
         }
         else{

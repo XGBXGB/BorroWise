@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.database.Cursor;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -21,8 +22,13 @@ import com.example.shayanetan.borrowise2.Models.Transaction;
 import com.example.shayanetan.borrowise2.Views.SlidingTabLayout;
 import com.example.shayanetan.borrowise2.R;
 
+import java.util.StringTokenizer;
+
 public class ViewTransactionActivity extends BaseActivity
-                                     implements ViewBorrowedFragment.OnFragmentInteractionListener, ViewLentFragment.OnFragmentInteractionListener{
+                                     implements ViewBorrowedFragment.OnFragmentInteractionListener,
+                                                ViewLentFragment.OnFragmentInteractionListener,
+                                                AmountDialogFragment.OnFragmentInteractionListener,
+                                                RatingDialogFragment.OnFragmentInteractionListener{
 
     private ViewPager viewPager;
     private ViewPagerAdapter viewPagerAdapter;
@@ -36,6 +42,7 @@ public class ViewTransactionActivity extends BaseActivity
     private DatabaseOpenHelper dbHelper;
 
     private int TempID, currType, currBtn;
+   // private TransactionsCursorAdapter transactionsCursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +50,19 @@ public class ViewTransactionActivity extends BaseActivity
         setContentView(R.layout.activity_view_transaction);
 
         dbHelper = DatabaseOpenHelper.getInstance(getBaseContext());
-       // transactionsCursorAdapter = new TransactionsCursorAdapter(getBaseContext(),null);
+        //transactionsCursorAdapter = new TransactionsCursorAdapter(getBaseContext(),null);
+
         viewPagerAdapter = new ViewPagerAdapter(this.getSupportFragmentManager());
 
         viewPager = (ViewPager)findViewById(R.id.view_pager);
 
         borrowFragment = new ViewBorrowedFragment();
         borrowFragment.setOnFragmentInteractionListener(this);
+        //borrowFragment.setTransactionsCursorAdapter(transactionsCursorAdapter);
+
         lentFragment = new ViewLentFragment();
         lentFragment.setOnFragmentInteractionListener(this);
+       // lentFragment.setTransactionsCursorAdapter(transactionsCursorAdapter);
 
         viewPagerAdapter.addFragment(borrowFragment, TITLE_TAB1);
         viewPagerAdapter.addFragment(lentFragment, TITLE_TAB2);
@@ -89,7 +100,7 @@ public class ViewTransactionActivity extends BaseActivity
     }
 
     @Override
-    public void updateTransaction(int id, int type, int btnType) {
+    public void updateTransaction(int id, int type, int btnType, TransactionsCursorAdapter adapter, String viewType) {
         this.currBtn = btnType;
         switch (type) {
             case TransactionsCursorAdapter.TYPE_MONEY:
@@ -103,27 +114,28 @@ public class ViewTransactionActivity extends BaseActivity
         if(currBtn == TransactionsCursorAdapter.BTN_TYPE_PARTIAL) {
 
             AmountDialogFragment df = new AmountDialogFragment();
+            df.setOnFragmentInteractionListener(this);
+            df.setTransactionsCursorAdapter(adapter);
+            df.setViewType(viewType);
             df.show(getFragmentManager(), "");
-
-           // MoneyTransaction m = (MoneyTransaction) dbHelper.queryTransaction(TempID);
-            //m.setAmountDeficit(0);
-           // m.setReturnDate(System.currentTimeMillis());
-           // m.setStatus(1);
-            //m.setRate(rating);
-            //transID = dbHelper.updateTransaction(m);
         }
         else
         {
-            DialogFragment dialogFragment
-                    = new RatingDialogFragment();
-            dialogFragment.show(getFragmentManager(), "");
+            RatingDialogFragment df = new RatingDialogFragment();
+            df.setOnFragmentInteractionListener(this);
+            df.setTransactionsCursorAdapter(adapter);
+            df.setViewType(viewType);
+            df.show(getFragmentManager(), "");
         }
 
+        retrieveTransaction(adapter, viewType);
     }
 
     @Override
     public void retrieveTransaction(TransactionsCursorAdapter adapter, String viewType) {
         Cursor cursor = null;
+
+        Log.v("PASOKKKKK", "HALU");
         if(viewType.equalsIgnoreCase(ViewLentFragment.VIEW_TYPE)) {
              cursor= dbHelper.querryLendTransactionsJoinUser("0");
         }
@@ -133,8 +145,41 @@ public class ViewTransactionActivity extends BaseActivity
         adapter.swapCursor(cursor);
     }
 
-    public void setExpRating(double rating)
-    {
+    @Override
+    public void updateAmount(TransactionsCursorAdapter adapter, String viewType, double partialAmt) {
+
+
+        MoneyTransaction m = (MoneyTransaction) dbHelper.queryTransaction(TempID);
+        double computedAmount = m.getAmountDeficit() - partialAmt;
+        m.setAmountDeficit(computedAmount);
+        m.setReturnDate(System.currentTimeMillis());
+        m.setStatus(0);
+
+        Toast.makeText(this, "Deficit " + m.getAmountDeficit(), Toast.LENGTH_LONG).show();
+
+        if(m.getAmountDeficit() == 0)
+        {
+            RatingDialogFragment df = new RatingDialogFragment();
+            df.setOnFragmentInteractionListener(this);
+            df.setTransactionsCursorAdapter(adapter);
+            df.setViewType(viewType);
+            df.show(getFragmentManager(), "");
+
+            MoneyTransaction m2 = (MoneyTransaction) dbHelper.queryTransaction(TempID);
+            m2.setAmountDeficit(m.getAmountDeficit() - partialAmt);
+            m2.setReturnDate(System.currentTimeMillis());
+            m2.setStatus(1);
+
+            TempID = dbHelper.updateTransaction(m2);
+        }
+        else
+            TempID = dbHelper.updateTransaction(m);
+
+        retrieveTransaction(adapter, viewType);
+    }
+
+    @Override
+    public void updateRating(TransactionsCursorAdapter adapter, String viewType, double rating) {
         int transID = 0;
         switch (currType) {
             case TransactionsCursorAdapter.TYPE_MONEY:
@@ -148,9 +193,9 @@ public class ViewTransactionActivity extends BaseActivity
                 }else{
                     //Toast.makeText(this, "PARTIALS NOT YET SUPPORTED", Toast.LENGTH_SHORT).show();
                     MoneyTransaction m = (MoneyTransaction) dbHelper.queryTransaction(TempID);
-                   // m.setAmountDeficit(m.getAmountDeficit());
-                   // m.setReturnDate(System.currentTimeMillis());
-                   // m.setStatus(1);
+                    // m.setAmountDeficit(m.getAmountDeficit());
+                    // m.setReturnDate(System.currentTimeMillis());
+                    // m.setStatus(1);
                     m.setRate(rating);
                     transID = dbHelper.updateTransaction(m);
                 }
@@ -175,29 +220,7 @@ public class ViewTransactionActivity extends BaseActivity
         }
         Transaction transaction = dbHelper.queryTransaction(transID);
         dbHelper.updateUserRating(transaction.getUserID());
-    }
-
-    public void transactPartial(Double partialAmt)
-    {
-        MoneyTransaction m = (MoneyTransaction) dbHelper.queryTransaction(TempID);
-        m.setAmountDeficit(m.getAmountDeficit() - partialAmt);
-        m.setReturnDate(System.currentTimeMillis());
-        m.setStatus(0);
-        Toast.makeText(this, "Deficit " + m.getAmountDeficit(), Toast.LENGTH_LONG).show();
-        if(m.getAmountDeficit() == 0)
-        {
-            DialogFragment dialogFragment
-                    = new RatingDialogFragment();
-            dialogFragment.show(getFragmentManager(), "");
-
-            MoneyTransaction m2 = (MoneyTransaction) dbHelper.queryTransaction(TempID);
-            m2.setAmountDeficit(m.getAmountDeficit() - partialAmt);
-            m2.setReturnDate(System.currentTimeMillis());
-            m2.setStatus(1);
-            TempID = dbHelper.updateTransaction(m2);
-        }
-        else
-            TempID = dbHelper.updateTransaction(m);
+        retrieveTransaction(adapter, viewType);
     }
 }
 

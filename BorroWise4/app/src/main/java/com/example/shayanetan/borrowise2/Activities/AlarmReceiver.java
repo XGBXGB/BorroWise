@@ -64,7 +64,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                         .setContentIntent(pendingIntent)
                         .setTicker("BorroWise")
                         .setNumber(COUNT)
-                        .addAction(R.drawable.ic_item_dark, "View Item",second_pendingIntent);
+                        .addAction(R.mipmap.ic_launcher, "View Item",second_pendingIntent);
         }else if(tranType.equalsIgnoreCase(Transaction.MONEY_TYPE)){
             MoneyTransaction mt = (MoneyTransaction) dbHelper.queryTransaction(transactionId);
             String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(mt.getDueDate()));
@@ -75,7 +75,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                     .setContentIntent(pendingIntent)
                     .setTicker("Ticker")
                     .setNumber(COUNT)
-                    .addAction(R.drawable.ic_money_dark, "View Amount",second_pendingIntent);
+                    .addAction(R.mipmap.ic_launcher, "View Amount",second_pendingIntent);
         }
 
         if(notif_builder != null) {

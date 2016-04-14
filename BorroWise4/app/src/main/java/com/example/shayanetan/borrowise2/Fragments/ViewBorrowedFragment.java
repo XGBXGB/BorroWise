@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.example.shayanetan.borrowise2.Adapters.TransactionsCursorAdapter;
+import com.example.shayanetan.borrowise2.Models.Transaction;
 import com.example.shayanetan.borrowise2.R;
 
 public class ViewBorrowedFragment extends Fragment {
@@ -29,6 +30,7 @@ public class ViewBorrowedFragment extends Fragment {
         // Required empty public constructor
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +39,8 @@ public class ViewBorrowedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        transactionsCursorAdapter = new TransactionsCursorAdapter(getActivity().getBaseContext(),null);
+
+        transactionsCursorAdapter = new TransactionsCursorAdapter(getActivity().getBaseContext(), null);
 
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_view_borrowed, container, false);
@@ -48,14 +51,14 @@ public class ViewBorrowedFragment extends Fragment {
         transactionsCursorAdapter.setmOnClickListener(new TransactionsCursorAdapter.OnButtonClickListener() {
             @Override
             public void onButtonClick(int id, int type, int btnType) {
-                mListener.updateTransaction(id, type, btnType);
-                mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE);
+                mListener.updateTransaction(id, type, btnType, transactionsCursorAdapter,VIEW_TYPE);
+                mListener.retrieveTransaction(transactionsCursorAdapter,VIEW_TYPE);
             }
         });
 
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.setAdapter(transactionsCursorAdapter);
-        mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE);
+        mListener.retrieveTransaction(transactionsCursorAdapter,VIEW_TYPE);
 
         return layout;
     }
@@ -69,7 +72,7 @@ public class ViewBorrowedFragment extends Fragment {
 
 
     public interface OnFragmentInteractionListener{
-        public void updateTransaction(int id, int type, int btnType);
+        public void updateTransaction(int id, int type, int btnType,TransactionsCursorAdapter adapter, String viewType);
         public void retrieveTransaction(TransactionsCursorAdapter adapter, String viewType);
     }
     public void setOnFragmentInteractionListener(OnFragmentInteractionListener mListener){

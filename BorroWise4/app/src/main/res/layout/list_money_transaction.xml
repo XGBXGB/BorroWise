@@ -37,7 +37,7 @@
             android:id="@+id/layout_amount_details"
             android:layout_below="@id/layout_user_name_mt"
             android:layout_width="match_parent"
-            android:layout_height="65dp"
+            android:layout_height="80dp"
             android:padding="5dp">
             <TextView
                 android:layout_width="wrap_content"
@@ -51,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/card_amount_textsize"
                 android:text="1000.00"
+                android:layout_marginBottom="10dp"
                 android:layout_alignParentBottom="true"
                 android:gravity="center_horizontal"
                 android:textStyle="bold"/>
@@ -64,7 +65,7 @@
             <TextView
                 android:id="@+id/lbl_duedatemoney"
                 android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:text="@string/lbl_duedate"/>
@@ -75,7 +76,7 @@
                 android:layout_weight="3"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
-                android:gravity="right"
+                android:gravity="left"
                 android:layout_toRightOf="@id/lbl_duedatemoney"
                 android:text="date"/>
         </LinearLayout>

@@ -175,6 +175,7 @@ public class AddItemFragment extends AddAbstractFragment {
         et_AIItemName.setText("");
         atv_person_name.setText("");
         img_camera.setImageResource(R.drawable.ic_camera_small);
+        img_camera.setScaleType(ImageView.ScaleType.FIT_XY);
         setDateToCurrent();
     }
 

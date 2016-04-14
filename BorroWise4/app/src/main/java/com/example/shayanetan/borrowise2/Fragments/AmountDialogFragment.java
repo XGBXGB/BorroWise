@@ -15,11 +15,32 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 
 import com.example.shayanetan.borrowise2.Activities.ViewTransactionActivity;
+import com.example.shayanetan.borrowise2.Adapters.TransactionsCursorAdapter;
 import com.example.shayanetan.borrowise2.R;
 
 
 public class AmountDialogFragment extends DialogFragment {
     View v;
+
+    private OnFragmentInteractionListener mListener;
+    private TransactionsCursorAdapter transactionsCursorAdapter;
+    private String viewType;
+
+    public interface OnFragmentInteractionListener{
+
+        public void updateAmount(TransactionsCursorAdapter transactionsCursorAdapter, String viewType, double partialAmount);
+    }
+
+    public void setViewType(String viewType) {
+        this.viewType = viewType;
+    }
+
+    public void setTransactionsCursorAdapter(TransactionsCursorAdapter transactionsCursorAdapter) {
+        this.transactionsCursorAdapter = transactionsCursorAdapter;
+    }
+    public void setOnFragmentInteractionListener(OnFragmentInteractionListener mListener){
+        this.mListener = mListener;
+    }
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
@@ -31,11 +52,12 @@ public class AmountDialogFragment extends DialogFragment {
                 .setTitle("PARTIAL AMOUNT")
                 .setView(v)
                 .setMessage("How much was the partial payment?")
-                .setPositiveButton("Rate", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Paid", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 EditText etPartialAmt = (EditText) v.findViewById(R.id.etPartialAmt);
-                                ((ViewTransactionActivity) getActivity()).transactPartial(Double.parseDouble(etPartialAmt.getText().toString()));
+                                mListener.updateAmount(transactionsCursorAdapter, viewType,Double.parseDouble(etPartialAmt.getText().toString()));
+                               // ((ViewTransactionActivity) getActivity()).transactPartial();
                                 //((ViewTransactionActivity) getActivity()).setExpRating(rb.getRating());
                             }
                         }

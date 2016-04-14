@@ -1,16 +1,27 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     tools:context="com.example.shayanetan.borrowise2.Fragments.AmountDialogFragment">
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="00.00"
-        android:textSize="30sp"
-        android:inputType="numberDecimal"
-        android:id="@+id/etPartialAmt"
-        />
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency"
+            android:layout_marginRight="5dp"
+            android:textSize="25dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="0.00"
+            android:textSize="25sp"
+            android:inputType="numberDecimal"
+            android:id="@+id/etPartialAmt" />
+    </LinearLayout>
 
 
 </FrameLayout>
