@@ -84,8 +84,8 @@ public class HistoryActivity extends BaseActivity  implements HistoryAbstractFra
 
     @Override
     public void deleteTransaction(HistoryCursorAdapter adapter, int id, String type, String classification) {
-        dbHelper.deleteTransaction(id, classification);
-        retrieveTransaction(adapter, type);
+//        dbHelper.deleteTransaction(id, classification);
+//        retrieveTransaction(adapter, type);
     }
 
     @Override

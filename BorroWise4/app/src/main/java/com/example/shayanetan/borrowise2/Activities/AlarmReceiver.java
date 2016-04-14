@@ -60,10 +60,11 @@ public class AlarmReceiver extends BroadcastReceiver {
             notif_builder = new NotificationCompat.Builder(context)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle("BorroWise pending item")
-                        .setContentText("Hurry! " + it.getName() + " will already be due on " + dateString)
+                        .setContentText("Hurry! The item " + it.getName() + " will already be due on " + dateString)
                         .setContentIntent(pendingIntent)
                         .setTicker("BorroWise")
                         .setNumber(COUNT)
+                        .setAutoCancel(true)
                         .addAction(R.mipmap.ic_launcher, "View Item",second_pendingIntent);
         }else if(tranType.equalsIgnoreCase(Transaction.MONEY_TYPE)){
             MoneyTransaction mt = (MoneyTransaction) dbHelper.queryTransaction(transactionId);
@@ -71,10 +72,11 @@ public class AlarmReceiver extends BroadcastReceiver {
             notif_builder = new NotificationCompat.Builder(context)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle("BorroWise pending amount due")
-                    .setContentText("Hurry! " + mt.getTotalAmountDue() + " will already be due on " + dateString)
+                    .setContentText("Hurry! Your debt of PHP " + mt.getTotalAmountDue() + " will already be due on " + dateString)
                     .setContentIntent(pendingIntent)
                     .setTicker("Ticker")
                     .setNumber(COUNT)
+                    .setAutoCancel(true)
                     .addAction(R.mipmap.ic_launcher, "View Amount",second_pendingIntent);
         }
 
