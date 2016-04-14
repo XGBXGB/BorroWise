@@ -3,6 +3,7 @@ package com.example.shayanetan.borrowise2.Fragments;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,14 +39,14 @@ public class HistoryLendFragment extends HistoryAbstractFragment {
         View layout = inflater.inflate(R.layout.fragment_history_lend, container, false);
         recyclerView = (RecyclerView)layout.findViewById(R.id.recyclerview_history_lent);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.setAdapter(historyCursorAdapter);
         mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_LEND);
 
         if(filterType.equalsIgnoreCase("All"))
-            mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_BORROWED);
+            mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_LEND);
         else
-            mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_BORROWED, filterType);
+            mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_LEND, filterType);
 
         btn_HLend_all = (Button) layout.findViewById(R.id.btn_HLend_all);
         btn_HLend_item = (Button) layout.findViewById(R.id.btn_HLend_item);
@@ -55,7 +56,7 @@ public class HistoryLendFragment extends HistoryAbstractFragment {
             @Override
             public void onClick(View v) {
                 filterType = "All";
-                mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_BORROWED);
+                mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_LEND);
             }
         });
 
@@ -63,7 +64,7 @@ public class HistoryLendFragment extends HistoryAbstractFragment {
             @Override
             public void onClick(View v) {
                 filterType = Transaction.ITEM_TYPE;
-                mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_BORROWED, Transaction.ITEM_TYPE);
+                mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_LEND, Transaction.ITEM_TYPE);
             }
         });
 
@@ -71,7 +72,7 @@ public class HistoryLendFragment extends HistoryAbstractFragment {
             @Override
             public void onClick(View v) {
                 filterType = Transaction.MONEY_TYPE;
-                mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_BORROWED, Transaction.MONEY_TYPE);
+                mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_LEND, Transaction.MONEY_TYPE);
             }
         });
 
