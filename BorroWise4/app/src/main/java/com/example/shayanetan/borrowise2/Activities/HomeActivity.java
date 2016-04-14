@@ -21,6 +21,8 @@ import com.example.shayanetan.borrowise2.Models.Transaction;
 import com.example.shayanetan.borrowise2.Models.User;
 import com.example.shayanetan.borrowise2.R;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -105,11 +107,28 @@ public class HomeActivity extends BaseActivity implements AddAbstractFragment.On
             intent.putExtra(Transaction.COLUMN_CLASSIFICATION, classification);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), item_id, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
+
+            DateFormat sdf = new SimpleDateFormat("hh:mm");
+            Date date = null;
+            try {
+                date = sdf.parse(borrowTime);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+
             Calendar alarm = Calendar.getInstance();
             alarm.setTimeInMillis(end);
-            alarm.set(Calendar.HOUR_OF_DAY, 14);
-            alarm.set(Calendar.MINUTE, 30);
-            alarm.set(Calendar.SECOND, 0);
+            if(borrowTime != null) {
+                alarm.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR));
+                alarm.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
+                alarm.set(Calendar.SECOND, 0);
+            }else{
+                alarm.set(Calendar.HOUR_OF_DAY, 10);
+                alarm.set(Calendar.MINUTE,0);
+                alarm.set(Calendar.SECOND, 0);
+            }
 
             String dateToday = new SimpleDateFormat("MM/dd/yyyy").format(new Date(Calendar.getInstance().getTimeInMillis()));
             String dueDate = new SimpleDateFormat("MM/dd/yyyy").format(new Date(end));
@@ -139,11 +158,29 @@ public class HomeActivity extends BaseActivity implements AddAbstractFragment.On
 
             AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 
+
+            DateFormat sdf = new SimpleDateFormat("hh:mm");
+            Date date = null;
+            try {
+                date = sdf.parse(borrowTime);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+
             Calendar smsAlarm = Calendar.getInstance();
             smsAlarm.setTimeInMillis(end);
-            smsAlarm.set(Calendar.HOUR_OF_DAY, 14);
-            smsAlarm.set(Calendar.MINUTE, 30);
-            smsAlarm.set(Calendar.SECOND, 60);
+
+            if(lendTime != null) {
+                smsAlarm.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR));
+                smsAlarm.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
+                smsAlarm.set(Calendar.SECOND, 0);
+            }else{
+                smsAlarm.set(Calendar.HOUR_OF_DAY, 10);
+                smsAlarm.set(Calendar.MINUTE,0);
+                smsAlarm.set(Calendar.SECOND, 0);
+            }
 
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, smsAlarm.getTimeInMillis(), pendingIntent);
 

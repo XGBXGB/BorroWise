@@ -30,14 +30,31 @@ public class SettingsActivity extends BaseActivity {
         et_lendDays = (EditText) findViewById(R.id.et_lendDays);
         btn_save = (Button) findViewById(R.id.btn_save);
 
-        btn_borrowTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TimePickerFragment timePickerFragment = new TimePickerFragment();
-                timePickerFragment.setButtonDateSelector(btn_borrowTime);
-                timePickerFragment.show(getSupportFragmentManager(), "BorrowTimePicker");
-            }
-        });
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String borrowDay = sp.getString(HomeActivity.SP_KEY_BORROW_DAYS, null);
+        String borrowTime = sp.getString(HomeActivity.SP_KEY_BORROW_TIME, null);
+        String lendDay = sp.getString(HomeActivity.SP_KEY_LEND_DAYS, null);
+        String lendTime = sp.getString(HomeActivity.SP_KEY_LEND_TIME, null);
+
+        if(borrowTime != null)
+            btn_borrowTime.setText(borrowTime);
+        if(lendTime != null)
+            btn_lendTime.setText(lendTime);
+        if(borrowDay != null)
+            et_borrowDays.setText(borrowDay);
+        if(lendDay != null)
+            et_lendDays.setText(lendDay);
+
+
+            btn_borrowTime.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TimePickerFragment timePickerFragment = new TimePickerFragment();
+                    timePickerFragment.setButtonDateSelector(btn_borrowTime);
+                    timePickerFragment.show(getSupportFragmentManager(), "BorrowTimePicker");
+                }
+            });
+
 
         btn_lendTime.setOnClickListener(new View.OnClickListener() {
             @Override
