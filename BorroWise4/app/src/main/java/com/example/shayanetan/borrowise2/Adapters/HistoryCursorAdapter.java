@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.shayanetan.borrowise2.Models.Transaction;
 import com.example.shayanetan.borrowise2.Models.User;
@@ -35,6 +36,7 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
     public  static final String TYPE_BORROWED = "borrowed";
     public  static final String TYPE_LEND= "lend";
 
+    private String viewTypeFinal;
     private OnButtonClickListener mOnClickListener;
 
     public HistoryCursorAdapter(Context context, Cursor cursor) {
@@ -54,7 +56,7 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final Cursor cursor) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, final Cursor cursor) {
         String name = cursor.getString(cursor.getColumnIndex(User.COLUMN_NAME));
         String returnDate="";
         String dueDate = parseMillisToDate(cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_DUE_DATE)));
@@ -62,8 +64,14 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
         double rating = cursor.getDouble(cursor.getColumnIndex(Transaction.COLUMN_RATE));
         String transactionAttribute1 = cursor.getString(cursor.getColumnIndex("Attribute1"));
         String transactionAttribute3 = cursor.getString(cursor.getColumnIndex("Attribute3"));
-        final String type = cursor.getString(cursor.getColumnIndex(Transaction.COLUMN_TYPE));
+        String type = cursor.getString(cursor.getColumnIndex(Transaction.COLUMN_TYPE));
         int statusInteger = cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_STATUS));
+
+
+        if(type.equalsIgnoreCase("borrow"))
+            viewTypeFinal = TYPE_BORROWED;
+        else
+            viewTypeFinal = TYPE_LEND;
 
         if( statusInteger == -1 || statusInteger == 0) {
             returnDate = "N/A";
@@ -80,8 +88,7 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
             case "0": statusFinal = "Ongoing"; break;
         }
 
-        final int itemViewType = viewHolder.getItemViewType();
-        switch (itemViewType) {
+        switch (viewHolder.getItemViewType()) {
             case TYPE_ITEM:
 
                 File imgFile = new  File(transactionAttribute3);
@@ -102,7 +109,7 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
                 ((BorrowedItemViewHolder)viewHolder).item_container.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
-                        mOnClickListener.onButtonClick(Integer.parseInt(v.getTag().toString()), type, Transaction.ITEM_TYPE);
+                        mOnClickListener.onButtonClick(Integer.parseInt(v.getTag().toString()), viewTypeFinal, Transaction.ITEM_TYPE);
                         return true;
                     }
                 });
@@ -120,7 +127,8 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
                 ((BorrowedMoneyViewHolder)viewHolder).money_container.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
-                        mOnClickListener.onButtonClick(Integer.parseInt(v.getTag().toString()), type, Transaction.MONEY_TYPE);
+
+                        mOnClickListener.onButtonClick(Integer.parseInt(v.getTag().toString()), viewTypeFinal, Transaction.MONEY_TYPE);
                         return true;
                     }
                 });

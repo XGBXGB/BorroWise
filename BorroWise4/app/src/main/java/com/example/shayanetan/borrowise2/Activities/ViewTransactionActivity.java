@@ -216,9 +216,6 @@ public class ViewTransactionActivity extends BaseActivity
                 }else{
                     //Toast.makeText(this, "PARTIALS NOT YET SUPPORTED", Toast.LENGTH_SHORT).show();
                     MoneyTransaction m = (MoneyTransaction) dbHelper.queryTransaction(TempID);
-                    // m.setAmountDeficit(m.getAmountDeficit());
-                    // m.setReturnDate(System.currentTimeMillis());
-                    // m.setStatus(1);
                     m.setRate(rating);
                     transID = dbHelper.updateTransaction(m);
                 }

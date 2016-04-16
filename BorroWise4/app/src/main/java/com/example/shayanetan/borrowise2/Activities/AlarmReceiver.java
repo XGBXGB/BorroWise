@@ -32,8 +32,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent2) {
-
-
         // TODO: This method is called when the BroadcastReceiver is receiving
 
         Intent intent = new Intent();
@@ -44,15 +42,12 @@ public class AlarmReceiver extends BroadcastReceiver {
         secondact_intent.setClass(context,ViewTransactionActivity.class);
         PendingIntent second_pendingIntent = PendingIntent.getActivity(context,SA_PENDING_INTENT, secondact_intent, PendingIntent.FLAG_UPDATE_CURRENT);//flag_update_current depends on the extras
 
-
         //create a notification
         NotificationCompat.Builder notif_builder = null;
 
         dbHelper = DatabaseOpenHelper.getInstance(context);
         int transactionId = intent2.getExtras().getInt(Transaction.COLUMN_ID);
         String tranType = intent2.getExtras().getString(Transaction.COLUMN_CLASSIFICATION);
-
-        Toast.makeText(context,"TRAN TYPE: "+ tranType,Toast.LENGTH_LONG);
 
         if(tranType.equalsIgnoreCase(Transaction.ITEM_TYPE)){
             ItemTransaction it = (ItemTransaction) dbHelper.queryTransaction(transactionId);
@@ -74,7 +69,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                     .setContentTitle("BorroWise pending amount due")
                     .setContentText("Hurry! Your debt of PHP " + mt.getTotalAmountDue() + " will already be due on " + dateString)
                     .setContentIntent(pendingIntent)
-                    .setTicker("Ticker")
+                    .setTicker("BorroWise")
                     .setNumber(COUNT)
                     .setAutoCancel(true)
                     .addAction(R.mipmap.ic_launcher, "View Amount",second_pendingIntent);

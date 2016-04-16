@@ -840,7 +840,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                     null,
                     null);
 
-            totalRate = 1;
+            totalRate = 0;
             totalCnt = 0;
 
             while (c2.moveToNext())

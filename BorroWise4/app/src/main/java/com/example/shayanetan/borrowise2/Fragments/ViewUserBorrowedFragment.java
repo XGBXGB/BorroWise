@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.shayanetan.borrowise2.Adapters.HistoryCursorAdapter;
 import com.example.shayanetan.borrowise2.Adapters.TransactionsCursorAdapter;
@@ -39,7 +40,13 @@ public class ViewUserBorrowedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         historyCursorAdapter = new HistoryCursorAdapter(getActivity().getBaseContext(),null);
-
+        historyCursorAdapter.setmOnLongClickListener(new HistoryCursorAdapter.OnButtonClickListener() {
+            @Override
+            public void onButtonClick(int id, String type, String classification) {
+            //    Toast.makeText(getActivity().getBaseContext(), "KEN LEE: " + id, Toast.LENGTH_LONG);
+           //     mListener.deleteTransaction(historyCursorAdapter,id, type, classification);
+            }
+        });
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_users_borrowed, container, false);
 
@@ -62,6 +69,7 @@ public class ViewUserBorrowedFragment extends Fragment {
 
 
     public interface OnFragmentInteractionListener{
+        public void deleteTransaction(HistoryCursorAdapter adapter,int id, String type, String classification);
         public void retrieveTransaction(HistoryCursorAdapter adapter, String viewType);
     }
     public void setOnFragmentInteractionListener(OnFragmentInteractionListener mListener){

@@ -172,7 +172,7 @@ public class HomeActivity extends BaseActivity implements AddAbstractFragment.On
                 u = dbHelper.queryUser(it.getUserID());
 
                 message = "[BorroWise Reminder] \n"
-                        + " Hi " + u.getName() + "! Please be reminded to return the borrowed item " + it.getName()+ "today!";
+                        + " Hi " + u.getName() + "! Please be reminded to return the borrowed item " + it.getName()+ " today!";
             }else{
                 MoneyTransaction mt = (MoneyTransaction) dbHelper.queryTransaction(item_id);
                 u = dbHelper.queryUser(mt.getUserID());

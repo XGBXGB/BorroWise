@@ -135,16 +135,19 @@ public class SettingsActivity extends BaseActivity {
     public void updateAlarms(){
         Cursor cursor = dbHelper.querryAllTransactionsJoinUser("0");
 
-        if(cursor.moveToFirst()){
-            do {
-                int id = cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID));
-                String classification = cursor.getString(cursor.getColumnIndex(Transaction.COLUMN_CLASSIFICATION));
-                String type = cursor.getString(cursor.getColumnIndex(Transaction.COLUMN_TYPE));
-                long dueDate = cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_DUE_DATE));
+        if(cursor != null){
+            if(cursor.moveToFirst()){
+                do {
+                    int id = cursor.getInt(cursor.getColumnIndex(Transaction.COLUMN_ID));
+                    String classification = cursor.getString(cursor.getColumnIndex(Transaction.COLUMN_CLASSIFICATION));
+                    String type = cursor.getString(cursor.getColumnIndex(Transaction.COLUMN_TYPE));
+                    long dueDate = cursor.getLong(cursor.getColumnIndex(Transaction.COLUMN_DUE_DATE));
 
-                setItemAlarm(id, dueDate, classification, type);
-            }while(cursor.moveToNext());
+                    setItemAlarm(id, dueDate, classification, type);
+                }while(cursor.moveToNext());
+            }
         }
+
     }
 
     public void setItemAlarm(int item_id, long end, String classification, String type){
@@ -227,7 +230,7 @@ public class SettingsActivity extends BaseActivity {
                 u = dbHelper.queryUser(it.getUserID());
 
                 message = "[BorroWise Reminder] \n"
-                        + " Hi " + u.getName() + "! Please be reminded to return the borrowed item " + it.getName()+ "today!";
+                        + " Hi " + u.getName() + "! Please be reminded to return the borrowed item " + it.getName()+ " today!";
             }else{
                 MoneyTransaction mt = (MoneyTransaction) dbHelper.queryTransaction(item_id);
                 u = dbHelper.queryUser(mt.getUserID());

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.shayanetan.borrowise2.Adapters.HistoryCursorAdapter;
 import com.example.shayanetan.borrowise2.R;
@@ -34,10 +35,11 @@ public abstract class HistoryAbstractFragment extends Fragment {
 
     public void init(){
 
-        historyCursorAdapter = new HistoryCursorAdapter(getActivity(),null);
+        historyCursorAdapter = new HistoryCursorAdapter(getActivity().getBaseContext(),null);
         historyCursorAdapter.setmOnLongClickListener(new HistoryCursorAdapter.OnButtonClickListener() {
             @Override
             public void onButtonClick(int id, String type, String classification) {
+                Toast.makeText(getActivity().getBaseContext(), "KEN LEE: " + id, Toast.LENGTH_LONG);
                 mListener.deleteTransaction(historyCursorAdapter,id, type, classification);
             }
         });

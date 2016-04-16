@@ -115,6 +115,12 @@ public class ViewUserProfileActivity extends BaseActivity implements ViewUserBor
     }
 
     @Override
+    public void deleteTransaction(HistoryCursorAdapter adapter, int id, String type, String classification) {
+//        dbHelper.deleteTransaction(id, classification);
+//        retrieveTransaction(adapter, type);
+    }
+
+    @Override
     public void retrieveTransaction(HistoryCursorAdapter adapter, String viewType) {
         Cursor cursor = null;
         if(viewType.equalsIgnoreCase(ViewUserLentFragment.VIEW_TYPE)) {

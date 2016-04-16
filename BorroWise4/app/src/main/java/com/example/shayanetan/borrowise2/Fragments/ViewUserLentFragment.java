@@ -39,7 +39,13 @@ public class ViewUserLentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         historyCursorAdapter = new HistoryCursorAdapter(getActivity().getBaseContext(),null);
-
+        historyCursorAdapter.setmOnLongClickListener(new HistoryCursorAdapter.OnButtonClickListener() {
+            @Override
+            public void onButtonClick(int id, String type, String classification) {
+                //    Toast.makeText(getActivity().getBaseContext(), "KEN LEE: " + id, Toast.LENGTH_LONG);
+                //mListener.deleteTransaction(historyCursorAdapter,id, type, classification);
+            }
+        });
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_users_lent, container, false);
 
@@ -61,6 +67,7 @@ public class ViewUserLentFragment extends Fragment {
 
 
     public interface OnFragmentInteractionListener{
+        public void deleteTransaction(HistoryCursorAdapter adapter,int id, String type, String classification);
         public void retrieveTransaction(HistoryCursorAdapter adapter, String viewType);
     }
     public void setOnFragmentInteractionListener(OnFragmentInteractionListener mListener){

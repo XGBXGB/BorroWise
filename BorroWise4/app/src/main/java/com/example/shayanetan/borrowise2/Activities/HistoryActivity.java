@@ -88,8 +88,8 @@ public class HistoryActivity extends BaseActivity  implements HistoryAbstractFra
 
     @Override
     public void deleteTransaction(HistoryCursorAdapter adapter, int id, String type, String classification) {
-//        dbHelper.deleteTransaction(id, classification);
-//        retrieveTransaction(adapter, type);
+        dbHelper.deleteTransaction(id, classification);
+        retrieveTransaction(adapter, type);
     }
 
     @Override
@@ -101,12 +101,10 @@ public class HistoryActivity extends BaseActivity  implements HistoryAbstractFra
                 cursor = dbHelper.querryBorrowTransactionsJoinUser("1,-1");
                 break;
             case HistoryCursorAdapter.TYPE_LEND:
-                Toast.makeText(getBaseContext(),"PASOK LEND NO FILETR",Toast.LENGTH_LONG);
                 cursor = dbHelper.querryLendTransactionsJoinUser("1,-1");
                 break;
         }
-        if(cursor != null)
-             adapter.swapCursor(cursor);
+        adapter.swapCursor(cursor);
     }
 
     @Override
@@ -115,29 +113,15 @@ public class HistoryActivity extends BaseActivity  implements HistoryAbstractFra
         Cursor cursor = null;
         switch(type){
             case HistoryCursorAdapter.TYPE_BORROWED:
-
                 cursor = dbHelper.querryBorrowTransactionsJoinUser("1,-1", filter);
                 break;
             case HistoryCursorAdapter.TYPE_LEND:
-                Log.v("LEND FINLTER", "PASOK LEND WIH FILTER: "+filter);
-
                 cursor = dbHelper.querryLendTransactionsJoinUser("1,-1", filter);
                 break;
         }
 
         adapter.swapCursor(cursor);
 
-
-       /* Cursor cursor = null;
-
-        if(type.equalsIgnoreCase(ViewLentFragment.VIEW_TYPE)){
-            cursor = dbHelper.querryLendTransactionsJoinUser("1", filter);
-        }
-        else if(type.equalsIgnoreCase(ViewBorrowedFragment.VIEW_TYPE )) {
-            cursor = dbHelper.querryBorrowTransactionsJoinUser("1", filter);
-        }
-        adapter.swapCursor(cursor);
-        */
     }
 
 
