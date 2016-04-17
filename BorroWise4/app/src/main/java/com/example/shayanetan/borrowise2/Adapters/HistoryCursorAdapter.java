@@ -95,8 +95,8 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
 
                 File imgFile = new  File(transactionAttribute3);
                 if(imgFile.exists()){
-                    ItemTransaction.bmpOptions.inSampleSize = 8;
-                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), ItemTransaction.bmpOptions);
+                  //  ItemTransaction.bmpOptions.inSampleSize = 8;
+                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                     ((BorrowedItemViewHolder)viewHolder).img_Hitem.setImageBitmap(myBitmap);
                     ((BorrowedItemViewHolder)viewHolder).img_Hitem.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 }
@@ -215,7 +215,7 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
         public void onButtonClick(int id, String type, String classification);
     }
     public String parseMillisToDate(long millis){
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy");
         Date resultdate = new Date(millis);
         return sdf.format(resultdate);
     }

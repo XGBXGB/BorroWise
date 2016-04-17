@@ -171,7 +171,6 @@ public class AddItemFragment extends AddAbstractFragment {
             img_camera.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
             System.out.println("CAMERA SAVED FILEPATH: " + getRealPathFromURI(tempUri));
-            Toast.makeText(getActivity(), "CAMERA SAVED FILEPATH: " + getRealPathFromURI(tempUri), Toast.LENGTH_SHORT).show();
         }
     }
 

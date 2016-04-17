@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Item name"
-            android:textSize="@dimen/title_label"/>
+            android:textSize="@dimen/subheading_label"/>
 
     </LinearLayout>
 
@@ -115,7 +115,6 @@
             android:id="@+id/layout_item_startDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
             <ImageView
                 android:layout_width="@dimen/navigation_icon_size"
@@ -143,10 +142,13 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_margin="10dp"
             android:background="@color/dividerColor" />
+
         <LinearLayout
             android:id="@+id/layout_item_endDate"
             android:layout_width="match_parent"

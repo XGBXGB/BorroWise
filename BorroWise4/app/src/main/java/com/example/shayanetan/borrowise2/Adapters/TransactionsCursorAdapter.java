@@ -71,8 +71,8 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
             case TYPE_ITEM:
                 File imgFile = new  File(transactionAttribute3);
                 if(imgFile.exists()){
-                    ItemTransaction.bmpOptions.inSampleSize = 8;
-                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), ItemTransaction.bmpOptions);
+                   // ItemTransaction.bmpOptions.inSampleSize = 8;
+                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                     ((BorrowedItemViewHolder)viewHolder).img_item.setImageBitmap(myBitmap);
                     ((BorrowedItemViewHolder)viewHolder).img_item.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
@@ -205,7 +205,7 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
     }
 
     public String parseMillisToDate(long millis){
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy");
         Date resultdate = new Date(millis);
         return sdf.format(resultdate);
     }

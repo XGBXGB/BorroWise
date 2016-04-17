@@ -2,7 +2,7 @@
 <resources>
     <color name = "primaryDarkColor">#f57f17</color>
     <color name = "primaryColor">#f9a825</color>
-    <color name = "secondaryColor">#fbc02d</color>
+    <color name = "secondaryColor">#ffc107</color>
     <color name = "accentBlueColor">#303f9f</color>
     <color name = "accentLightBlueColor">#3f51b5</color>
     <color name = "accentRedColor">#ff5252</color>

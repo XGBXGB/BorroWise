@@ -35,6 +35,7 @@
             android:hint="0.00"
             android:textColorHint="@android:color/white"
             android:textSize="45sp"
+            android:textCursorDrawable = "@null"
             android:textColor="@android:color/white"
             android:inputType="numberDecimal"/>
 
@@ -45,8 +46,8 @@
         android:src="@drawable/ic_item"
         app:fabSize="normal"
         app:backgroundTint="@color/secondaryColor"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight = "true" />
@@ -105,7 +106,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:layout_marginBottom="5dp"
             android:orientation="horizontal">
             <ImageView
                 android:layout_width="@dimen/navigation_icon_size"
@@ -132,7 +132,11 @@
                     android:text="today"/>
             </LinearLayout>
         </LinearLayout>
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="10dp"
+            android:background="@color/dividerColor" />
         <LinearLayout
             android:id="@+id/layout_money_endDate"
             android:layout_below="@id/layout_user_name"

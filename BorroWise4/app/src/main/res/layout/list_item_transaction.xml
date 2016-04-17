@@ -78,7 +78,6 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/caption_label"
                 android:text="@string/lbl_duedate"
-                android:textStyle="bold"
                 android:gravity="right"
                 android:layout_toRightOf="@id/tv_duedateitem_label"
                 android:layout_below="@id/tv_itemname"/>

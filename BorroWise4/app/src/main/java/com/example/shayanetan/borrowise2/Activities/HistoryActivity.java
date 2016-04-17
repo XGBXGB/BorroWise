@@ -73,17 +73,17 @@ public class HistoryActivity extends BaseActivity  implements HistoryAbstractFra
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+////        if (id == R.id.action_settings) {
+////            return true;
+////        }
+//        //menu.findItem(R.id.action_settings).setVisible(false);
+//        return super.onOptionsItemSelected(item);
+//    }
 
 
     @Override

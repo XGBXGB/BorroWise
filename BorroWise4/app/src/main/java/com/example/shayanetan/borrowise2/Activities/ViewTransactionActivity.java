@@ -92,9 +92,9 @@ public class ViewTransactionActivity extends BaseActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -111,7 +111,7 @@ public class ViewTransactionActivity extends BaseActivity
         }
         this.TempID = id;
         Log.v("update TRANS ID!!!!!! ", "" + id);
-        Toast.makeText(getBaseContext(), "update TRANS ID!!!!!! " +id, Toast.LENGTH_LONG).show();
+      //  Toast.makeText(getBaseContext(), "update TRANS ID!!!!!! " +id, Toast.LENGTH_LONG).show();
 
         if(currBtn == TransactionsCursorAdapter.BTN_TYPE_PARTIAL) {
 
@@ -171,7 +171,7 @@ public class ViewTransactionActivity extends BaseActivity
         m.setReturnDate(System.currentTimeMillis());
         m.setStatus(0);
 
-        Toast.makeText(this, "Deficit " + m.getAmountDeficit(), Toast.LENGTH_LONG).show();
+      //  Toast.makeText(this, "Deficit " + m.getAmountDeficit(), Toast.LENGTH_LONG).show();
 
         if(m.getAmountDeficit() == 0)
         {
@@ -205,7 +205,7 @@ public class ViewTransactionActivity extends BaseActivity
         switch (currType) {
             case TransactionsCursorAdapter.TYPE_MONEY:
                 Log.v("rating TRANS ID!!!!!! ",""+TempID);
-                Toast.makeText(getBaseContext(), "rating TRANS ID!!!!!! " +TempID, Toast.LENGTH_LONG).show();
+           //     Toast.makeText(getBaseContext(), "rating TRANS ID!!!!!! " +TempID, Toast.LENGTH_LONG).show();
                 if(currBtn == TransactionsCursorAdapter.BTN_TYPE_RETURN) {
                     MoneyTransaction m = (MoneyTransaction) dbHelper.queryTransaction(TempID);
                     m.setAmountDeficit(m.getAmountDeficit());

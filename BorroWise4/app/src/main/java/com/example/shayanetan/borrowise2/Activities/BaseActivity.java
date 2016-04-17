@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -43,6 +44,7 @@ public class BaseActivity extends AppCompatActivity implements
         super.setContentView(drawerLayout);
 
         toolbar = (Toolbar) findViewById(R.id.appbar);
+
 
         navigationView = (NavigationView) findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -105,22 +107,7 @@ public class BaseActivity extends AppCompatActivity implements
             drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                     R.string.drawer_open,
                     R.string.drawer_close);
-//                public void onDrawerClosed(View view) {
-//                    supportInvalidateOptionsMenu();
-//                }
-//
-//                public void onDrawerOpened(View drawerView) {
-//                    supportInvalidateOptionsMenu();
-//                }
-//
-//                @Override
-//                public void onDrawerSlide(View drawerView, float slideOffset) {
-//                    super.onDrawerSlide(drawerView, slideOffset);
-//                    activityContainer.setTranslationX(slideOffset * drawerView.getWidth());
-//                    drawerLayout.bringChildToFront(drawerView);
-//                    drawerLayout.requestLayout();
-//                }
-//            };
+
             drawerLayout.setDrawerListener(drawerToggle);
             drawerToggle.syncState();
         } else if (useToolbar() && getSupportActionBar() != null) {
@@ -128,6 +115,7 @@ public class BaseActivity extends AppCompatActivity implements
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
         }
+
     }
 
     protected boolean useDrawerToggle() {
@@ -144,18 +132,10 @@ public class BaseActivity extends AppCompatActivity implements
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public boolean onPrepareOptionsMenu (Menu menu) {
+        return false;
     }
+
+
+
 }
