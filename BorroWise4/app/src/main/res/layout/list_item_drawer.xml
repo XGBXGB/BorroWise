@@ -21,7 +21,8 @@
             <ImageView
                 android:id="@+id/drawer_icon"
                 android:layout_width="wrap_content"
-                android:src="@drawable/ic_account_dark"
+                android:tint="@color/text_primaryColor"
+                android:src="@drawable/ic_account"
                 android:layout_height="@dimen/navigation_icon_size"/>
 
             <TextView

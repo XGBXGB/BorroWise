@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="5dp"
-            android:background="@color/accentDarkColor">
+            android:background="@color/primaryColor">
             <ImageView
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -37,12 +37,13 @@
             android:id="@+id/layout_amount_details"
             android:layout_below="@id/layout_user_name_mt"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="85dp"
             android:padding="5dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
                 android:text="@string/currency"
                 android:textSize="@dimen/card_currency_textsize"/>
             <TextView
@@ -67,7 +68,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:textSize="@dimen/caption_label"
                 android:text="@string/lbl_duedate"/>
 
             <TextView
@@ -75,7 +76,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:textSize="@dimen/caption_label"
                 android:gravity="left"
                 android:layout_toRightOf="@id/lbl_duedatemoney"
                 android:text="date"/>
@@ -93,6 +94,7 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:text="@string/btn_partial"
+                android:textSize="@dimen/button_label"
                 android:textColor="@android:color/white"
                 android:background="@color/primaryColor"/>
             <Button
@@ -101,8 +103,9 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:text="@string/btn_full"
+                android:textSize="@dimen/button_label"
                 android:textColor="@android:color/white"
-                android:background="@color/accentColor"/>
+                android:background="@color/accentBlueColor"/>
         </LinearLayout>
     </RelativeLayout>
 

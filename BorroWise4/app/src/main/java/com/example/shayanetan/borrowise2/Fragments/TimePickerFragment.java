@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.format.DateFormat;
 import android.text.format.Time;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.shayanetan.borrowise2.Models.CustomDate;
@@ -24,12 +26,14 @@ import java.util.Date;
  */
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
-    private Button btn_time_selector;
+    private TextView tv_alarm;
 
     public TimePickerFragment(){}
 
-    public void setButtonDateSelector(Button btn_time_selector){
-        this.btn_time_selector = btn_time_selector;
+
+
+    public void setTv_alarm(TextView tv_alarm) {
+        this.tv_alarm = tv_alarm;
     }
 
     @Override
@@ -46,17 +50,17 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         // Do something with the time chosen by the user
-        SimpleDateFormat curFormatter = new SimpleDateFormat("HH:mm");
-        Date dateObj = null;
-        try {
-            dateObj = curFormatter.parse(hourOfDay + ":" + minute);
-        }catch (ParseException e){
-            e.printStackTrace();
-        }
-        SimpleDateFormat postFormatter = new SimpleDateFormat("HH:mm");
-        String result = postFormatter.format(dateObj);
 
-        btn_time_selector.setText(hourOfDay+":"+minute);
+            Log.v("PASOK", "HALU");
+
+            String result ="";
+            if(minute>=0 && minute <=9)
+                result = hourOfDay +":0"+minute;
+            else
+                result = hourOfDay +":"+minute;
+
+            tv_alarm.setText(result);
+
     }
 
 }

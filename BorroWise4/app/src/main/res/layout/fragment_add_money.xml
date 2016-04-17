@@ -10,8 +10,9 @@
         android:layout_height="200dp"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:background="@color/primaryColor"
+        android:background="@color/accentBlueColor"
         android:padding="5dp"
+        android:layout_marginBottom="10dp"
         android:id="@+id/card_money">
         <TextView
             android:id="@+id/tv_lbl_currency"
@@ -32,6 +33,7 @@
             android:layout_below="@id/tv_lbl_currency"
             android:layout_marginTop="30dp"
             android:hint="0.00"
+            android:textColorHint="@android:color/white"
             android:textSize="45sp"
             android:textColor="@android:color/white"
             android:inputType="numberDecimal"/>
@@ -42,7 +44,7 @@
         android:id="@+id/btn_MoneyToItem"
         android:src="@drawable/ic_item"
         app:fabSize="normal"
-        app:backgroundTint="@color/blueColor"
+        app:backgroundTint="@color/secondaryColor"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
         android:layout_width="wrap_content"
@@ -54,7 +56,7 @@
         android:id="@+id/money_content_section"
         android:layout_below="@id/card_money"
         android:layout_width="match_parent"
-        android:padding="5dp"
+        android:padding="10dp"
         android:layout_marginTop="5dp"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -62,7 +64,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
@@ -70,16 +71,10 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="@dimen/navigation_icon_size"
-                android:layout_marginRight="3dp"
+                android:layout_marginRight="10dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_account_dark"/>
-            <!--EditText
-                android:id="@+id/et_AMPersonName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Person Name"
-                android:textSize="20sp"
-                android:layout_marginLeft="8dp"/-->
+                android:tint="@color/text_primaryColor"
+                android:src="@drawable/ic_account"/>
 
             <AutoCompleteTextView
                 android:id="@+id/atv_AMPersonName"
@@ -88,8 +83,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Enter person name"
                 android:layout_alignParentLeft="true"
-                android:ems="10"
-                android:text="">
+                android:textSize="@dimen/subheading_label">
                 <requestFocus />
             </AutoCompleteTextView>
 
@@ -100,60 +94,75 @@
                 android:layout_height="@dimen/navigation_icon_size"
                 android:layout_marginRight="3dp"
                 android:layout_gravity="center_vertical"
+                android:tint="@color/text_primaryColor"
                 android:src="@drawable/ic_add_plus"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/item_date_details"
+            android:id="@+id/layout_money_startDate"
             android:layout_below="@id/layout_user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:orientation="vertical">
-
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="@dimen/navigation_icon_size"
+                android:layout_height="@dimen/navigation_icon_size"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_calendar"
+                android:tint="@color/text_primaryColor"/>
             <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:orientation="horizontal">
-
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Start Date"
-                    android:textSize="20sp"/>
-
-                <Button
-                    android:layout_width="0dp"
+                    android:textSize="@dimen/subheading_label"
+                    android:text="Start Date"/>
+                <TextView
+                    android:id="@+id/tv_money_startDate"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/accent_dark_border"
-                    android:id="@+id/btn_AMStartDate"
-                    android:layout_weight="2" />
-
+                    android:textSize="@dimen/caption_label"
+                    android:text="today"/>
             </LinearLayout>
+        </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/layout_money_endDate"
+            android:layout_below="@id/layout_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="@dimen/navigation_icon_size"
+                android:layout_height="@dimen/navigation_icon_size"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_calendar"
+                android:tint="@color/text_primaryColor"/>
             <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:orientation="horizontal">
-
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/subheading_label"
                     android:text="End Date"/>
-
-                <Button
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tv_money_endDate"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:background="@drawable/accent_dark_border"
-                    android:id="@+id/btn_AMEndDate" />
-
+                    android:textSize="@dimen/caption_label"
+                    android:text="today"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -165,7 +174,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignBottom="@id/money_content_section"
-        android:padding="5dp"
         android:orientation="horizontal">
 
         <Button
@@ -173,11 +181,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginRight="5dp"
             android:text="@string/btn_borrowed"
-            android:textSize="20sp"
-            android:background="@color/primaryDarkColor"
-            android:textColor="#FFFFFF"/>
+            android:textSize="@dimen/button_label"
+            android:background="@color/accentLightBlueColor"
+            android:textColor="@android:color/white"/>
 
         <Button
             android:id="@+id/btn_AMLend"
@@ -185,9 +192,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/btn_lent"
-            android:textSize="20sp"
-            android:background="@color/accentDarkColor"
-            android:textColor="#FFFFFF"/>
+            android:textSize="@dimen/button_label"
+            android:background="@color/accentLightBlueColor"
+            android:textColor="@android:color/white"/>
     </LinearLayout>
 
 </RelativeLayout>

@@ -1,58 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
     android:id="@+id/user_container">
 
-    <ImageView
-        android:src="@drawable/ic_account_dark"
-        android:id="@+id/iv_user"
-        android:layout_gravity="center_vertical"
-        android:layout_height="30dp"
-        android:layout_width="0dp"
-        android:layout_weight="1"/>
-
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="5">
-
-        <TextView
-            android:id="@+id/tv_username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:text="Shayane Tan"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_user"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_account"
+            android:tint="@color/text_primaryColor"
+            android:layout_height="@dimen/navigation_icon_size"
+            android:layout_width="@dimen/navigation_icon_size"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RatingBar
-                android:id="@+id/rb_ratinguser"
-                android:layout_gravity="left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="?android:attr/ratingBarStyleSmall"
-                android:numStars="5"
-                android:isIndicator="true"
-                android:stepSize="0.5"
-                android:rating="3.5"/>
+            android:orientation="vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_gravity="center_vertical">
+
             <TextView
-                android:id="@+id/tv_userrating"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_username"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="3.5"
-                android:textSize="13sp"/>
+                android:layout_weight="5"
+                android:text="Shayane Tan"
+                android:textSize="@dimen/subheading_label"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RatingBar
+                    android:id="@+id/rb_ratinguser"
+                    android:layout_gravity="left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:numStars="5"
+                    android:isIndicator="true"
+                    android:stepSize="0.5"
+                    android:rating="3.5"/>
+                <TextView
+                    android:id="@+id/tv_userrating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="3.5"
+                    android:textSize="@dimen/caption_label"/>
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dividerColor" /></LinearLayout>
+

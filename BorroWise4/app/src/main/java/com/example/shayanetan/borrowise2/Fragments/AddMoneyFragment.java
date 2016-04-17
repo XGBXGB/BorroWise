@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.shayanetan.borrowise2.Models.MoneyTransaction;
@@ -44,8 +45,13 @@ public class AddMoneyFragment extends AddAbstractFragment {
         btn_addContact = (ImageView) layout.findViewById(R.id.btn_addContact);
         et_AMAmount = (EditText) layout.findViewById(R.id.et_AMAmount);
         atv_person_name = (AutoCompleteTextView) layout.findViewById(R.id.atv_AMPersonName);
-        btn_start_date = (Button) layout.findViewById(R.id.btn_AMStartDate);
-        btn_end_date = (Button) layout.findViewById(R.id.btn_AMEndDate);
+
+
+        layout_startDate = (View) layout.findViewById(R.id.layout_money_startDate);
+        layout_endDate = (View) layout.findViewById(R.id.layout_money_endDate);
+
+        tv_endDate = (TextView) layout.findViewById(R.id.tv_money_endDate);
+        tv_startDate = (TextView) layout.findViewById(R.id.tv_money_startDate);
 
         init(); //method can be found in abstract class
 
@@ -66,8 +72,8 @@ public class AddMoneyFragment extends AddAbstractFragment {
 
                 double amount =  Double.parseDouble(et_AMAmount.getText().toString());
                 MoneyTransaction m = new MoneyTransaction(Transaction.MONEY_TYPE, id, Transaction.BORROWED_ACTION, 0,
-                                     parseDateToMillis(btn_start_date.getText().toString()),
-                                     parseDateToMillis(btn_end_date.getText().toString()),
+                                     parseDateToMillis(tv_startDate.getText().toString()),
+                                     parseDateToMillis(tv_endDate.getText().toString()),
                                      0,0.0,amount, amount);
                 mListener.onAddTransactions(m);
                 printAddAcknowledgement(et_AMAmount.getText().toString(), "borrowed");
@@ -84,8 +90,8 @@ public class AddMoneyFragment extends AddAbstractFragment {
 
                 double amount =  Double.parseDouble(et_AMAmount.getText().toString());
                 MoneyTransaction m = new MoneyTransaction(Transaction.MONEY_TYPE, id, Transaction.LEND_ACTION, 0,
-                                    parseDateToMillis(btn_start_date.getText().toString()),
-                                    parseDateToMillis(btn_end_date.getText().toString()),
+                                    parseDateToMillis(tv_startDate.getText().toString()),
+                                    parseDateToMillis(tv_endDate.getText().toString()),
                                     0,0.0, amount,amount);
 
                 mListener.onAddTransactions(m);

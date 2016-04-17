@@ -35,7 +35,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         // TODO: This method is called when the BroadcastReceiver is receiving
 
         Intent intent = new Intent();
-        intent.setClass(context, HomeActivity.class);
+        intent.setClass(context, ViewTransactionActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,MA_PENDING_INTENT, intent, PendingIntent.FLAG_UPDATE_CURRENT);//flag_update_current depends on the extras
 
         Intent secondact_intent= new Intent();

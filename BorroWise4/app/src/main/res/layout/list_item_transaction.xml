@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="5dp"
-            android:background="@color/accentDarkColor">
+            android:background="@color/primaryColor">
             <ImageView
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -37,7 +37,7 @@
             android:id="@+id/layout_item_image"
             android:layout_below="@id/layout_username_it"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="85dp"
             android:orientation="horizontal">
             <ImageView
                 android:background="@color/dividerColor"
@@ -52,7 +52,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:textSize="17sp"
+            android:layout_marginTop="5dp"
+            android:textSize="@dimen/subheading_label"
             android:text="HawkeBag"
             android:textStyle="bold"/>
 
@@ -66,7 +67,7 @@
                 android:id="@+id/tv_duedateitem_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:textSize="@dimen/caption_label"
                 android:layout_marginRight="5dp"
                 android:text="@string/lbl_duedate"
                 android:layout_below="@id/tv_itemname"/>
@@ -75,7 +76,7 @@
                 android:id="@+id/tv_duedateitem_val"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:textSize="@dimen/caption_label"
                 android:text="@string/lbl_duedate"
                 android:textStyle="bold"
                 android:gravity="right"
@@ -94,16 +95,18 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:text="@string/btn_lost"
+                android:textSize="@dimen/button_label"
                 android:textColor="@android:color/white"
-                android:background="@color/redColor"/>
+                android:background="@color/accentRedColor"/>
             <Button
                 android:id="@+id/btn_returned"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:text="@string/btn_returned"
+                android:textSize="@dimen/button_label"
                 android:textColor="@android:color/white"
-                android:background="@color/accentColor"/>
+                android:background="@color/accentBlueColor"/>
         </LinearLayout>
     </RelativeLayout>
 

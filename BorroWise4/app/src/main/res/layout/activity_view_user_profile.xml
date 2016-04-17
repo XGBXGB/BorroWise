@@ -10,14 +10,14 @@
         android:layout_width="fill_parent"
         android:layout_height="160dp"
         android:orientation="horizontal"
-        android:background="@android:color/white">
+        android:background="@color/text_primaryColor">
         <ImageView
             android:id="@+id/img_userprofile"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="45dp"
+            android:layout_height="35dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_account_dark"/>
+            android:src="@drawable/ic_account"/>
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_weight="3"
@@ -28,8 +28,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Shayane Tan"
-                android:textStyle="bold"
-                android:textSize="25dp"/>
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/title_label"/>
 
             <RatingBar
                 android:id="@+id/rb_userprofile_rating"
@@ -48,10 +48,11 @@
                 android:layout_below="@id/tv_userprofile_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="8dp"
                 android:text="3.5"
-                android:textSize="20sp"/>
+                android:textSize="@dimen/subheading_label"
+                android:textColor="@android:color/white"/>
         </RelativeLayout>
     </LinearLayout>
 
@@ -59,7 +60,7 @@
         android:id="@+id/sliding_tab_userprofile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primaryColor" />
+        android:background="@color/text_secondaryColor" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager_userprofile"

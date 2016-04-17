@@ -1,5 +1,6 @@
 package com.example.shayanetan.borrowise2.Activities;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -8,13 +9,14 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.shayanetan.borrowise2.Adapters.UsersCursorAdapter;
@@ -33,10 +35,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class SettingsActivity extends BaseActivity {
+public class SettingsActivity extends AppCompatActivity {
 
-    private EditText et_borrowDays, et_lendDays;
-    private Button btn_borrowTime, btn_lendTime, btn_save, btn_cancel;
+
+    private TextView tv_SMS_alarm, tv_NOTIF_alarm;
+    private Button  btn_save, btn_cancel;
+    private Spinner spnr_SMS_days, spnr_NOTIF_days;
+    private View layout_SMS_alarm,layout_NOTIF_alarm;
+
     private DatabaseOpenHelper dbHelper;
 
     @Override
@@ -44,10 +50,21 @@ public class SettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         dbHelper = DatabaseOpenHelper.getInstance(getBaseContext());
-        btn_borrowTime = (Button) findViewById(R.id.btn_borrowTime);
-        btn_lendTime = (Button) findViewById(R.id.btn_lendTime);
-        et_borrowDays = (EditText) findViewById(R.id.et_borrowDays);
-        et_lendDays = (EditText) findViewById(R.id.et_lendDays);
+
+        tv_NOTIF_alarm = (TextView) findViewById(R.id.tv_NOTIF_alarm);
+        tv_SMS_alarm = (TextView) findViewById(R.id.tv_SMS_alarm);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.array_spinner, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spnr_NOTIF_days = (Spinner) findViewById(R.id.spnr_NOTIF_days);
+        spnr_NOTIF_days.setAdapter(adapter);
+        spnr_SMS_days = (Spinner) findViewById(R.id.spnr_SMS_days);
+        spnr_SMS_days.setAdapter(adapter);
+
+        layout_NOTIF_alarm = (View) findViewById(R.id.layout_NOTIF_alarm);
+        layout_SMS_alarm = (View) findViewById(R.id.layout_SMS_alarm);
+
         btn_save = (Button) findViewById(R.id.btn_save);
         btn_cancel = (Button) findViewById(R.id.btn_cancel);
 
@@ -58,30 +75,34 @@ public class SettingsActivity extends BaseActivity {
         String lendTime = sp.getString(HomeActivity.SP_KEY_LEND_TIME, null);
 
         if(borrowTime != null)
-            btn_borrowTime.setText(borrowTime);
+            tv_NOTIF_alarm.setText(borrowTime);
         if(lendTime != null)
-            btn_lendTime.setText(lendTime);
-        if(borrowDay != null)
-            et_borrowDays.setText(borrowDay);
-        if(lendDay != null)
-            et_lendDays.setText(lendDay);
+            tv_SMS_alarm.setText(lendTime);
+        if(borrowDay != null) {
+                int spinnerPosition = adapter.getPosition(borrowDay);
+                spnr_NOTIF_days.setSelection(spinnerPosition);
+        }
+        if(lendDay != null) {
+            int spinnerPosition = adapter.getPosition(lendDay);
+            spnr_SMS_days.setSelection(spinnerPosition);
+        }
 
 
-            btn_borrowTime.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    TimePickerFragment timePickerFragment = new TimePickerFragment();
-                    timePickerFragment.setButtonDateSelector(btn_borrowTime);
-                    timePickerFragment.show(getSupportFragmentManager(), "BorrowTimePicker");
-                }
-            });
-
-
-        btn_lendTime.setOnClickListener(new View.OnClickListener() {
+        layout_NOTIF_alarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TimePickerFragment timePickerFragment = new TimePickerFragment();
-                timePickerFragment.setButtonDateSelector(btn_lendTime);
+                timePickerFragment.setTv_alarm(tv_NOTIF_alarm);
+                timePickerFragment.show(getSupportFragmentManager(), "BorrowTimePicker");
+            }
+        });
+
+
+        layout_SMS_alarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerFragment timePickerFragment = new TimePickerFragment();
+                timePickerFragment.setTv_alarm(tv_SMS_alarm);
                 timePickerFragment.show(getSupportFragmentManager(), "LendTimePicker");
             }
         });
@@ -91,19 +112,26 @@ public class SettingsActivity extends BaseActivity {
             public void onClick(View v) {
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 SharedPreferences.Editor spEditor = sp.edit();
-                if(!et_borrowDays.getText().toString().isEmpty())
-                    spEditor.putString(HomeActivity.SP_KEY_BORROW_DAYS, et_borrowDays.getText().toString());
-                if(!btn_borrowTime.getText().toString().isEmpty())
-                    spEditor.putString(HomeActivity.SP_KEY_BORROW_TIME, btn_borrowTime.getText().toString());
-                if(!et_lendDays.getText().toString().isEmpty())
-                    spEditor.putString(HomeActivity.SP_KEY_LEND_DAYS, et_lendDays.getText().toString());
-                if(!btn_lendTime.getText().toString().isEmpty())
-                    spEditor.putString(HomeActivity.SP_KEY_LEND_TIME, btn_lendTime.getText().toString());
+
+                String notifDays = spnr_NOTIF_days.getSelectedItem().toString();
+                String notifAlarm = tv_NOTIF_alarm.getText().toString();
+
+                String smsDays = spnr_SMS_days.getSelectedItem().toString();
+                String smsAlarm =  tv_SMS_alarm.getText().toString();
+
+                if (!notifDays.isEmpty())
+                    spEditor.putString(HomeActivity.SP_KEY_BORROW_DAYS, notifDays);
+                if(!notifAlarm.isEmpty())
+                    spEditor.putString(HomeActivity.SP_KEY_BORROW_TIME, notifAlarm);
+                if(!smsDays.isEmpty())
+                    spEditor.putString(HomeActivity.SP_KEY_LEND_DAYS, smsDays);
+                if(!smsAlarm.isEmpty())
+                    spEditor.putString(HomeActivity.SP_KEY_LEND_TIME, smsAlarm);
 
 
                 spEditor.commit();
                 updateAlarms();
-                Toast.makeText(getBaseContext(), "Changes Saved! btime: "+btn_borrowTime.getText().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Changes Saved! btime: "+tv_NOTIF_alarm.getText().toString(), Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

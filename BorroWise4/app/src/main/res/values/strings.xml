@@ -18,15 +18,18 @@
     <string name = "btn_full">FULL</string>
     <string name = "btn_lost">LOST</string>
     <string name = "btn_lent">LENT</string>
-    <string-array name="array_transaction_type">
-        <item>Items</item>
-        <item>Money</item>
-    </string-array>
 
-    <string-array name="Sample_People">
-        <item>Winona Erive</item>
-        <item>Shayane Tan</item>
-        <item>Christian Cote</item>
+    <string-array name="array_spinner">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
     </string-array>
 
     <string-array name="menu_item_array">

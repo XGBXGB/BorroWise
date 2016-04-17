@@ -1,5 +1,8 @@
 package com.example.shayanetan.borrowise2.Models;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 /**
  * Created by kewpe on 10 Mar 2016.
  */
@@ -9,6 +12,8 @@ public class ItemTransaction extends Transaction {
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_PHOTOPATH = "photo_path";
     public static final String COLUMN_TRANSACTION_ID = "transaction_id";
+
+    public static final BitmapFactory.Options bmpOptions  = new BitmapFactory.Options();
 
     private String name;
     private String description;

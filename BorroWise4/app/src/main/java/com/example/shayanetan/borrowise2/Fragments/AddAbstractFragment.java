@@ -20,11 +20,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.shayanetan.borrowise2.Activities.AlarmReceiver;
 import com.example.shayanetan.borrowise2.Adapters.ContactsCursorAdapter;
 import com.example.shayanetan.borrowise2.Models.CustomDate;
 import com.example.shayanetan.borrowise2.Models.Transaction;
+import com.example.shayanetan.borrowise2.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,7 +46,8 @@ public abstract class AddAbstractFragment extends Fragment {
 
     protected FragmentActivity myContext;
     protected AutoCompleteTextView atv_person_name;
-    protected Button btn_end_date, btn_start_date;
+    protected View layout_startDate, layout_endDate;
+    protected TextView tv_startDate, tv_endDate;
     protected Button btn_borrowed, btn_lent;
     protected FloatingActionButton img_btn_switch;
 
@@ -73,6 +76,7 @@ public abstract class AddAbstractFragment extends Fragment {
         myContext = (FragmentActivity) getActivity();
         Cursor contacts = null;
         contactsCursorAdapter = new ContactsCursorAdapter(myContext, contacts, 0);
+
         atv_person_name.setThreshold(1);
         atv_person_name.setAdapter(contactsCursorAdapter);
         atv_person_name.setOnClickListener(new View.OnClickListener() {
@@ -105,20 +109,20 @@ public abstract class AddAbstractFragment extends Fragment {
 
         setDateToCurrent();
 
-        btn_start_date.setOnClickListener(new View.OnClickListener() {
+        layout_startDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerFragment datePickerFragment = new DatePickerFragment();
-                datePickerFragment.setButtonDateSelector(btn_start_date);
+                datePickerFragment.setTv_date(tv_startDate);
                 datePickerFragment.show(getFragmentManager(), "DatePicker");
             }
         });
 
-        btn_end_date.setOnClickListener(new View.OnClickListener() {
+        layout_endDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerFragment datePickerFragment = new DatePickerFragment();
-                datePickerFragment.setButtonDateSelector(btn_end_date);
+                datePickerFragment.setTv_date(tv_endDate);
                 datePickerFragment.show(getFragmentManager(), "DatePicker");
             }
         });
@@ -142,7 +146,7 @@ public abstract class AddAbstractFragment extends Fragment {
     public void setDateToCurrent(){
         CustomDate d = new CustomDate();
         String currentDate = (d.getMonth()+1)+ "/" + d.getDay()+ "/ "+ d.getYear();
-        btn_start_date.setText(d.formatDateSlash(currentDate));
-        btn_end_date.setText(d.formatDateSlash(currentDate));
+        tv_startDate.setText(d.formatDateCommas(currentDate));
+        tv_endDate.setText(d.formatDateCommas(currentDate));
     }
 }

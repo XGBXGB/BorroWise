@@ -5,6 +5,10 @@
     <dimen name="tab_max_width">264dp</dimen>
     <dimen name="tab_padding_bottom">16dp</dimen>
     <dimen name="tab_label">14sp</dimen>
+    <dimen name ="button_label">14sp</dimen>
+    <dimen name ="title_label">20sp</dimen>
+    <dimen name ="subheading_label">16sp</dimen>
+    <dimen name ="caption_label">12sp</dimen>
     <dimen name="custom_tab_layout_height">72dp</dimen>
     <dimen name="navigation_icon_size">24dp</dimen>
     <dimen name="filter_button_size">35dp</dimen>

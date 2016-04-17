@@ -29,13 +29,4 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/menu_navigation_drawer"/>
-    <!--<ListView-->
-        <!--android:id="@+id/list_view_drawer"-->
-        <!--android:layout_width="240dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="left"-->
-        <!--android:choiceMode="singleChoice"-->
-        <!--android:divider="@color/dividerColor"-->
-        <!--android:dividerHeight="1dp"-->
-        <!--android:background="@color/cardview_light_background"/>-->
 </android.support.v4.widget.DrawerLayout>

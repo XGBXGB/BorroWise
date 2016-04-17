@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.shayanetan.borrowise2.Fragments.RatingDialogFragment;
+import com.example.shayanetan.borrowise2.Models.ItemTransaction;
 import com.example.shayanetan.borrowise2.Models.Transaction;
 import com.example.shayanetan.borrowise2.Models.User;
 import com.example.shayanetan.borrowise2.R;
@@ -70,8 +71,11 @@ public class TransactionsCursorAdapter extends CursorRecyclerViewAdapter<Recycle
             case TYPE_ITEM:
                 File imgFile = new  File(transactionAttribute3);
                 if(imgFile.exists()){
-                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                    ItemTransaction.bmpOptions.inSampleSize = 8;
+                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), ItemTransaction.bmpOptions);
                     ((BorrowedItemViewHolder)viewHolder).img_item.setImageBitmap(myBitmap);
+                    ((BorrowedItemViewHolder)viewHolder).img_item.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
                 }
                 ((BorrowedItemViewHolder)viewHolder).item_container.setTag(R.id.key_entry_id, id);
                 ((BorrowedItemViewHolder)viewHolder).item_container.setTag(R.id.key_entry_type, TYPE_ITEM);

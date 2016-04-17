@@ -10,7 +10,7 @@
         <item name="windowActionBar">false</item>
         <item name = "colorPrimary">@color/primaryColor</item>
         <item name = "colorPrimaryDark">@color/primaryDarkColor</item>
-        <item name = "colorAccent">@color/accentDarkColor</item>
+        <item name = "colorAccent">@color/accentBlueColor</item>
     </style>
 
     <style name="CustomAppBarTheme"  parent="ThemeOverlay.AppCompat.Light">

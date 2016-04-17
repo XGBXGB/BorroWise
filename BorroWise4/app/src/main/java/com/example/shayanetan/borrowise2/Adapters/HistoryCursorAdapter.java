@@ -4,6 +4,7 @@ package com.example.shayanetan.borrowise2.Adapters;
  * Created by ShayaneTan on 3/11/2016.
  */
 
+import android.content.ClipData;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -18,6 +19,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.shayanetan.borrowise2.Models.ItemTransaction;
 import com.example.shayanetan.borrowise2.Models.Transaction;
 import com.example.shayanetan.borrowise2.Models.User;
 import com.example.shayanetan.borrowise2.R;
@@ -93,8 +95,10 @@ public class HistoryCursorAdapter extends CursorRecyclerViewAdapter<RecyclerView
 
                 File imgFile = new  File(transactionAttribute3);
                 if(imgFile.exists()){
-                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                    ItemTransaction.bmpOptions.inSampleSize = 8;
+                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), ItemTransaction.bmpOptions);
                     ((BorrowedItemViewHolder)viewHolder).img_Hitem.setImageBitmap(myBitmap);
+                    ((BorrowedItemViewHolder)viewHolder).img_Hitem.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 }
                 ((BorrowedItemViewHolder)viewHolder).tv_Haccount_item.setText(name);
                 ((BorrowedItemViewHolder)viewHolder).tv_Hduedateitem_val.setText(dueDate);

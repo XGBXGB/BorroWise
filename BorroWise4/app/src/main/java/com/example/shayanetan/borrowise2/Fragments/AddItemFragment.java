@@ -26,12 +26,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.shayanetan.borrowise2.Activities.AlarmReceiver;
 import com.example.shayanetan.borrowise2.Models.ItemTransaction;
 import com.example.shayanetan.borrowise2.Models.Transaction;
 import com.example.shayanetan.borrowise2.R;
+
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -40,8 +43,7 @@ import java.io.File;
 public class AddItemFragment extends AddAbstractFragment {
 
     private FragmentTransaction transaction;
-    private EditText et_AIItemName,
-            et_AIDescription;
+    private EditText et_AIItemName;
     private ImageView img_camera;
     private View card_camera;
     private String filePath="";
@@ -59,17 +61,21 @@ public class AddItemFragment extends AddAbstractFragment {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_add_item, container, false);
         img_camera = (ImageView) layout.findViewById(R.id.img_camera);
-        card_camera = (View) layout.findViewById(R.id.card_camera);
         btn_addContact = (ImageView) layout.findViewById(R.id.btn_addContact);
         img_btn_switch = (FloatingActionButton) layout.findViewById(R.id.btn_ItemToMoney);
         et_AIItemName = (EditText) layout.findViewById(R.id.et_AIItemName);
-//        et_AIDescription = (EditText) layout.findViewById(R.id.et_AIDescription);
         atv_person_name = (AutoCompleteTextView) layout.findViewById(R.id.atv_AIPersonName);
+
+        card_camera = (View) layout.findViewById(R.id.card_camera);
+
+        layout_startDate = (View) layout.findViewById(R.id.layout_item_startDate);
+        layout_endDate = (View) layout.findViewById(R.id.layout_item_endDate);
+
+        tv_endDate = (TextView) layout.findViewById(R.id.tv_item_endDate);
+        tv_startDate = (TextView) layout.findViewById(R.id.tv_item_startDate);
 
         btn_borrowed = (Button) layout.findViewById(R.id.btn_AIBorrow);
         btn_lent = (Button) layout.findViewById(R.id.btn_AILend);
-        btn_start_date = (Button) layout.findViewById(R.id.btn_AIStartDate);
-        btn_end_date = (Button) layout.findViewById(R.id.btn_AIEndDate);
 
         init(); // method found in abstact class
 
@@ -98,8 +104,8 @@ public class AddItemFragment extends AddAbstractFragment {
                     int id = mListener.onAddNewUser(selected_name, selected_contact_number);
 
                     ItemTransaction it = new ItemTransaction(Transaction.ITEM_TYPE, id, Transaction.BORROWED_ACTION, 0,
-                            parseDateToMillis(btn_start_date.getText().toString()),
-                            parseDateToMillis(btn_end_date.getText().toString()),
+                            parseDateToMillis(tv_startDate.getText().toString()),
+                            parseDateToMillis(tv_endDate.getText().toString()),
                             0, 0.0,
                             et_AIItemName.getText().toString(), "", filePath);
                     mListener.onAddTransactions(it);
@@ -121,8 +127,8 @@ public class AddItemFragment extends AddAbstractFragment {
                     int id = mListener.onAddNewUser(selected_name, selected_contact_number);
 
                     ItemTransaction it = new ItemTransaction(Transaction.ITEM_TYPE, id, Transaction.LEND_ACTION, 0,
-                            parseDateToMillis(btn_start_date.getText().toString()),
-                            parseDateToMillis(btn_end_date.getText().toString()),
+                            parseDateToMillis(tv_startDate.getText().toString()),
+                            parseDateToMillis(tv_endDate.getText().toString()),
                             0, 0.0,
                             et_AIItemName.getText().toString(), "", filePath);
 
@@ -160,7 +166,7 @@ public class AddItemFragment extends AddAbstractFragment {
 
             img_camera.setImageBitmap(photo);
           //  img_camera.set;
-            img_camera.setScaleType(ImageView.ScaleType.FIT_XY);
+            img_camera.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
             System.out.println("CAMERA SAVED FILEPATH: " + getRealPathFromURI(tempUri));
             Toast.makeText(getActivity(), "CAMERA SAVED FILEPATH: " + getRealPathFromURI(tempUri), Toast.LENGTH_SHORT).show();
