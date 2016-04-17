@@ -3,9 +3,11 @@ package com.example.shayanetan.borrowise2.Fragments;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -174,11 +176,28 @@ public class AddItemFragment extends AddAbstractFragment {
     }
 
     public void printAddAcknowledgement(String entry_name, String type){
-        if(type.equalsIgnoreCase("lent"))
-            Toast.makeText(getActivity(),entry_name+ " has been successfully "+ type + " to "+selected_name+" !", Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(getActivity(),entry_name+ " has been successfully "+ type + " from "+selected_name+" !", Toast.LENGTH_SHORT).show();
+        if(type.equalsIgnoreCase("lent")) {
+            AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+            alertDialog.setMessage(entry_name + " has been successfully " + type + " to " + selected_name + " !");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+        }else {
+            AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+            alertDialog.setMessage(entry_name + " has been successfully " + type + " from " + selected_name + " !");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
 
+        }
     }
 
     public void clearAllFields(){

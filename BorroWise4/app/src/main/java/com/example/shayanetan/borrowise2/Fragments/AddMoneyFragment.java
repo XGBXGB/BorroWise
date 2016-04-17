@@ -1,6 +1,8 @@
 package com.example.shayanetan.borrowise2.Fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -105,12 +107,28 @@ public class AddMoneyFragment extends AddAbstractFragment {
     }
 
     public void printAddAcknowledgement(String entry_name, String type){
+        if(type.equalsIgnoreCase("lent")) {
+            AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+            alertDialog.setMessage("PHP "+ entry_name + " has been successfully " + type + " to "+selected_name+"!");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+        }else {
+            AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+            alertDialog.setMessage("PHP "+ entry_name + " has been successfully " + type + " from "+selected_name+"!");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
 
-        if(type.equalsIgnoreCase("lent"))
-            Toast.makeText(getActivity(), "PHP "+ entry_name + " has been successfully " + type + " to "+selected_name+"!", Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(getActivity(), "PHP "+ entry_name + " has been successfully " + type + " from "+selected_name+"!", Toast.LENGTH_SHORT).show();
-
+        }
     }
 
     public void clearAllFields(){
