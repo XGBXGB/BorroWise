@@ -15,10 +15,8 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.shayanetan.borrowise2.Models.MoneyTransaction;
 import com.example.shayanetan.borrowise2.Models.Transaction;
@@ -70,17 +68,23 @@ public class AddMoneyFragment extends AddAbstractFragment {
             @Override
             public void onClick(View v) {
 
-                int id = mListener.onAddNewUser(selected_name, selected_contact_number);
+                String money = et_AMAmount.getText().toString();
 
-                double amount =  Double.parseDouble(et_AMAmount.getText().toString());
-                MoneyTransaction m = new MoneyTransaction(Transaction.MONEY_TYPE, id, Transaction.BORROWED_ACTION, 0,
-                                     parseDateToMillis(tv_startDate.getText().toString()),
-                                     parseDateToMillis(tv_endDate.getText().toString()),
-                                     0,0.0,amount, amount);
-                mListener.onAddTransactions(m);
-                printAddAcknowledgement(et_AMAmount.getText().toString(), "borrowed");
+                if(!money.isEmpty() && !selected_name.isEmpty()){
+                    int id = mListener.onAddNewUser(selected_name, selected_contact_number);
 
-                clearAllFields();
+                    double amount =  Double.parseDouble(money);
+                    MoneyTransaction m = new MoneyTransaction(Transaction.MONEY_TYPE, id, Transaction.BORROWED_ACTION, 0,
+                            parseDateToMillis(tv_startDate.getText().toString()),
+                            parseDateToMillis(tv_endDate.getText().toString()),
+                            0,0.0,amount, amount);
+                    mListener.onAddTransactions(m);
+                    printAddAcknowledgement(et_AMAmount.getText().toString(), "borrowed");
+
+                    clearAllFields();
+                }else
+                    printRejectDialog();
+
             }
         });
 
@@ -88,18 +92,25 @@ public class AddMoneyFragment extends AddAbstractFragment {
             @Override
             public void onClick(View v) {
 
-                int id = mListener.onAddNewUser(selected_name, selected_contact_number);
+                String money = et_AMAmount.getText().toString();
 
-                double amount =  Double.parseDouble(et_AMAmount.getText().toString());
-                MoneyTransaction m = new MoneyTransaction(Transaction.MONEY_TYPE, id, Transaction.LEND_ACTION, 0,
-                                    parseDateToMillis(tv_startDate.getText().toString()),
-                                    parseDateToMillis(tv_endDate.getText().toString()),
-                                    0,0.0, amount,amount);
+                if(!money.isEmpty() && !selected_name.isEmpty()){
+                    int id = mListener.onAddNewUser(selected_name, selected_contact_number);
 
-                mListener.onAddTransactions(m);
-                printAddAcknowledgement(et_AMAmount.getText().toString(), "lent");
+                    double amount =  Double.parseDouble(money);
+                    MoneyTransaction m = new MoneyTransaction(Transaction.MONEY_TYPE, id, Transaction.LEND_ACTION, 0,
+                            parseDateToMillis(tv_startDate.getText().toString()),
+                            parseDateToMillis(tv_endDate.getText().toString()),
+                            0,0.0, amount,amount);
 
-                clearAllFields();
+                    mListener.onAddTransactions(m);
+                    printAddAcknowledgement(et_AMAmount.getText().toString(), "lent");
+
+                    clearAllFields();
+                }else{
+                    printRejectDialog();
+                }
+
             }
         });
 
@@ -108,8 +119,14 @@ public class AddMoneyFragment extends AddAbstractFragment {
 
     public void printAddAcknowledgement(String entry_name, String type){
         if(type.equalsIgnoreCase("lent")) {
+
+            LayoutInflater factory = LayoutInflater.from(getActivity());
+            final View view = factory.inflate(R.layout.add_transaction_confirmation, null);
+            TextView tv_confirmation = (TextView) view.findViewById(R.id.tv_confirmation);
+            tv_confirmation.setText("PHP " + entry_name + " has been successfully " + type + " to " + selected_name + "!");
+
             AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-            alertDialog.setMessage("PHP "+ entry_name + " has been successfully " + type + " to "+selected_name+"!");
+            alertDialog.setView(view);
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -118,8 +135,13 @@ public class AddMoneyFragment extends AddAbstractFragment {
                     });
             alertDialog.show();
         }else {
+            LayoutInflater factory = LayoutInflater.from(getActivity());
+            final View view = factory.inflate(R.layout.add_transaction_confirmation, null);
+            TextView tv_confirmation = (TextView) view.findViewById(R.id.tv_confirmation);
+            tv_confirmation.setText("PHP " + entry_name + " has been successfully " + type + " from " + selected_name + "!");
+
             AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-            alertDialog.setMessage("PHP "+ entry_name + " has been successfully " + type + " from "+selected_name+"!");
+            alertDialog.setView(view);
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {

@@ -53,11 +53,18 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
             Log.v("PASOK", "HALU");
 
+            String hourString = "";
             String result ="";
-            if(minute>=0 && minute <=9)
-                result = hourOfDay +":0"+minute;
+
+            if(hourOfDay == 0)
+                hourString = "12";
             else
-                result = hourOfDay +":"+minute;
+                hourString = String.valueOf(hourOfDay);
+
+            if(minute>=0 && minute <=9)
+                result = hourString +":0"+minute;
+            else
+                result = hourString+":"+minute;
 
             tv_alarm.setText(result);
 

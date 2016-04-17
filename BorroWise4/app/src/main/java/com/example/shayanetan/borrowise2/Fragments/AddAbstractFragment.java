@@ -1,8 +1,10 @@
 package com.example.shayanetan.borrowise2.Fragments;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -73,6 +75,8 @@ public abstract class AddAbstractFragment extends Fragment {
 
     public void init() {
 
+        selected_name = "";
+        selected_contact_number = "";
         myContext = (FragmentActivity) getActivity();
         Cursor contacts = null;
         contactsCursorAdapter = new ContactsCursorAdapter(myContext, contacts, 0);
@@ -133,7 +137,7 @@ public abstract class AddAbstractFragment extends Fragment {
     public long parseDateToMillis(String toParse){
         long millis=0;
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd, yyyy"); // I assume d-M, you may refer to M-d for month-day instead.
+            SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy"); // I assume d-M, you may refer to M-d for month-day instead.
             Date date = formatter.parse(toParse); // You will need try/catch around this
             millis = date.getTime();
 
@@ -143,6 +147,22 @@ public abstract class AddAbstractFragment extends Fragment {
         return millis;
     }
 
+    public void printRejectDialog(){
+        LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View view = factory.inflate(R.layout.add_transaction_reject, null);
+        TextView tv_reject = (TextView) view.findViewById(R.id.tv_reject);
+        tv_reject.setText("Please fill up all the necessary information!");
+
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+        alertDialog.setView(view);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
     public void setDateToCurrent(){
         CustomDate d = new CustomDate();
         String currentDate = (d.getMonth()+1)+ "/" + d.getDay()+ "/ "+ d.getYear();

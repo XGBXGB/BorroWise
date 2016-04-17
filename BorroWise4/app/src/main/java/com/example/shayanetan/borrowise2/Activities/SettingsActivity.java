@@ -131,7 +131,7 @@ public class SettingsActivity extends BaseActivity {
 
                 spEditor.commit();
                 updateAlarms();
-                Toast.makeText(getBaseContext(), "Changes Saved! btime: "+tv_NOTIF_alarm.getText().toString(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getBaseContext(), "Changes Saved! btime: "+tv_NOTIF_alarm.getText().toString(), Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

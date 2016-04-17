@@ -1,11 +1,7 @@
 package com.example.shayanetan.borrowise2.Fragments;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,7 +9,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -25,21 +20,14 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.shayanetan.borrowise2.Activities.AlarmReceiver;
 import com.example.shayanetan.borrowise2.Models.ItemTransaction;
 import com.example.shayanetan.borrowise2.Models.Transaction;
 import com.example.shayanetan.borrowise2.R;
 
-import org.w3c.dom.Text;
-
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 
 
 public class AddItemFragment extends AddAbstractFragment {
@@ -102,22 +90,25 @@ public class AddItemFragment extends AddAbstractFragment {
             @Override
             public void onClick(View v) {
 
-                if (mListener != null) {
+                String item = et_AIItemName.getText().toString();
+
+                if (mListener != null && !item.isEmpty() && !selected_name.isEmpty()) {
                     int id = mListener.onAddNewUser(selected_name, selected_contact_number);
 
                     ItemTransaction it = new ItemTransaction(Transaction.ITEM_TYPE, id, Transaction.BORROWED_ACTION, 0,
                             parseDateToMillis(tv_startDate.getText().toString()),
                             parseDateToMillis(tv_endDate.getText().toString()),
                             0, 0.0,
-                            et_AIItemName.getText().toString(), "", filePath);
+                            item, "", filePath);
                     mListener.onAddTransactions(it);
 
                     printAddAcknowledgement(et_AIItemName.getText().toString(), "borrowed");
-
-
+                    clearAllFields();
+                }else{
+                    printRejectDialog();
                 }
 
-                clearAllFields();
+
             }
         });
 
@@ -125,21 +116,24 @@ public class AddItemFragment extends AddAbstractFragment {
             @Override
             public void onClick(View v) {
 
-                if (mListener != null) {
+                String item = et_AIItemName.getText().toString();
+
+                if (mListener != null && !item.isEmpty() && !selected_name.isEmpty()) {
                     int id = mListener.onAddNewUser(selected_name, selected_contact_number);
 
                     ItemTransaction it = new ItemTransaction(Transaction.ITEM_TYPE, id, Transaction.LEND_ACTION, 0,
                             parseDateToMillis(tv_startDate.getText().toString()),
                             parseDateToMillis(tv_endDate.getText().toString()),
                             0, 0.0,
-                            et_AIItemName.getText().toString(), "", filePath);
+                            item, "", filePath);
 
 
                     mListener.onAddTransactions(it);
                     printAddAcknowledgement(et_AIItemName.getText().toString(), "lent");
+                    clearAllFields();
+                }else{
+                    printRejectDialog();
                 }
-
-                clearAllFields();
             }
         });
 
@@ -176,8 +170,14 @@ public class AddItemFragment extends AddAbstractFragment {
 
     public void printAddAcknowledgement(String entry_name, String type){
         if(type.equalsIgnoreCase("lent")) {
+
+            LayoutInflater factory = LayoutInflater.from(getActivity());
+            final View view = factory.inflate(R.layout.add_transaction_confirmation, null);
+            TextView tv_confirmation = (TextView) view.findViewById(R.id.tv_confirmation);
+            tv_confirmation.setText(entry_name + " has been successfully " + type + " to " + selected_name + " !");
+
             AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-            alertDialog.setMessage(entry_name + " has been successfully " + type + " to " + selected_name + " !");
+            alertDialog.setView(view);
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -186,8 +186,14 @@ public class AddItemFragment extends AddAbstractFragment {
                     });
             alertDialog.show();
         }else {
+
+            LayoutInflater factory = LayoutInflater.from(getActivity());
+            final View view = factory.inflate(R.layout.add_transaction_confirmation, null);
+            TextView tv_confirmation = (TextView) view.findViewById(R.id.tv_confirmation);
+            tv_confirmation.setText(entry_name + " has been successfully " + type + " from " + selected_name + " !");
+
             AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-            alertDialog.setMessage(entry_name + " has been successfully " + type + " from " + selected_name + " !");
+            alertDialog.setView(view);
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {

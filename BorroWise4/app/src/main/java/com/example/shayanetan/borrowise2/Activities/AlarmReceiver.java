@@ -53,26 +53,24 @@ public class AlarmReceiver extends BroadcastReceiver {
             ItemTransaction it = (ItemTransaction) dbHelper.queryTransaction(transactionId);
             String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(it.getDueDate()));
             notif_builder = new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setSmallIcon(R.drawable.ic_notif)
                         .setContentTitle("BorroWise pending item")
                         .setContentText("Hurry! The item " + it.getName() + " will already be due on " + dateString)
                         .setContentIntent(pendingIntent)
                         .setTicker("BorroWise")
                         .setNumber(COUNT)
-                        .setAutoCancel(true)
-                        .addAction(R.mipmap.ic_launcher, "View Item",second_pendingIntent);
+                        .setAutoCancel(true);
         }else if(tranType.equalsIgnoreCase(Transaction.MONEY_TYPE)){
             MoneyTransaction mt = (MoneyTransaction) dbHelper.queryTransaction(transactionId);
             String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(mt.getDueDate()));
             notif_builder = new NotificationCompat.Builder(context)
-                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setSmallIcon(R.drawable.ic_notif)
                     .setContentTitle("BorroWise pending amount due")
                     .setContentText("Hurry! Your debt of PHP " + mt.getTotalAmountDue() + " will already be due on " + dateString)
                     .setContentIntent(pendingIntent)
                     .setTicker("BorroWise")
                     .setNumber(COUNT)
-                    .setAutoCancel(true)
-                    .addAction(R.mipmap.ic_launcher, "View Amount",second_pendingIntent);
+                    .setAutoCancel(true);
         }
 
         if(notif_builder != null) {
