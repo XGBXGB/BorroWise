@@ -1,6 +1,7 @@
 package com.example.shayanetan.borrowise2.Activities;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.annotation.LayoutRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -63,7 +64,8 @@ public class BaseActivity extends AppCompatActivity implements
             toolbar.setVisibility(View.GONE);
         }
 
-       setUpNavView();
+        setUpNavView();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     private void selectDrawerItem(MenuItem menuItem) {

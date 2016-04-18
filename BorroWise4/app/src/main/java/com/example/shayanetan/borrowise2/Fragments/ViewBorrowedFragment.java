@@ -78,6 +78,10 @@ public class ViewBorrowedFragment extends Fragment {
             public void onClick(View v) {
                 filterType = "All";
                 mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE);
+
+                btn_TBorrowed_all.setBackgroundResource(R.color.accentBlueColor);
+                btn_TBorrowed_item.setBackgroundResource(R.color.text_primaryColor);
+                btn_TBorrowed_money.setBackgroundResource(R.color.text_primaryColor);
             }
         });
 
@@ -86,6 +90,10 @@ public class ViewBorrowedFragment extends Fragment {
             public void onClick(View v) {
                 filterType = Transaction.ITEM_TYPE;
                 mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, Transaction.ITEM_TYPE);
+
+                btn_TBorrowed_item.setBackgroundResource(R.color.accentBlueColor);
+                btn_TBorrowed_all.setBackgroundResource(R.color.text_primaryColor);
+                btn_TBorrowed_money.setBackgroundResource(R.color.text_primaryColor);
             }
         });
 
@@ -94,6 +102,10 @@ public class ViewBorrowedFragment extends Fragment {
             public void onClick(View v) {
                 filterType = Transaction.MONEY_TYPE;
                 mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, Transaction.MONEY_TYPE);
+
+                btn_TBorrowed_money.setBackgroundResource(R.color.accentBlueColor);
+                btn_TBorrowed_item.setBackgroundResource(R.color.text_primaryColor);
+                btn_TBorrowed_all.setBackgroundResource(R.color.text_primaryColor);
             }
         });
 

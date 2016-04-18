@@ -59,6 +59,10 @@ public class HistoryBorrowedFragment extends HistoryAbstractFragment {
             public void onClick(View v) {
                 filterType = "All";
                 mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_BORROWED);
+
+                btn_HBorrowed_all.setBackgroundResource(R.color.accentBlueColor);
+                btn_HBorrowed_item.setBackgroundResource(R.color.text_primaryColor);
+                btn_HBorrowed_money.setBackgroundResource(R.color.text_primaryColor);
             }
         });
 
@@ -67,6 +71,9 @@ public class HistoryBorrowedFragment extends HistoryAbstractFragment {
             public void onClick(View v) {
                 filterType = Transaction.ITEM_TYPE;
                 mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_BORROWED, Transaction.ITEM_TYPE);
+                btn_HBorrowed_item.setBackgroundResource(R.color.accentBlueColor);
+                btn_HBorrowed_all.setBackgroundResource(R.color.text_primaryColor);
+                btn_HBorrowed_money.setBackgroundResource(R.color.text_primaryColor);
             }
         });
 
@@ -75,9 +82,11 @@ public class HistoryBorrowedFragment extends HistoryAbstractFragment {
             public void onClick(View v) {
                 filterType = Transaction.MONEY_TYPE;
                 mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_BORROWED, Transaction.MONEY_TYPE);
+                btn_HBorrowed_money.setBackgroundResource(R.color.accentBlueColor);
+                btn_HBorrowed_item.setBackgroundResource(R.color.text_primaryColor);
+                btn_HBorrowed_all.setBackgroundResource(R.color.text_primaryColor);
             }
         });
-
 
         return layout;
     }

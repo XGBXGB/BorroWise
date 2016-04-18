@@ -4,5 +4,4 @@
     <!--this is to give gradient effect -->
     <solid android:color="@color/accentBlueColor"/>
     <!-- this is make corners of button rounded -->
-    <corners android:radius="20dp"/>
 </shape>

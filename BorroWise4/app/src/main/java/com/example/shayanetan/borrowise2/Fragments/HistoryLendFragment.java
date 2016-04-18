@@ -58,6 +58,10 @@ public class HistoryLendFragment extends HistoryAbstractFragment {
             public void onClick(View v) {
                 filterType = "All";
                 mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_LEND);
+
+                btn_HLend_all.setBackgroundResource(R.color.accentBlueColor);
+                btn_HLend_money.setBackgroundResource(R.color.text_primaryColor);
+                btn_HLend_item.setBackgroundResource(R.color.text_primaryColor);
             }
         });
 
@@ -65,8 +69,11 @@ public class HistoryLendFragment extends HistoryAbstractFragment {
             @Override
             public void onClick(View v) {
                 filterType = Transaction.ITEM_TYPE;
-                Toast.makeText(getActivity().getBaseContext(), "PASOK FRAGMENT LEND ITEM", Toast.LENGTH_LONG);
                 mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_LEND, Transaction.ITEM_TYPE);
+
+                btn_HLend_item.setBackgroundResource(R.color.accentBlueColor);
+                btn_HLend_all.setBackgroundResource(R.color.text_primaryColor);
+                btn_HLend_money.setBackgroundResource(R.color.text_primaryColor);
             }
         });
 
@@ -75,6 +82,11 @@ public class HistoryLendFragment extends HistoryAbstractFragment {
             public void onClick(View v) {
                 filterType = Transaction.MONEY_TYPE;
                 mListener.retrieveTransaction(historyCursorAdapter, HistoryCursorAdapter.TYPE_LEND, Transaction.MONEY_TYPE);
+
+                btn_HLend_money.setBackgroundResource(R.color.accentBlueColor);
+                btn_HLend_item.setBackgroundResource(R.color.text_primaryColor);
+                btn_HLend_all.setBackgroundResource(R.color.text_primaryColor);
+
             }
         });
 

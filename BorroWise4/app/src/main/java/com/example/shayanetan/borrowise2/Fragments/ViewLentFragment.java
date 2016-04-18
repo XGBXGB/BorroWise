@@ -76,7 +76,12 @@ public class ViewLentFragment extends Fragment {
         btn_TLent_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                filterType = "All";
                 mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE);
+
+                btn_TLent_all.setBackgroundResource(R.color.accentBlueColor);
+                btn_TLent_money.setBackgroundResource(R.color.text_primaryColor);
+                btn_TLent_item.setBackgroundResource(R.color.text_primaryColor);
             }
         });
 
@@ -85,6 +90,11 @@ public class ViewLentFragment extends Fragment {
             public void onClick(View v) {
                 filterType = Transaction.ITEM_TYPE;
                 mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, Transaction.ITEM_TYPE);
+
+                btn_TLent_item.setBackgroundResource(R.color.accentBlueColor);
+                btn_TLent_all.setBackgroundResource(R.color.text_primaryColor);
+                btn_TLent_money.setBackgroundResource(R.color.text_primaryColor);
+
             }
         });
 
@@ -93,6 +103,10 @@ public class ViewLentFragment extends Fragment {
             public void onClick(View v) {
                 filterType = Transaction.MONEY_TYPE;
                 mListener.retrieveTransaction(transactionsCursorAdapter, VIEW_TYPE, Transaction.MONEY_TYPE);
+
+                btn_TLent_money.setBackgroundResource(R.color.accentBlueColor);
+                btn_TLent_item.setBackgroundResource(R.color.text_primaryColor);
+                btn_TLent_all.setBackgroundResource(R.color.text_primaryColor);
             }
         });
 
